@@ -8,11 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		D1AC4EC42036E2D50056743F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EC32036E2D50056743F /* AppDelegate.swift */; };
-		D1AC4EC62036E2D50056743F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EC52036E2D50056743F /* ViewController.swift */; };
 		D1AC4EC92036E2D50056743F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1AC4EC72036E2D50056743F /* Main.storyboard */; };
 		D1AC4ECB2036E2D50056743F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1AC4ECA2036E2D50056743F /* Assets.xcassets */; };
 		D1AC4ECE2036E2D50056743F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1AC4ECC2036E2D50056743F /* LaunchScreen.storyboard */; };
 		D1AC4ED92036E2D50056743F /* PhysicsBubblesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4ED82036E2D50056743F /* PhysicsBubblesUITests.swift */; };
+		D1AC4EE5203701930056743F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EE4203701930056743F /* ViewController.swift */; };
+		D1AC4EE9203701B10056743F /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EE7203701B10056743F /* Common.swift */; };
+		D1AC4EEA203701B10056743F /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EE8203701B10056743F /* Serializable.swift */; };
+		D1AC4EEF203701B80056743F /* BubbleGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EEC203701B80056743F /* BubbleGridView.swift */; };
+		D1AC4EF0203701B80056743F /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EED203701B80056743F /* BubbleView.swift */; };
+		D1AC4EF1203701B80056743F /* PaletteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EEE203701B80056743F /* PaletteView.swift */; };
+		D1AC4EF6203701C10056743F /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EF3203701C00056743F /* Bubble.swift */; };
+		D1AC4EF7203701C10056743F /* BubbleGrid+Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EF4203701C00056743F /* BubbleGrid+Serializable.swift */; };
+		D1AC4EF8203701C10056743F /* BubbleGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EF5203701C00056743F /* BubbleGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +36,6 @@
 /* Begin PBXFileReference section */
 		D1AC4EC02036E2D50056743F /* PhysicsBubbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhysicsBubbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1AC4EC32036E2D50056743F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D1AC4EC52036E2D50056743F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D1AC4EC82036E2D50056743F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D1AC4ECA2036E2D50056743F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D1AC4ECD2036E2D50056743F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +43,15 @@
 		D1AC4ED42036E2D50056743F /* PhysicsBubblesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhysicsBubblesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1AC4ED82036E2D50056743F /* PhysicsBubblesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsBubblesUITests.swift; sourceTree = "<group>"; };
 		D1AC4EDA2036E2D50056743F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D1AC4EE4203701930056743F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D1AC4EE7203701B10056743F /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		D1AC4EE8203701B10056743F /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
+		D1AC4EEC203701B80056743F /* BubbleGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleGridView.swift; sourceTree = "<group>"; };
+		D1AC4EED203701B80056743F /* BubbleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
+		D1AC4EEE203701B80056743F /* PaletteView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteView.swift; sourceTree = "<group>"; };
+		D1AC4EF3203701C00056743F /* Bubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bubble.swift; sourceTree = "<group>"; };
+		D1AC4EF4203701C00056743F /* BubbleGrid+Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BubbleGrid+Serializable.swift"; sourceTree = "<group>"; };
+		D1AC4EF5203701C00056743F /* BubbleGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +75,10 @@
 		D1AC4EB72036E2D40056743F = {
 			isa = PBXGroup;
 			children = (
+				D1AC4EEB203701B80056743F /* View */,
+				D1AC4EF2203701C00056743F /* Model */,
+				D1AC4EE6203701B10056743F /* Common */,
+				D1AC4EE3203701930056743F /* Controller */,
 				D1AC4EC22036E2D50056743F /* PhysicsBubbles */,
 				D1AC4ED72036E2D50056743F /* PhysicsBubblesUITests */,
 				D1AC4EC12036E2D50056743F /* Products */,
@@ -78,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				D1AC4EC32036E2D50056743F /* AppDelegate.swift */,
-				D1AC4EC52036E2D50056743F /* ViewController.swift */,
 				D1AC4EC72036E2D50056743F /* Main.storyboard */,
 				D1AC4ECA2036E2D50056743F /* Assets.xcassets */,
 				D1AC4ECC2036E2D50056743F /* LaunchScreen.storyboard */,
@@ -94,6 +113,43 @@
 				D1AC4EDA2036E2D50056743F /* Info.plist */,
 			);
 			path = PhysicsBubblesUITests;
+			sourceTree = "<group>";
+		};
+		D1AC4EE3203701930056743F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D1AC4EE4203701930056743F /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		D1AC4EE6203701B10056743F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D1AC4EE7203701B10056743F /* Common.swift */,
+				D1AC4EE8203701B10056743F /* Serializable.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		D1AC4EEB203701B80056743F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D1AC4EEC203701B80056743F /* BubbleGridView.swift */,
+				D1AC4EED203701B80056743F /* BubbleView.swift */,
+				D1AC4EEE203701B80056743F /* PaletteView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		D1AC4EF2203701C00056743F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D1AC4EF3203701C00056743F /* Bubble.swift */,
+				D1AC4EF4203701C00056743F /* BubbleGrid+Serializable.swift */,
+				D1AC4EF5203701C00056743F /* BubbleGrid.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,7 +255,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1AC4EC62036E2D50056743F /* ViewController.swift in Sources */,
+				D1AC4EE9203701B10056743F /* Common.swift in Sources */,
+				D1AC4EF6203701C10056743F /* Bubble.swift in Sources */,
+				D1AC4EEA203701B10056743F /* Serializable.swift in Sources */,
+				D1AC4EF0203701B80056743F /* BubbleView.swift in Sources */,
+				D1AC4EEF203701B80056743F /* BubbleGridView.swift in Sources */,
+				D1AC4EE5203701930056743F /* ViewController.swift in Sources */,
+				D1AC4EF8203701C10056743F /* BubbleGrid.swift in Sources */,
+				D1AC4EF1203701B80056743F /* PaletteView.swift in Sources */,
+				D1AC4EF7203701C10056743F /* BubbleGrid+Serializable.swift in Sources */,
 				D1AC4EC42036E2D50056743F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
