@@ -125,7 +125,7 @@ class ViewController: UIViewController {
     }
 
     private func render() {
-        for row in 0..<NUM_ROWS_FOR_PALETTE {
+        for row in 0..<NUM_ROWS {
             for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
                 let bubble = bubbleGridModel.getBubbleAt(row: row, col: col)
                 bubbleGridView.render(row: row, col: col, as: bubble)
@@ -212,7 +212,11 @@ class ViewController: UIViewController {
      **************************************************/
 
     private func handleGridTap(at coords: CGPoint) {
-        guard let (row, col) =  bubbleGridView.getBubbleIndexAt(coords: coords) else {
+        guard let (row, col) = bubbleGridView.getBubbleIndexAt(coords: coords) else {
+            return
+        }
+
+        guard isBubbleIndexInPalette(row: row, col: col) else {
             return
         }
 
@@ -234,11 +238,19 @@ class ViewController: UIViewController {
             return
         }
 
+        guard isBubbleIndexInPalette(row: row, col: col) else {
+            return
+        }
+
         bubbleGridModel.setBubbleAt(row: row, col: col, to: nextBubbleToDraw)
     }
 
     private func handleGridLongPress(at coords: CGPoint) {
         guard let (row, col) =  bubbleGridView.getBubbleIndexAt(coords: coords) else {
+            return
+        }
+
+        guard isBubbleIndexInPalette(row: row, col: col) else {
             return
         }
 

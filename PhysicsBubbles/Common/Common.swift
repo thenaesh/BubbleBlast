@@ -9,8 +9,8 @@
 import Foundation
 
 let BUBBLES_PER_ROW = 12
-let NUM_ROWS = 9
-let NUM_ROWS_FOR_PALETTE = 18
+let NUM_ROWS = 18
+let NUM_ROWS_FOR_PALETTE = 9
 
 func isBubbleIndexAllowable(row: Int, col: Int) -> Bool {
     guard 0 <= row && row < NUM_ROWS && 0 <= col else {
@@ -21,4 +21,12 @@ func isBubbleIndexAllowable(row: Int, col: Int) -> Bool {
     let oddRowCondition = row % 2 == 1 && col < BUBBLES_PER_ROW - 1
 
     return evenRowCondition || oddRowCondition
+}
+
+func isBubbleIndexInPalette(row: Int, col: Int) -> Bool {
+    guard isBubbleIndexAllowable(row: row, col: col) else {
+        return false
+    }
+
+    return row < NUM_ROWS_FOR_PALETTE
 }
