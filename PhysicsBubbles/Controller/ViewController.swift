@@ -71,7 +71,7 @@ class ViewController: UIViewController {
 
     @objc private func refresh(displayLink: CADisplayLink) {
         DispatchQueue.main.async {
-            self.render()
+            self.bubbleGridView.render()
             self.performRenderHack()
         }
     }
@@ -89,7 +89,7 @@ class ViewController: UIViewController {
         } else {
             self.renderingBugWorkaroundImage.image = #imageLiteral(resourceName: "bubble-red")
         }
-        self.render()
+        self.bubbleGridView.render()
     }
 
     private func loadBackgroundImage() {
@@ -101,7 +101,7 @@ class ViewController: UIViewController {
 
     private func initializeBubbleGridModelAndView() {
         self._bubbleGridModel = BubbleGrid()
-        self._bubbleGridView = BubbleGridView(parentView: gameArea)
+        self._bubbleGridView = BubbleGridView(parentView: gameArea, model: bubbleGridModel)
     }
 
     private func createPalette() {
@@ -120,15 +120,6 @@ class ViewController: UIViewController {
         for row in 0..<NUM_ROWS_FOR_PALETTE {
             for col in 0..<BUBBLES_PER_ROW {
                 bubbleGridView.getBubbleViewAt(row: row, col: col)?.setBackground(to: color)
-            }
-        }
-    }
-
-    private func render() {
-        for row in 0..<NUM_ROWS {
-            for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
-                let bubble = bubbleGridModel.getBubbleAt(row: row, col: col)
-                bubbleGridView.render(row: row, col: col, as: bubble)
             }
         }
     }
@@ -193,7 +184,7 @@ class ViewController: UIViewController {
         switch button {
         case paletteView.resetButton:
             bubbleGridModel.setAllBubbles(to: nil)
-            render()
+            bubbleGridView.render()
         case paletteView.startButton:
             // TODO: implement this in a future PS
             //print("start button tapped")

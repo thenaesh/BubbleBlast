@@ -11,10 +11,12 @@ import UIKit
 class BubbleGridView {
     let uiView = UIView()
     private let parentView: UIView
+    private let model: BubbleGrid
     private var grid: [[BubbleView]] = []
 
-    init(parentView: UIView) {
+    init(parentView: UIView, model: BubbleGrid) {
         self.parentView = parentView
+        self.model = model
         attachGridViewToParent()
         fixAspectRatio()
         createBubbleGrid()
@@ -90,12 +92,21 @@ class BubbleGridView {
         uiView.addSubview(bubbleView.uiView)
     }
 
-    func render(row: Int, col: Int, as bubble: Bubble?) {
+    private func setBubbleView(row: Int, col: Int, to bubble: Bubble?) {
         guard isBubbleIndexAllowable(row: row, col: col) else {
             return
         }
         let bubbleView = getBubbleViewAt(row: row, col: col)
         bubbleView?.render(as: bubble)
+    }
+
+    func render() {
+        for row in 0..<NUM_ROWS {
+            for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
+                let bubble = model.getBubbleAt(row: row, col: col)
+                setBubbleView(row: row, col: col, to: bubble)
+            }
+        }
     }
 
     private var radius: Double {
