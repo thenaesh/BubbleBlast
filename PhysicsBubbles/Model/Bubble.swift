@@ -14,7 +14,6 @@ enum Bubble: String, Codable {
     case greenBubble
     case blueBubble
     case orangeBubble
-    case eraseBubble
 }
 
 extension Bubble {
@@ -28,8 +27,6 @@ extension Bubble {
             return .orangeBubble
         case .orangeBubble:
             return .redBubble
-        default:
-            return self
         }
     }
 }

@@ -13,7 +13,7 @@ class BubbleGrid: Codable {
 
     init() {
         self.grid = Array.init(repeating: Array.init(repeating: nil, count: BUBBLES_PER_ROW), count: NUM_ROWS);
-        setAllBubbles(to: .eraseBubble)
+        setAllBubbles(to: nil)
     }
 
     func getBubbleAt(row: Int, col: Int) -> Bubble? {
@@ -24,17 +24,20 @@ class BubbleGrid: Codable {
         return grid[row][col]
     }
 
-    func setBubbleAt(row: Int, col: Int, to bubble: Bubble) {
+    func setBubbleAt(row: Int, col: Int, to bubble: Bubble?, given predicate: (Bubble?) -> Bool = { _ in true }) {
         guard isBubbleIndexAllowable(row: row, col: col) else {
             return
         }
-        grid[row][col] = bubble
+        
+        if predicate(grid[row][col]) {
+            grid[row][col] = bubble
+        }
     }
 
-    func setAllBubbles(to bubble: Bubble) {
+    func setAllBubbles(to bubble: Bubble?, given predicate: (Bubble?) -> Bool = { _ in true }) {
         for row in 0..<NUM_ROWS {
             for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
-                setBubbleAt(row: row, col: col, to: bubble)
+                setBubbleAt(row: row, col: col, to: bubble, given: predicate)
             }
         }
     }

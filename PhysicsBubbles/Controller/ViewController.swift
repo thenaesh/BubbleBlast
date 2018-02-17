@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     private var _bubbleGridModel: BubbleGrid? = nil
     private var _bubbleGridView: BubbleGridView? = nil
     private var _paletteView: PaletteView? = nil
-    private var nextBubbleToDraw: Bubble = .eraseBubble
+    private var nextBubbleToDraw: Bubble? = nil
+    private var renderingBugWorkaroundImage = UIImageView(image: #imageLiteral(resourceName: "bubble-red"))
 
     private var bubbleGridModel: BubbleGrid {
         guard let __bubbleGridModel = self._bubbleGridModel else {
@@ -54,8 +55,7 @@ class ViewController: UIViewController {
         loadBackgroundImage()
         initializeBubbleGridModelAndView()
         createPalette()
-        let displayLink = CADisplayLink(target: self, selector: #selector(refresh))
-        displayLink.add(to: .current, forMode: .defaultRunLoopMode)
+        setupDisplayLink()
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,9 +63,33 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    private func setupDisplayLink() {
+        let displayLink = CADisplayLink(target: self, selector: #selector(refresh))
+        displayLink.add(to: .current, forMode: .defaultRunLoopMode)
+        initRenderHack()
+    }
+
     @objc private func refresh(displayLink: CADisplayLink) {
-        render()
-        print(displayLink.timestamp)
+        DispatchQueue.main.async {
+            self.render()
+            self.performRenderHack()
+        }
+    }
+
+    private func initRenderHack() {
+        self.gameArea.addSubview(self.renderingBugWorkaroundImage)
+        self.renderingBugWorkaroundImage.alpha = 0.1
+        self.renderingBugWorkaroundImage.frame.size.height = self.gameArea.frame.size.height / 1000
+        self.renderingBugWorkaroundImage.frame.size.width = self.gameArea.frame.size.width / 1000
+    }
+
+    private func performRenderHack() {
+        if self.renderingBugWorkaroundImage.image == #imageLiteral(resourceName: "bubble-red") {
+            self.renderingBugWorkaroundImage.image = #imageLiteral(resourceName: "bubble-blue")
+        } else {
+            self.renderingBugWorkaroundImage.image = #imageLiteral(resourceName: "bubble-red")
+        }
+        self.render()
     }
 
     private func loadBackgroundImage() {
@@ -168,7 +192,7 @@ class ViewController: UIViewController {
     private func handlePaletteButtonTap(button: Button) {
         switch button {
         case paletteView.resetButton:
-            bubbleGridModel.setAllBubbles(to: .eraseBubble)
+            bubbleGridModel.setAllBubbles(to: nil)
             render()
         case paletteView.startButton:
             // TODO: implement this in a future PS
@@ -193,12 +217,16 @@ class ViewController: UIViewController {
         }
 
         guard let currentBubble = bubbleGridModel.getBubbleAt(row: row, col: col) else {
+            bubbleGridModel.setBubbleAt(row: row, col: col, to: nextBubbleToDraw)
             return
         }
 
         // cycling of filled bubbles
-        let bubbleToSetTo = currentBubble == .eraseBubble || nextBubbleToDraw == .eraseBubble ? nextBubbleToDraw : currentBubble.next()
-        bubbleGridModel.setBubbleAt(row: row, col: col, to: bubbleToSetTo)
+        if nextBubbleToDraw == nil {
+            bubbleGridModel.setBubbleAt(row: row, col: col, to: nextBubbleToDraw)
+        } else {
+            bubbleGridModel.setBubbleAt(row: row, col: col, to: currentBubble.next())
+        }
     }
 
     private func handleGridPan(at coords: CGPoint) {
@@ -214,7 +242,7 @@ class ViewController: UIViewController {
             return
         }
 
-        bubbleGridModel.setBubbleAt(row: row, col: col, to: .eraseBubble)
+        bubbleGridModel.setBubbleAt(row: row, col: col, to: nil)
     }
 
     /************************************************************************************

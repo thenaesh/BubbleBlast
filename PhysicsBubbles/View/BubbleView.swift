@@ -19,6 +19,7 @@ class BubbleView {
 
     func setImage(to img: UIImage?) {
         uiView.image = img
+        uiView.setNeedsDisplay()
     }
 
     func setBackground(to color: UIColor?) {

@@ -162,7 +162,7 @@ class PaletteView {
         }
     }
 
-    func mapSelectorToModel(selector: Selector) -> Bubble {
+    func mapSelectorToModel(selector: Selector) -> Bubble? {
         switch selector {
         case redSelector:
             return .redBubble
@@ -173,7 +173,7 @@ class PaletteView {
         case orangeSelector:
             return .orangeBubble
         case eraseSelector:
-            return .eraseBubble
+            return nil
         default:
             fatalError("There are selector types that don't match any known Bubble model!")
         }
