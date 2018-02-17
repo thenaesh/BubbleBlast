@@ -35,28 +35,17 @@ class ViewController: UIViewController {
         return __paletteView
     }
 
-    @IBAction func handleTapGesture(_ sender: UITapGestureRecognizer) {
-        let coords = sender.location(in: gameArea)
-
-        if didTapOccurInPalette(at: coords) {
-            let paletteCoords = sender.location(in: paletteView.uiView)
-            handlePaletteTap(at: paletteCoords)
-        } else {
-            let bubbleGridCoords = sender.location(in: bubbleGridView.uiView)
-            handleGridTap(at: bubbleGridCoords)
+    @IBAction func handleGesture(_ sender: UIGestureRecognizer) {
+        switch sender {
+        case is UITapGestureRecognizer:
+            _paletteView == nil ? gameModeTapHandler(sender as! UITapGestureRecognizer) : paletteModeTapHandler(sender as! UITapGestureRecognizer)
+        case is UIPanGestureRecognizer:
+            _paletteView == nil ? gameModePanHandler(sender as! UIPanGestureRecognizer) : paletteModePanHandler(sender as! UIPanGestureRecognizer)
+        case is UILongPressGestureRecognizer:
+            _paletteView == nil ? gameModeLongPressHandler(sender as! UILongPressGestureRecognizer) : paletteModeLongPressHandler(sender as! UILongPressGestureRecognizer)
+        default:
+            fatalError("Unexpected input handlers encountered!")
         }
-
-        render()
-    }
-    @IBAction func handlePanGesture(_ sender: UIPanGestureRecognizer) {
-        let bubbleGridCoords = sender.location(in: bubbleGridView.uiView)
-        handleGridPan(at: bubbleGridCoords)
-        render()
-    }
-    @IBAction func handleLongPressGesture(_ sender: UILongPressGestureRecognizer) {
-        let bubbbleGridCoords = sender.location(in: bubbleGridView.uiView)
-        handleGridLongPress(at: bubbbleGridCoords)
-        render()
     }
 
     override func viewDidLoad() {
@@ -87,13 +76,19 @@ class ViewController: UIViewController {
     private func createPalette() {
         self._paletteView = PaletteView(parentView: gameArea)
         paletteView.setupPalette()
-        markPaintableBubbles()
+        markPaintableBubbles(with: .gray)
     }
 
-    private func markPaintableBubbles() {
+    private func destroyPalette() {
+        markPaintableBubbles(with: nil)
+        paletteView.teardownPalette()
+        self._paletteView = nil
+    }
+
+    private func markPaintableBubbles(with color: UIColor?) {
         for row in 0..<NUM_ROWS_FOR_PALETTE {
             for col in 0..<BUBBLES_PER_ROW {
-                bubbleGridView.getBubbleViewAt(row: row, col: col)?.setBackground(to: .gray)
+                bubbleGridView.getBubbleViewAt(row: row, col: col)?.setBackground(to: color)
             }
         }
     }
@@ -106,6 +101,45 @@ class ViewController: UIViewController {
             }
         }
     }
+
+    /*******************************
+     ** Input Handlers for Scenes **
+     *******************************/
+
+    private func paletteModeTapHandler(_ sender: UITapGestureRecognizer) {
+        let coords = sender.location(in: gameArea)
+
+        if didTapOccurInPalette(at: coords) {
+            let paletteCoords = sender.location(in: paletteView.uiView)
+            handlePaletteTap(at: paletteCoords)
+        } else {
+            let bubbleGridCoords = sender.location(in: bubbleGridView.uiView)
+            handleGridTap(at: bubbleGridCoords)
+        }
+
+        render()
+    }
+    private func paletteModePanHandler(_ sender: UIPanGestureRecognizer) {
+        let bubbleGridCoords = sender.location(in: bubbleGridView.uiView)
+        handleGridPan(at: bubbleGridCoords)
+        render()
+    }
+    private func paletteModeLongPressHandler(_ sender: UILongPressGestureRecognizer) {
+        let bubbbleGridCoords = sender.location(in: bubbleGridView.uiView)
+        handleGridLongPress(at: bubbbleGridCoords)
+        render()
+    }
+
+    private func gameModeTapHandler(_ sender: UITapGestureRecognizer) {
+        print("Tap @ \(sender.location(in: gameArea))")
+    }
+    private func gameModePanHandler(_ sender: UIPanGestureRecognizer) {
+        print("Pan @ \(sender.location(in: gameArea))")
+    }
+    private func gameModeLongPressHandler(_ sender: UILongPressGestureRecognizer) {
+        print("Long Press @ \(sender.location(in: gameArea))")
+    }
+
 
     /**********************************************
      ** Code to handle user input in the palette **
@@ -135,7 +169,8 @@ class ViewController: UIViewController {
             render()
         case paletteView.startButton:
             // TODO: implement this in a future PS
-            print("start button tapped")
+            //print("start button tapped")
+            destroyPalette()
         case paletteView.saveButton:
             promptUserForSave()
         case paletteView.loadButton:

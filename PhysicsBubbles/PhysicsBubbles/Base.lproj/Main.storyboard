@@ -45,17 +45,17 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="vcW-yq-K1b">
                     <connections>
-                        <action selector="handleTapGesture:" destination="BYZ-38-t0r" id="BFz-KF-9JP"/>
+                        <action selector="handleGesture:" destination="BYZ-38-t0r" id="xxH-5G-2M4"/>
                     </connections>
                 </tapGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="bNr-gI-Z0E">
                     <connections>
-                        <action selector="handlePanGesture:" destination="BYZ-38-t0r" id="2PP-Kc-GNp"/>
+                        <action selector="handleGesture:" destination="BYZ-38-t0r" id="v6I-9Q-RJo"/>
                     </connections>
                 </panGestureRecognizer>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="1y3-pW-bb9">
                     <connections>
-                        <action selector="handleLongPressGesture:" destination="BYZ-38-t0r" id="v1E-Vh-QqR"/>
+                        <action selector="handleGesture:" destination="BYZ-38-t0r" id="3E1-BP-q2x"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>

@@ -46,6 +46,10 @@ class PaletteView {
         constrainButtons()
     }
 
+    func teardownPalette() {
+        uiView.removeFromSuperview()
+    }
+
     private func loadPaletteBox() {
         let paletteHeight = parentView.frame.size.height / 5
         let paletteWidth = parentView.frame.size.width
