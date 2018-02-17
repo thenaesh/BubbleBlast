@@ -17,10 +17,22 @@ enum BubbleColor: String, Codable {
 }
 
 struct Bubble: Codable {
+    var x: Double
+    var y: Double
     var color: BubbleColor
 
-    init(color: BubbleColor) {
+    init(x: Double, y: Double, color: BubbleColor) {
+        self.x = x
+        self.y = y
         self.color = color
+    }
+
+    init (coords: (Double, Double), color: BubbleColor) {
+        self.init(x: coords.0, y: coords.1, color: color)
+    }
+
+    var coords: (Double, Double) {
+        return (x, y)
     }
 }
 

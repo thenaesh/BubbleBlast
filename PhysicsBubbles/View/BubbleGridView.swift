@@ -13,6 +13,7 @@ class BubbleGridView {
     private let parentView: UIView
     private let model: BubbleGrid
     private var grid: [[BubbleView]] = []
+    private var projectileView: BubbleView? = nil
 
     init(parentView: UIView, model: BubbleGrid) {
         self.parentView = parentView
@@ -41,6 +42,15 @@ class BubbleGridView {
                 addBubbleToGrid(bubbleToAdd)
             }
         }
+    }
+
+    func loadProjectileView() {
+        guard let projectileModel = model.projectile else {
+            return
+        }
+
+        projectileView = BubbleView(frame: getProjectileFrameFor(projectileModel.coords))
+        uiView.addSubview(projectileView!.uiView)
     }
 
     func getBubbleIndexAt(coords: CGPoint) -> (Int, Int)? {
@@ -92,7 +102,12 @@ class BubbleGridView {
         uiView.addSubview(bubbleView.uiView)
     }
 
-    private func setBubbleView(row: Int, col: Int, to color: BubbleColor?) {
+    func getProjectileFrameFor(_ coords: (Double, Double)) -> CGRect {
+        let (xCentre, yCentre) = translateToViewCoordinates(coords)
+        return CGRect(x: xCentre - radius, y: yCentre - radius, width: diameter, height: diameter)
+    }
+
+    private func updateBubbleViewAt(row: Int, col: Int, to color: BubbleColor?) {
         guard isBubbleIndexAllowable(row: row, col: col) else {
             return
         }
@@ -100,19 +115,37 @@ class BubbleGridView {
         bubbleView?.render(as: color)
     }
 
+    func updateProjectileView() {
+        guard let projectileModel = model.projectile else {
+            return
+        }
+
+        projectileView?.uiView.frame = getProjectileFrameFor(projectileModel.coords)
+        projectileView?.render(as: model.projectile?.color)
+    }
+
     func render() {
         for row in 0..<NUM_ROWS {
             for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
                 let bubble = model.getBubbleAt(row: row, col: col)
-                setBubbleView(row: row, col: col, to: bubble?.color)
+                updateBubbleViewAt(row: row, col: col, to: bubble?.color)
             }
         }
+        updateProjectileView()
     }
 
-    private var radius: Double {
-        return Double(uiView.frame.size.width) / Double(BUBBLES_PER_ROW * 2)
+    private func translateToViewCoordinates(_ coords: (Double, Double)) -> (Double, Double) {
+        return (viewCoordinateScaleFactor * coords.0, viewCoordinateScaleFactor * coords.1)
     }
+
+    private var viewCoordinateScaleFactor: Double {
+        return Double(uiView.frame.size.width)
+    }
+
     private var diameter: Double {
-        return 2 * radius
+        return viewCoordinateScaleFactor / Double(BUBBLES_PER_ROW)
+    }
+    private var radius: Double {
+        return diameter / 2
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 
 class BubbleGrid: Codable {
     var grid: [[Bubble?]]
+    var projectile: Bubble? = nil
 
     init() {
         self.grid = Array.init(repeating: Array.init(repeating: nil, count: BUBBLES_PER_ROW), count: NUM_ROWS);
@@ -34,7 +35,7 @@ class BubbleGrid: Codable {
         }
 
         if grid[row][col] == nil {
-            grid[row][col] = Bubble(color: color)
+            grid[row][col] = Bubble(coords: getBubbleCentre(row: row, col: col), color: color)
         } else {
             grid[row][col]?.color = color
         }
@@ -64,8 +65,27 @@ class BubbleGrid: Codable {
         }
     }
 
+    func loadProjectile() {
+        let xCentre = maxX / 2
+        let yCentre = maxY - radius
+        self.projectile = Bubble(x: xCentre, y: yCentre, color: .redBubble)
+    }
+
+    var minX: Double {
+        return 0
+    }
+    var maxX: Double {
+        return 1
+    }
+    var minY: Double {
+        return 0
+    }
+    var maxY: Double {
+        return aspectRatio
+    }
+
     var aspectRatio: Double {
-        return Double(NUM_ROWS) / Double(BUBBLES_PER_ROW)
+        return (2 + Double(NUM_ROWS - 1) * sqrt(3)) * radius
     }
 
     var diameter: Double {

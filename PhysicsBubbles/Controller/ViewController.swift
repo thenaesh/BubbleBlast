@@ -187,6 +187,8 @@ class ViewController: UIViewController {
             // TODO: implement this in a future PS
             //print("start button tapped")
             destroyPalette()
+            bubbleGridModel.loadProjectile()
+            bubbleGridView.loadProjectileView()
         case paletteView.saveButton:
             promptUserForSave()
         case paletteView.loadButton:
