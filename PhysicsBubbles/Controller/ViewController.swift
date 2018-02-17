@@ -54,11 +54,18 @@ class ViewController: UIViewController {
         loadBackgroundImage()
         initializeBubbleGridModelAndView()
         createPalette()
+        let displayLink = CADisplayLink(target: self, selector: #selector(refresh))
+        displayLink.add(to: .current, forMode: .defaultRunLoopMode)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    @objc private func refresh(displayLink: CADisplayLink) {
+        render()
+        print(displayLink.timestamp)
     }
 
     private func loadBackgroundImage() {
@@ -116,18 +123,14 @@ class ViewController: UIViewController {
             let bubbleGridCoords = sender.location(in: bubbleGridView.uiView)
             handleGridTap(at: bubbleGridCoords)
         }
-
-        render()
     }
     private func paletteModePanHandler(_ sender: UIPanGestureRecognizer) {
         let bubbleGridCoords = sender.location(in: bubbleGridView.uiView)
         handleGridPan(at: bubbleGridCoords)
-        render()
     }
     private func paletteModeLongPressHandler(_ sender: UILongPressGestureRecognizer) {
         let bubbbleGridCoords = sender.location(in: bubbleGridView.uiView)
         handleGridLongPress(at: bubbbleGridCoords)
-        render()
     }
 
     private func gameModeTapHandler(_ sender: UITapGestureRecognizer) {
@@ -194,7 +197,7 @@ class ViewController: UIViewController {
         }
 
         // cycling of filled bubbles
-        let bubbleToSetTo = currentBubble == .eraseBubble ? nextBubbleToDraw : currentBubble.next()
+        let bubbleToSetTo = currentBubble == .eraseBubble || nextBubbleToDraw == .eraseBubble ? nextBubbleToDraw : currentBubble.next()
         bubbleGridModel.setBubbleAt(row: row, col: col, to: bubbleToSetTo)
     }
 
