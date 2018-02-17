@@ -26,8 +26,8 @@ class BubbleView {
         uiView.backgroundColor = color
     }
 
-    func render(as bubble: Bubble?) {
-        switch bubble {
+    func render(as color: BubbleColor?) {
+        switch color {
         case .redBubble?:
             setImage(to: #imageLiteral(resourceName: "bubble-red"))
         case .greenBubble?:

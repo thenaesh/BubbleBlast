@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     private var _bubbleGridModel: BubbleGrid? = nil
     private var _bubbleGridView: BubbleGridView? = nil
     private var _paletteView: PaletteView? = nil
-    private var nextBubbleToDraw: Bubble? = nil
+    private var nextBubbleToDraw: BubbleColor? = nil
     private var renderingBugWorkaroundImage = UIImageView(image: #imageLiteral(resourceName: "bubble-red"))
 
     private var bubbleGridModel: BubbleGrid {
@@ -70,10 +70,8 @@ class ViewController: UIViewController {
     }
 
     @objc private func refresh(displayLink: CADisplayLink) {
-        DispatchQueue.main.async {
-            self.bubbleGridView.render()
-            self.performRenderHack()
-        }
+        self.bubbleGridView.render()
+        self.performRenderHack()
     }
 
     private func initRenderHack() {
@@ -183,7 +181,7 @@ class ViewController: UIViewController {
     private func handlePaletteButtonTap(button: Button) {
         switch button {
         case paletteView.resetButton:
-            bubbleGridModel.setAllBubbles(to: nil)
+            bubbleGridModel.removeAllBubbles()
             bubbleGridView.render()
         case paletteView.startButton:
             // TODO: implement this in a future PS
@@ -211,17 +209,18 @@ class ViewController: UIViewController {
             return
         }
 
+        guard let nextBubble = nextBubbleToDraw else {
+            bubbleGridModel.removeBubbleAt(row: row, col: col)
+            return
+        }
+
         guard let currentBubble = bubbleGridModel.getBubbleAt(row: row, col: col) else {
-            bubbleGridModel.setBubbleAt(row: row, col: col, to: nextBubbleToDraw)
+            bubbleGridModel.setBubbleAt(row: row, col: col, to: nextBubble)
             return
         }
 
         // cycling of filled bubbles
-        if nextBubbleToDraw == nil {
-            bubbleGridModel.setBubbleAt(row: row, col: col, to: nextBubbleToDraw)
-        } else {
-            bubbleGridModel.setBubbleAt(row: row, col: col, to: currentBubble.next())
-        }
+        bubbleGridModel.setBubbleAt(row: row, col: col, to: currentBubble.color.next())
     }
 
     private func handleGridPan(at coords: CGPoint) {
@@ -233,7 +232,12 @@ class ViewController: UIViewController {
             return
         }
 
-        bubbleGridModel.setBubbleAt(row: row, col: col, to: nextBubbleToDraw)
+        guard let nextBubble = nextBubbleToDraw else {
+            bubbleGridModel.removeBubbleAt(row: row, col: col)
+            return
+        }
+
+        bubbleGridModel.setBubbleAt(row: row, col: col, to: nextBubble)
     }
 
     private func handleGridLongPress(at coords: CGPoint) {
@@ -245,7 +249,7 @@ class ViewController: UIViewController {
             return
         }
 
-        bubbleGridModel.setBubbleAt(row: row, col: col, to: nil)
+        bubbleGridModel.removeBubbleAt(row: row, col: col)
     }
 
     /************************************************************************************

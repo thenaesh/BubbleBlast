@@ -162,7 +162,7 @@ class PaletteView {
         }
     }
 
-    func mapSelectorToModel(selector: Selector) -> Bubble? {
+    func mapSelectorToModel(selector: Selector) -> BubbleColor? {
         switch selector {
         case redSelector:
             return .redBubble

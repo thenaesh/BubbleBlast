@@ -92,19 +92,19 @@ class BubbleGridView {
         uiView.addSubview(bubbleView.uiView)
     }
 
-    private func setBubbleView(row: Int, col: Int, to bubble: Bubble?) {
+    private func setBubbleView(row: Int, col: Int, to color: BubbleColor?) {
         guard isBubbleIndexAllowable(row: row, col: col) else {
             return
         }
         let bubbleView = getBubbleViewAt(row: row, col: col)
-        bubbleView?.render(as: bubble)
+        bubbleView?.render(as: color)
     }
 
     func render() {
         for row in 0..<NUM_ROWS {
             for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
                 let bubble = model.getBubbleAt(row: row, col: col)
-                setBubbleView(row: row, col: col, to: bubble)
+                setBubbleView(row: row, col: col, to: bubble?.color)
             }
         }
     }

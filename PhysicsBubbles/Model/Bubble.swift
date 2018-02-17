@@ -9,15 +9,23 @@
 import Foundation
 
 
-enum Bubble: String, Codable {
+enum BubbleColor: String, Codable {
     case redBubble
     case greenBubble
     case blueBubble
     case orangeBubble
 }
 
-extension Bubble {
-    func next() -> Bubble {
+struct Bubble: Codable {
+    var color: BubbleColor
+
+    init(color: BubbleColor) {
+        self.color = color
+    }
+}
+
+extension BubbleColor {
+    func next() -> BubbleColor {
         switch self {
         case .redBubble:
             return .greenBubble

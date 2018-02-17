@@ -13,7 +13,11 @@ class BubbleGrid: Codable {
 
     init() {
         self.grid = Array.init(repeating: Array.init(repeating: nil, count: BUBBLES_PER_ROW), count: NUM_ROWS);
-        setAllBubbles(to: nil)
+        for row in 0..<NUM_ROWS {
+            for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
+                grid[row][col] = nil
+            }
+        }
     }
 
     func getBubbleAt(row: Int, col: Int) -> Bubble? {
@@ -24,21 +28,57 @@ class BubbleGrid: Codable {
         return grid[row][col]
     }
 
-    func setBubbleAt(row: Int, col: Int, to bubble: Bubble?, given predicate: (Bubble?) -> Bool = { _ in true }) {
+    func setBubbleAt(row: Int, col: Int, to color: BubbleColor) {
         guard isBubbleIndexAllowable(row: row, col: col) else {
             return
         }
-        
-        if predicate(grid[row][col]) {
-            grid[row][col] = bubble
+
+        if grid[row][col] == nil {
+            grid[row][col] = Bubble(color: color)
+        } else {
+            grid[row][col]?.color = color
         }
     }
 
-    func setAllBubbles(to bubble: Bubble?, given predicate: (Bubble?) -> Bool = { _ in true }) {
+    func removeBubbleAt(row: Int, col: Int) {
+        guard isBubbleIndexAllowable(row: row, col: col) else {
+            return
+        }
+
+        grid[row][col] = nil
+    }
+
+    func setAllBubbles(to color: BubbleColor) {
         for row in 0..<NUM_ROWS {
             for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
-                setBubbleAt(row: row, col: col, to: bubble, given: predicate)
+                setBubbleAt(row: row, col: col, to: color)
             }
         }
+    }
+
+    func removeAllBubbles() {
+        for row in 0..<NUM_ROWS {
+            for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
+                removeBubbleAt(row: row, col: col)
+            }
+        }
+    }
+
+    var aspectRatio: Double {
+        return Double(NUM_ROWS) / Double(BUBBLES_PER_ROW)
+    }
+
+    var diameter: Double {
+        return 1 / Double(BUBBLES_PER_ROW)
+    }
+
+    var radius: Double {
+        return diameter / 2
+    }
+
+    func getBubbleCentre(row: Int, col: Int) -> (Double, Double) {
+        let xCentre = (row % 2 == 0 ? 1 : 2) * radius + Double(col) * diameter
+        let yCentre = radius + Double(row) * sqrt(3) * radius
+        return (xCentre, yCentre)
     }
 }
