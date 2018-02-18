@@ -9,8 +9,8 @@
 import Foundation
 
 class BubbleGrid: Codable {
-    var grid: [[Bubble?]]
-    var projectile: Bubble? = nil
+    var grid: [[FixedBubble?]]
+    var projectile: ProjectileBubble? = nil
 
     init() {
         self.grid = Array.init(repeating: Array.init(repeating: nil, count: BUBBLES_PER_ROW), count: NUM_ROWS);
@@ -35,7 +35,7 @@ class BubbleGrid: Codable {
         }
 
         if grid[row][col] == nil {
-            grid[row][col] = Bubble(coords: getBubbleCentre(row: row, col: col), color: color)
+            grid[row][col] = FixedBubble(coords: BubbleGrid.getBubbleCentre(row: row, col: col), color: color)
         } else {
             grid[row][col]?.color = color
         }
@@ -67,8 +67,8 @@ class BubbleGrid: Codable {
 
     func loadProjectile() {
         let xCentre = maxX / 2
-        let yCentre = maxY - radius
-        self.projectile = Bubble(x: xCentre, y: yCentre, color: .redBubble)
+        let yCentre = maxY - BubbleGrid.radius
+        self.projectile = ProjectileBubble(x: xCentre, y: yCentre, color: .redBubble)
     }
 
     var minX: Double {
@@ -81,24 +81,24 @@ class BubbleGrid: Codable {
         return 0
     }
     var maxY: Double {
-        return aspectRatio
+        return BubbleGrid.aspectRatio
     }
 
-    var aspectRatio: Double {
+    static var aspectRatio: Double {
         return (2 + Double(NUM_ROWS - 1) * sqrt(3)) * radius
     }
 
-    var diameter: Double {
+    static var diameter: Double {
         return 1 / Double(BUBBLES_PER_ROW)
     }
 
-    var radius: Double {
+    static var radius: Double {
         return diameter / 2
     }
 
-    func getBubbleCentre(row: Int, col: Int) -> (Double, Double) {
+    static func getBubbleCentre(row: Int, col: Int) -> Vector2D {
         let xCentre = (row % 2 == 0 ? 1 : 2) * radius + Double(col) * diameter
         let yCentre = radius + Double(row) * sqrt(3) * radius
-        return (xCentre, yCentre)
+        return Vector2D(xCentre, yCentre)
     }
 }

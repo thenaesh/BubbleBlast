@@ -8,8 +8,17 @@
 
 import Foundation
 
-protocol DynamicRigidBody {
+protocol DynamicBody {
     var position: Vector2D { get set }
     var velocity: Vector2D { get set }
     var acceleration: Vector2D { get set }
+
+    mutating func integrate(dt: Double)
+}
+
+extension DynamicBody {
+    mutating func integrate(dt: Double) {
+        velocity += acceleration * dt
+        position += velocity * dt
+    }
 }

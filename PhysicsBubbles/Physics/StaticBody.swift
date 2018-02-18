@@ -8,8 +8,9 @@
 
 import Foundation
 
-protocol StaticRigidBody {
+protocol StaticBody {
     var position: Vector2D { get }
-    
-    func collide(with otherBody: DynamicRigidBody)
+
+    func isColliding(with otherBody: DynamicBody) -> Bool
+    func collide(with otherBody: inout DynamicBody)
 }

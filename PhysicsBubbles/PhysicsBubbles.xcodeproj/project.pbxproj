@@ -21,10 +21,13 @@
 		D1AC4EF6203701C10056743F /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EF3203701C00056743F /* Bubble.swift */; };
 		D1AC4EF7203701C10056743F /* BubbleGrid+Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EF4203701C00056743F /* BubbleGrid+Serializable.swift */; };
 		D1AC4EF8203701C10056743F /* BubbleGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EF5203701C00056743F /* BubbleGrid.swift */; };
-		D1AC4EFD2037F6090056743F /* StaticRigidBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EFC2037F6090056743F /* StaticRigidBody.swift */; };
+		D1AC4EFD2037F6090056743F /* StaticBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EFC2037F6090056743F /* StaticBody.swift */; };
 		D1AC4EFF2038217C0056743F /* Vector2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EFE2038217C0056743F /* Vector2D.swift */; };
-		D1AC4F012038376E0056743F /* DynamicRigidBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4F002038376E0056743F /* DynamicRigidBody.swift */; };
+		D1AC4F012038376E0056743F /* DynamicBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4F002038376E0056743F /* DynamicBody.swift */; };
 		D1AC4F05203877870056743F /* PhysicsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4F04203877870056743F /* PhysicsEnvironment.swift */; };
+		D1C4294A2038A692006125CF /* FixedBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C429492038A692006125CF /* FixedBubble.swift */; };
+		D1C4294C2038B103006125CF /* ProjectileBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C4294B2038B103006125CF /* ProjectileBubble.swift */; };
+		D1C4294E2038B266006125CF /* BubbleGrid+PhysicsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C4294D2038B266006125CF /* BubbleGrid+PhysicsEnvironment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,10 +59,13 @@
 		D1AC4EF3203701C00056743F /* Bubble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bubble.swift; sourceTree = "<group>"; };
 		D1AC4EF4203701C00056743F /* BubbleGrid+Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "BubbleGrid+Serializable.swift"; sourceTree = "<group>"; };
 		D1AC4EF5203701C00056743F /* BubbleGrid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BubbleGrid.swift; sourceTree = "<group>"; };
-		D1AC4EFC2037F6090056743F /* StaticRigidBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticRigidBody.swift; sourceTree = "<group>"; };
+		D1AC4EFC2037F6090056743F /* StaticBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticBody.swift; sourceTree = "<group>"; };
 		D1AC4EFE2038217C0056743F /* Vector2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Vector2D.swift; sourceTree = "<group>"; };
-		D1AC4F002038376E0056743F /* DynamicRigidBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicRigidBody.swift; sourceTree = "<group>"; };
+		D1AC4F002038376E0056743F /* DynamicBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBody.swift; sourceTree = "<group>"; };
 		D1AC4F04203877870056743F /* PhysicsEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEnvironment.swift; sourceTree = "<group>"; };
+		D1C429492038A692006125CF /* FixedBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedBubble.swift; sourceTree = "<group>"; };
+		D1C4294B2038B103006125CF /* ProjectileBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectileBubble.swift; sourceTree = "<group>"; };
+		D1C4294D2038B266006125CF /* BubbleGrid+PhysicsEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BubbleGrid+PhysicsEnvironment.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +163,9 @@
 				D1AC4EF3203701C00056743F /* Bubble.swift */,
 				D1AC4EF4203701C00056743F /* BubbleGrid+Serializable.swift */,
 				D1AC4EF5203701C00056743F /* BubbleGrid.swift */,
+				D1C429492038A692006125CF /* FixedBubble.swift */,
+				D1C4294B2038B103006125CF /* ProjectileBubble.swift */,
+				D1C4294D2038B266006125CF /* BubbleGrid+PhysicsEnvironment.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -165,8 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				D1AC4EFE2038217C0056743F /* Vector2D.swift */,
-				D1AC4EFC2037F6090056743F /* StaticRigidBody.swift */,
-				D1AC4F002038376E0056743F /* DynamicRigidBody.swift */,
+				D1AC4EFC2037F6090056743F /* StaticBody.swift */,
+				D1AC4F002038376E0056743F /* DynamicBody.swift */,
 				D1AC4F04203877870056743F /* PhysicsEnvironment.swift */,
 			);
 			path = Physics;
@@ -276,9 +285,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1AC4EE9203701B10056743F /* Common.swift in Sources */,
-				D1AC4EFD2037F6090056743F /* StaticRigidBody.swift in Sources */,
-				D1AC4F012038376E0056743F /* DynamicRigidBody.swift in Sources */,
+				D1AC4EFD2037F6090056743F /* StaticBody.swift in Sources */,
+				D1AC4F012038376E0056743F /* DynamicBody.swift in Sources */,
 				D1AC4EF6203701C10056743F /* Bubble.swift in Sources */,
+				D1C4294A2038A692006125CF /* FixedBubble.swift in Sources */,
 				D1AC4EEA203701B10056743F /* Serializable.swift in Sources */,
 				D1AC4EF0203701B80056743F /* BubbleView.swift in Sources */,
 				D1AC4EEF203701B80056743F /* BubbleGridView.swift in Sources */,
@@ -288,7 +298,9 @@
 				D1AC4EF1203701B80056743F /* PaletteView.swift in Sources */,
 				D1AC4EF7203701C10056743F /* BubbleGrid+Serializable.swift in Sources */,
 				D1AC4EFF2038217C0056743F /* Vector2D.swift in Sources */,
+				D1C4294C2038B103006125CF /* ProjectileBubble.swift in Sources */,
 				D1AC4EC42036E2D50056743F /* AppDelegate.swift in Sources */,
+				D1C4294E2038B266006125CF /* BubbleGrid+PhysicsEnvironment.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

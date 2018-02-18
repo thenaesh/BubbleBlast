@@ -23,7 +23,7 @@ extension BubbleGrid: Serializable {
         guard let jsonData: Data = loadData(from: file) else {
             return false
         }
-        guard let decodedGrid: [[Bubble?]] = try? jsonDecoder.decode([[Bubble?]].self, from: jsonData) else {
+        guard let decodedGrid: [[FixedBubble?]] = try? jsonDecoder.decode([[FixedBubble?]].self, from: jsonData) else {
             return false
         }
         self.grid = decodedGrid

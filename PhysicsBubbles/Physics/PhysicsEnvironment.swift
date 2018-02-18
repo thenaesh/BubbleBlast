@@ -8,12 +8,20 @@
 
 import Foundation
 
-protocol PhysicsEnvironment {
-    func simulate(dt: Double)
+protocol PhysicsEnvironment: AnyObject {
+    var staticBodies: [StaticBody] { get }
+    var dynamicBody: DynamicBody? { get set }
 }
 
 extension PhysicsEnvironment {
     func simulate(dt: Double) {
-        print(dt)
+        guard var dynamicBody = dynamicBody else {
+            return
+        }
+
+        dynamicBody.integrate(dt: dt)
+        for staticBody in staticBodies where staticBody.isColliding(with: dynamicBody) {
+            staticBody.collide(with: &dynamicBody)
+        }
     }
 }

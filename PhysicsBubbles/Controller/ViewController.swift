@@ -70,6 +70,7 @@ class ViewController: UIViewController {
     }
 
     @objc private func refresh(displayLink: CADisplayLink) {
+        self.bubbleGridModel.simulate(dt: displayLink.targetTimestamp - displayLink.timestamp)
         self.bubbleGridView.render()
         self.performRenderHack()
     }
@@ -148,6 +149,7 @@ class ViewController: UIViewController {
 
     private func gameModeTapHandler(_ sender: UITapGestureRecognizer) {
         print("Tap @ \(sender.location(in: gameArea))")
+        bubbleGridModel.projectile?.velocity += Vector2D(0, -0.05)
     }
     private func gameModePanHandler(_ sender: UIPanGestureRecognizer) {
         print("Pan @ \(sender.location(in: gameArea))")
@@ -184,8 +186,6 @@ class ViewController: UIViewController {
             bubbleGridModel.removeAllBubbles()
             bubbleGridView.render()
         case paletteView.startButton:
-            // TODO: implement this in a future PS
-            //print("start button tapped")
             destroyPalette()
             bubbleGridModel.loadProjectile()
             bubbleGridView.loadProjectileView()

@@ -49,7 +49,7 @@ class BubbleGridView {
             return
         }
 
-        projectileView = BubbleView(frame: getProjectileFrameFor(projectileModel.coords))
+        projectileView = BubbleView(frame: getProjectileFrameFor(projectileModel.position))
         uiView.addSubview(projectileView!.uiView)
     }
 
@@ -102,7 +102,7 @@ class BubbleGridView {
         uiView.addSubview(bubbleView.uiView)
     }
 
-    func getProjectileFrameFor(_ coords: (Double, Double)) -> CGRect {
+    func getProjectileFrameFor(_ coords: Vector2D) -> CGRect {
         let (xCentre, yCentre) = translateToViewCoordinates(coords)
         return CGRect(x: xCentre - radius, y: yCentre - radius, width: diameter, height: diameter)
     }
@@ -120,7 +120,7 @@ class BubbleGridView {
             return
         }
 
-        projectileView?.uiView.frame = getProjectileFrameFor(projectileModel.coords)
+        projectileView?.uiView.frame = getProjectileFrameFor(projectileModel.position)
         projectileView?.render(as: model.projectile?.color)
     }
 
@@ -134,8 +134,8 @@ class BubbleGridView {
         updateProjectileView()
     }
 
-    private func translateToViewCoordinates(_ coords: (Double, Double)) -> (Double, Double) {
-        return (viewCoordinateScaleFactor * coords.0, viewCoordinateScaleFactor * coords.1)
+    private func translateToViewCoordinates(_ coords: Vector2D) -> (Double, Double) {
+        return (viewCoordinateScaleFactor * coords.x, viewCoordinateScaleFactor * coords.y)
     }
 
     private var viewCoordinateScaleFactor: Double {

@@ -16,23 +16,17 @@ enum BubbleColor: String, Codable {
     case orangeBubble
 }
 
-struct Bubble: Codable {
-    var x: Double
-    var y: Double
+class Bubble: Codable {
+    var position: Vector2D
     var color: BubbleColor
 
     init(x: Double, y: Double, color: BubbleColor) {
-        self.x = x
-        self.y = y
+        self.position = Vector2D(x, y)
         self.color = color
     }
 
-    init (coords: (Double, Double), color: BubbleColor) {
-        self.init(x: coords.0, y: coords.1, color: color)
-    }
-
-    var coords: (Double, Double) {
-        return (x, y)
+    convenience init (coords: Vector2D, color: BubbleColor) {
+        self.init(x: coords.x, y: coords.y, color: color)
     }
 }
 
