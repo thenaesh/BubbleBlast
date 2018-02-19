@@ -70,9 +70,10 @@ class BubbleGrid: Codable {
     }
 
     func loadProjectile() {
+        self.projectile = nil
         let xCentre = maxX / 2 - 0.05
         let yCentre = maxY - BubbleGrid.radius
-        self.projectile = ProjectileBubble(x: xCentre, y: yCentre, color: .redBubble)
+        self.projectile = ProjectileBubble(x: xCentre, y: yCentre, color: BubbleColor.random())
     }
 
     func trackProjectile() {
@@ -83,17 +84,21 @@ class BubbleGrid: Codable {
             return
         }
 
-        let (row, col) = nearestGridPoint(from: projectile.position)
+        let (row, col) = nearestUnoccupiedGridPoint(from: projectile.position)
         setBubbleAt(row: row, col: col, to: projectile.color)
-        self.projectile = nil
+        loadProjectile()
     }
 
-    func nearestGridPoint(from position: Vector2D) -> (Int, Int) {
+    func nearestUnoccupiedGridPoint(from position: Vector2D) -> (Int, Int) {
         var (nearestRow, nearestCol) = (-1, -1)
         var smallestDistance = Double.infinity
 
+        func canSelectGridPoint(_ row: Int, _ col: Int) -> Bool {
+            return isBubbleIndexAllowable(row: row, col: col) && getBubbleAt(row: row, col: col) == nil
+        }
+
         for row in 0..<NUM_ROWS {
-            for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
+            for col in 0..<BUBBLES_PER_ROW where canSelectGridPoint(row, col) {
                 let newPosition = BubbleGrid.getBubbleCentre(row: row, col: col)
                 let dist = (position - newPosition).magnitude
                 if dist < smallestDistance {

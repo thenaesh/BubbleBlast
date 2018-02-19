@@ -22,6 +22,7 @@ extension PhysicsEnvironment {
         dynamicBody.integrate(dt: dt)
         for staticBody in staticBodies where staticBody.isColliding(with: dynamicBody) {
             staticBody.collide(with: &dynamicBody)
+            staticBody.doOnCollide(with: &dynamicBody)
         }
     }
 }

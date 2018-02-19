@@ -8,7 +8,7 @@
 
 import Foundation
 
-class FixedBubble: Bubble, StaticBody {
+class FixedBubble: Bubble, StickyCircle {
     override init(x: Double, y: Double, color: BubbleColor) {
         super.init(x: x, y: y, color: color)
     }
@@ -21,15 +21,11 @@ class FixedBubble: Bubble, StaticBody {
         try super.encode(to: encoder)
     }
 
-    func isColliding(with otherBody: DynamicBody) -> Bool {
-        return (self.position - otherBody.position).magnitude <= BubbleGrid.diameter
-    }
-
-    func collide(with otherBody: inout DynamicBody) {
-        // if a projectile bubble collided with me, stop the bubble
-        if let otherBody = otherBody as? ProjectileBubble {
-            otherBody.velocity *= 0
-            otherBody.status = .stopped
+    func doOnCollide(with otherBody: inout DynamicBody) {
+        guard let otherBody = otherBody as? ProjectileBubble else {
+            return
         }
+
+        otherBody.status = .stopped
     }
 }

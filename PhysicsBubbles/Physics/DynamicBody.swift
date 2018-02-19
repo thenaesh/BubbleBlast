@@ -9,6 +9,8 @@
 import Foundation
 
 protocol DynamicBody {
+    var boundingRadius: Double { get }
+
     var position: Vector2D { get set }
     var velocity: Vector2D { get set }
     var acceleration: Vector2D { get set }

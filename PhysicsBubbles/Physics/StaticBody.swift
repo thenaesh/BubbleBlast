@@ -13,4 +13,5 @@ protocol StaticBody {
 
     func isColliding(with otherBody: DynamicBody) -> Bool
     func collide(with otherBody: inout DynamicBody)
+    func doOnCollide(with otherBody: inout DynamicBody)
 }

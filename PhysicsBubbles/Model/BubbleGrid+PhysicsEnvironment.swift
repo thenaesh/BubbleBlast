@@ -21,11 +21,11 @@ extension BubbleGrid: PhysicsEnvironment {
             }
         }
 
-        let stickyCeiling = StickyCeiling()
+        let stickyCeiling = Ceiling()
         staticBodyArray.append(stickyCeiling)
 
-        let leftReflectingSideWall = ReflectingSideWall(side: .left)
-        let rightReflectingSideWall = ReflectingSideWall(side: .right)
+        let leftReflectingSideWall = SideWall(xPos: 0, side: .left)
+        let rightReflectingSideWall = SideWall(xPos: 1, side: .right)
         staticBodyArray.append(leftReflectingSideWall)
         staticBodyArray.append(rightReflectingSideWall)
 

@@ -135,8 +135,14 @@ class BubbleGridView {
         updateProjectileView()
     }
 
-    private func translateToViewCoordinates(_ coords: Vector2D) -> (Double, Double) {
-        return (viewCoordinateScaleFactor * coords.x, viewCoordinateScaleFactor * coords.y)
+    func translateToViewCoordinates(_ coords: Vector2D) -> (Double, Double) {
+        return (coords.x * viewCoordinateScaleFactor, coords.y * viewCoordinateScaleFactor)
+    }
+
+    func translateFromViewCoordinates(_ coords: CGPoint) -> Vector2D {
+        let x = Double(coords.x)
+        let y = Double(coords.y)
+        return Vector2D(x, y) / viewCoordinateScaleFactor
     }
 
     private var viewCoordinateScaleFactor: Double {

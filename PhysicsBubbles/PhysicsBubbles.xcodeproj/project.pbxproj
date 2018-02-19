@@ -28,8 +28,11 @@
 		D1C4294A2038A692006125CF /* FixedBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C429492038A692006125CF /* FixedBubble.swift */; };
 		D1C4294C2038B103006125CF /* ProjectileBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C4294B2038B103006125CF /* ProjectileBubble.swift */; };
 		D1C4294E2038B266006125CF /* BubbleGrid+PhysicsEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C4294D2038B266006125CF /* BubbleGrid+PhysicsEnvironment.swift */; };
-		D1C42953203B11B8006125CF /* StickyCeiling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C42952203B11B8006125CF /* StickyCeiling.swift */; };
-		D1C42957203B13E4006125CF /* ReflectingSideWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C42956203B13E4006125CF /* ReflectingSideWall.swift */; };
+		D1C42953203B11B8006125CF /* Ceiling.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C42952203B11B8006125CF /* Ceiling.swift */; };
+		D1C4296C203B416C006125CF /* ReflectingLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C4296B203B416C006125CF /* ReflectingLine.swift */; };
+		D1C4296E203B4403006125CF /* SideWall.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C4296D203B4403006125CF /* SideWall.swift */; };
+		D1C42970203B4572006125CF /* StickyLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C4296F203B4572006125CF /* StickyLine.swift */; };
+		D1C42972203B477B006125CF /* StickyCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C42971203B477B006125CF /* StickyCircle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,8 +71,11 @@
 		D1C429492038A692006125CF /* FixedBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedBubble.swift; sourceTree = "<group>"; };
 		D1C4294B2038B103006125CF /* ProjectileBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectileBubble.swift; sourceTree = "<group>"; };
 		D1C4294D2038B266006125CF /* BubbleGrid+PhysicsEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BubbleGrid+PhysicsEnvironment.swift"; sourceTree = "<group>"; };
-		D1C42952203B11B8006125CF /* StickyCeiling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyCeiling.swift; sourceTree = "<group>"; };
-		D1C42956203B13E4006125CF /* ReflectingSideWall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectingSideWall.swift; sourceTree = "<group>"; };
+		D1C42952203B11B8006125CF /* Ceiling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ceiling.swift; sourceTree = "<group>"; };
+		D1C4296B203B416C006125CF /* ReflectingLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectingLine.swift; sourceTree = "<group>"; };
+		D1C4296D203B4403006125CF /* SideWall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideWall.swift; sourceTree = "<group>"; };
+		D1C4296F203B4572006125CF /* StickyLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyLine.swift; sourceTree = "<group>"; };
+		D1C42971203B477B006125CF /* StickyCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickyCircle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +182,7 @@
 		D1AC4EFB2037F5E60056743F /* Physics */ = {
 			isa = PBXGroup;
 			children = (
+				D1C42962203B33E8006125CF /* StaticBodies */,
 				D1AC4EFE2038217C0056743F /* Vector2D.swift */,
 				D1AC4EFC2037F6090056743F /* StaticBody.swift */,
 				D1AC4F002038376E0056743F /* DynamicBody.swift */,
@@ -189,10 +196,20 @@
 			children = (
 				D1C4294B2038B103006125CF /* ProjectileBubble.swift */,
 				D1C429492038A692006125CF /* FixedBubble.swift */,
-				D1C42952203B11B8006125CF /* StickyCeiling.swift */,
-				D1C42956203B13E4006125CF /* ReflectingSideWall.swift */,
+				D1C42952203B11B8006125CF /* Ceiling.swift */,
+				D1C4296D203B4403006125CF /* SideWall.swift */,
 			);
 			path = PhysicsBodies;
+			sourceTree = "<group>";
+		};
+		D1C42962203B33E8006125CF /* StaticBodies */ = {
+			isa = PBXGroup;
+			children = (
+				D1C4296B203B416C006125CF /* ReflectingLine.swift */,
+				D1C4296F203B4572006125CF /* StickyLine.swift */,
+				D1C42971203B477B006125CF /* StickyCircle.swift */,
+			);
+			path = StaticBodies;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,19 +318,22 @@
 				D1AC4EE9203701B10056743F /* Common.swift in Sources */,
 				D1AC4EFD2037F6090056743F /* StaticBody.swift in Sources */,
 				D1AC4F012038376E0056743F /* DynamicBody.swift in Sources */,
+				D1C4296C203B416C006125CF /* ReflectingLine.swift in Sources */,
 				D1AC4EF6203701C10056743F /* Bubble.swift in Sources */,
-				D1C42957203B13E4006125CF /* ReflectingSideWall.swift in Sources */,
+				D1C42970203B4572006125CF /* StickyLine.swift in Sources */,
 				D1C4294A2038A692006125CF /* FixedBubble.swift in Sources */,
 				D1AC4EEA203701B10056743F /* Serializable.swift in Sources */,
 				D1AC4EF0203701B80056743F /* BubbleView.swift in Sources */,
 				D1AC4EEF203701B80056743F /* BubbleGridView.swift in Sources */,
+				D1C42972203B477B006125CF /* StickyCircle.swift in Sources */,
 				D1AC4F05203877870056743F /* PhysicsEnvironment.swift in Sources */,
 				D1AC4EE5203701930056743F /* ViewController.swift in Sources */,
 				D1AC4EF8203701C10056743F /* BubbleGrid.swift in Sources */,
+				D1C4296E203B4403006125CF /* SideWall.swift in Sources */,
 				D1AC4EF1203701B80056743F /* PaletteView.swift in Sources */,
 				D1AC4EF7203701C10056743F /* BubbleGrid+Serializable.swift in Sources */,
 				D1AC4EFF2038217C0056743F /* Vector2D.swift in Sources */,
-				D1C42953203B11B8006125CF /* StickyCeiling.swift in Sources */,
+				D1C42953203B11B8006125CF /* Ceiling.swift in Sources */,
 				D1C4294C2038B103006125CF /* ProjectileBubble.swift in Sources */,
 				D1AC4EC42036E2D50056743F /* AppDelegate.swift in Sources */,
 				D1C4294E2038B266006125CF /* BubbleGrid+PhysicsEnvironment.swift in Sources */,

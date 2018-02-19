@@ -39,19 +39,28 @@ extension Vector2D {
         lhs = lhs - rhs
     }
 
+    static func * (_ lhs: Vector2D, _ rhs: Vector2D) -> Double {
+        return lhs.x * rhs.x + lhs.y * rhs.y
+    }
+
     static func * (_ lhs: Vector2D, _ rhs: Double) -> Vector2D {
         return Vector2D(lhs.x * rhs, lhs.y * rhs)
     }
 
-    static func * (_ lhs: Vector2D, _ rhs: Vector2D) -> Vector2D {
-        return Vector2D(lhs.x * rhs.x, lhs.y * rhs.y)
+    static func / (_ lhs: Vector2D, _ rhs: Double) -> Vector2D {
+        return lhs * (1 / rhs)
     }
 
-    static func *= (_ lhs: inout Vector2D, _ rhs: Vector2D) {
-        lhs = lhs * rhs
+    static func * (_ lhs: Double, _ rhs: Vector2D) -> Vector2D {
+        return rhs * lhs
     }
+
 
     static func *= (_ lhs: inout Vector2D, _ rhs: Double) {
         lhs = lhs * rhs
+    }
+
+    static func /= (_ lhs: inout Vector2D, _ rhs: Double) {
+        lhs = lhs / rhs
     }
 }
