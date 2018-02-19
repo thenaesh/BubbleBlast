@@ -1,5 +1,5 @@
 //
-//  FixedBubble.swift
+//  ProjectileBubble.swift
 //  PhysicsBubbles
 //
 //  Created by Thenaesh Elango on 18/2/18.
@@ -8,24 +8,29 @@
 
 import Foundation
 
-class FixedBubble: Bubble, StaticBody {
+class ProjectileBubble: Bubble, DynamicBody {
+    enum Status {
+        case flying
+        case stopped
+    }
+
+    var velocity: Vector2D
+    var acceleration: Vector2D
+    var status = Status.flying
+
     override init(x: Double, y: Double, color: BubbleColor) {
+        self.velocity = Vector2D(0, 0)
+        self.acceleration = Vector2D(0, 0)
         super.init(x: x, y: y, color: color)
     }
 
     required init(from decoder: Decoder) throws {
+        self.velocity = Vector2D(0, 0)
+        self.acceleration = Vector2D(0, 0)
         try super.init(from: decoder)
     }
 
     override func encode(to encoder: Encoder) throws {
         try super.encode(to: encoder)
-    }
-
-    func isColliding(with otherBody: DynamicBody) -> Bool {
-        return (self.position - otherBody.position).magnitude <= BubbleGrid.diameter
-    }
-
-    func collide(with otherBody: inout DynamicBody) {
-        otherBody.velocity *= 0
     }
 }

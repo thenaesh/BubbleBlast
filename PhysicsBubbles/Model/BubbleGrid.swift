@@ -21,6 +21,10 @@ class BubbleGrid: Codable {
         }
     }
 
+    func update() {
+        trackProjectile()
+    }
+
     func getBubbleAt(row: Int, col: Int) -> Bubble? {
         guard isBubbleIndexAllowable(row: row, col: col) else {
             return nil
@@ -66,9 +70,40 @@ class BubbleGrid: Codable {
     }
 
     func loadProjectile() {
-        let xCentre = maxX / 2
+        let xCentre = maxX / 2 - 0.05
         let yCentre = maxY - BubbleGrid.radius
         self.projectile = ProjectileBubble(x: xCentre, y: yCentre, color: .redBubble)
+    }
+
+    func trackProjectile() {
+        guard let projectile = self.projectile else  {
+            return
+        }
+        guard projectile.status == .stopped else {
+            return
+        }
+
+        let (row, col) = nearestGridPoint(from: projectile.position)
+        setBubbleAt(row: row, col: col, to: projectile.color)
+        self.projectile = nil
+    }
+
+    func nearestGridPoint(from position: Vector2D) -> (Int, Int) {
+        var (nearestRow, nearestCol) = (-1, -1)
+        var smallestDistance = Double.infinity
+
+        for row in 0..<NUM_ROWS {
+            for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
+                let newPosition = BubbleGrid.getBubbleCentre(row: row, col: col)
+                let dist = (position - newPosition).magnitude
+                if dist < smallestDistance {
+                    (nearestRow, nearestCol) = (row, col)
+                    smallestDistance = dist
+                }
+            }
+        }
+
+        return (nearestRow, nearestCol)
     }
 
     var minX: Double {

@@ -117,6 +117,7 @@ class BubbleGridView {
 
     func updateProjectileView() {
         guard let projectileModel = model.projectile else {
+            projectileView?.render(as: nil)
             return
         }
 

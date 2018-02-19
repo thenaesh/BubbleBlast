@@ -71,6 +71,7 @@ class ViewController: UIViewController {
 
     @objc private func refresh(displayLink: CADisplayLink) {
         self.bubbleGridModel.simulate(dt: displayLink.targetTimestamp - displayLink.timestamp)
+        self.bubbleGridModel.update()
         self.bubbleGridView.render()
         self.performRenderHack()
     }
@@ -149,7 +150,7 @@ class ViewController: UIViewController {
 
     private func gameModeTapHandler(_ sender: UITapGestureRecognizer) {
         print("Tap @ \(sender.location(in: gameArea))")
-        bubbleGridModel.projectile?.velocity += Vector2D(0, -0.05)
+        bubbleGridModel.projectile?.velocity += Vector2D(0.1, -0.05)
     }
     private func gameModePanHandler(_ sender: UIPanGestureRecognizer) {
         print("Pan @ \(sender.location(in: gameArea))")

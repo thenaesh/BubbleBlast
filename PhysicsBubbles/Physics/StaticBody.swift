@@ -1,5 +1,5 @@
 //
-//  FreeBody.swift
+//  StaticBody.swift
 //  PhysicsBubbles
 //
 //  Created by Thenaesh Elango on 17/2/18.
