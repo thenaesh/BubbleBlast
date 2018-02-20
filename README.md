@@ -85,7 +85,7 @@ Expectation 3: The projectile should reflect from the left wall the moment its b
 
 Action 4: Swipe a projectile towards either wall in a manner such that the angle between the trajectory and the horizontal is small. Observe the projectile after (WLOG) it reflects off the left wall.
 
-Expectation 4: The projectile should travel to the right wall with the expected trajectory and reflect off the right wall in the expected manner. After a series of reflections, the projectile should collide with the ceiling and stop.
+Expectation 4: The projectile should travel to the right wall with the expected trajectory and reflect off the right wall in the expected manner (described in Expectation 2). After a finite sequence of reflections (exactly how many depends on the original angle the projectile was fired at) off alternating walls, the projectile should collide with the ceiling and stop.
 
 ### Interaction of Projectile with Bubbles
 
@@ -95,10 +95,26 @@ Action 1: Start a new game with some bubbles, where no two adjacent bubbles have
 
 Expectation 1: The projectile should stop when its boundary comes into contact with any bubble. The projectile should also snap to the nearest possible grid position.
 
-Action 2: Start a new game with a group of two adjacent bubbles of the same colour.
+Action 2: Start a new game with a group of two adjacent bubbles of the same colour. Fire projectiles onto other positions on the ceiling to discard them until the current projectile colour matches that of the group initially described. Fire the projectile into the group.
 
 Expectation 2: The projectile should stop when its boundary comes into contact with any bubble. The projectile should also snap to the nearest possible grid position. The cluster of (now) three bubbles should then fade away.
 
-Action 3: Start the game with an inverted T-shaped structure, where the neck dangling from the ceiling is of one colour and the base is of another colour. Make sure some ceiling is exposed to the line of fire. Discard projectiles (by firing onto the ceiling) until the (projectile) colour same as that of the neck of the inverted T is obtained. Fire the projectile onto the neck of the T (by reflecting off a wall if necessary).
+Action 3: Repeat Action 2 for a group of n adjacent bubbles, for various values of n.
 
-Expection 3: Upon contact of the projectile with the neck of the T, the neck including the projectile should fade away. The base of the T, left unconnected to the ceiling, then drops off and fades away.
+Expectation 3: The projectile should stop when its boundary comes into contact with any bubble. The projectile should also snap to the nearest possible grid position. The cluster of (now) n+1 bubbles should then fade away.
+
+Action 4: Start the game with an inverted T-shaped structure, where the neck dangling from the ceiling is of one colour and the base is of another colour. Make sure some ceiling is exposed to the line of fire. Discard projectiles (by firing onto the ceiling) until the (projectile) colour same as that of the neck of the inverted T is obtained. Fire the projectile onto the neck of the T (by reflecting off a wall if necessary).
+
+Expection 4: Upon contact of the projectile with the neck of the T, the neck including the projectile should fade away. The base of the T, left unconnected to the ceiling, then drops off and fades away.
+
+Action 5: Start the game with a group of bubbles connected to the ceiling and a group of bubbles not connected to the ceiling.
+
+Expectation 5: The group of bubbles not connected to the ceiling should immediately drop off and fade away.
+
+Action 6: Start the game with several layers of bubbles, where each layer is of uniform colour, differs in colour from the layers directly above and below it and occupies every grid point on its row. Discard projectiles (at some corner) until the projectile is the same colour as the bottom-most layer. Fire the projectile at the bottom-most layer. Repeat this process for each layer.
+
+Expectation 6: The layers should disappear one by one. Any discarded bubbles stuck onto some corner of layer k should fall off and fade away as soon as layer k disappears (and those bubbles are hence no longer connected to the ceiling).
+
+Action 7: Create a setup similar to Action 6, but where the "layers" are vertical and occupy columns instead of rows (since a column doesn't follow a straight line, each "layer" is jagged). Fire the projectile onto a "layer" that is the same colour as the projectile. Repeat this several times.
+
+Expectation 7: Each "layer", upon being hit by a projectile of the same colour as itself, fades away.
