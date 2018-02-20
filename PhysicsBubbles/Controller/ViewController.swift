@@ -12,10 +12,12 @@ class ViewController: UIViewController {
 
     @IBOutlet var gameArea: UIView!
     private var _bubbleGridModel: BubbleGrid? = nil
+
     private var _bubbleGridView: BubbleGridView? = nil
     private var _paletteView: PaletteView? = nil
+
     private var nextBubbleToDraw: BubbleColor? = nil
-    private var renderingBugWorkaroundImage = UIImageView(image: #imageLiteral(resourceName: "bubble-red"))
+    private var displayLink: CADisplayLink? = nil
 
     private var bubbleGridModel: BubbleGrid {
         guard let __bubbleGridModel = self._bubbleGridModel else {
@@ -55,37 +57,11 @@ class ViewController: UIViewController {
         loadBackgroundImage()
         initializeBubbleGridModelAndView()
         createPalette()
-        setupDisplayLink()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    private func setupDisplayLink() {
-        let displayLink = CADisplayLink(target: self, selector: #selector(refresh))
-        displayLink.add(to: .current, forMode: .defaultRunLoopMode)
-    }
-
-    @objc private func refresh(displayLink: CADisplayLink) {
-        self.bubbleGridModel.simulate(dt: displayLink.targetTimestamp - displayLink.timestamp)
-        self.bubbleGridModel.update()
-        self.bubbleGridView.render()
-        self.performRenderHack()
-    }
-
-    private func performRenderHack() {
-        self.gameArea.addSubview(self.renderingBugWorkaroundImage)
-        self.renderingBugWorkaroundImage.alpha = 0.1
-        self.renderingBugWorkaroundImage.frame.size.height = self.gameArea.frame.size.height / 1000
-        self.renderingBugWorkaroundImage.frame.size.width = self.gameArea.frame.size.width / 1000
-        if self.renderingBugWorkaroundImage.image == #imageLiteral(resourceName: "bubble-red") {
-            self.renderingBugWorkaroundImage.image = #imageLiteral(resourceName: "bubble-blue")
-        } else {
-            self.renderingBugWorkaroundImage.image = #imageLiteral(resourceName: "bubble-red")
-        }
-        self.bubbleGridView.render()
     }
 
     private func loadBackgroundImage() {
@@ -100,16 +76,52 @@ class ViewController: UIViewController {
         self._bubbleGridView = BubbleGridView(parentView: gameArea, model: bubbleGridModel)
     }
 
-    private func createPalette() {
-        self._paletteView = PaletteView(parentView: gameArea)
-        paletteView.setupPalette()
-        markPaintableBubbles(with: .gray)
+    // There is some weird issue that delays updating UIImageViews, even if done on the main thread
+    // Since the delay is only until the next UIImageView is updated,
+    // we use a workaround of a tiny, rapidly-updating, nearly invisible bubble.
+    private var renderingBugWorkaroundImage = UIImageView(image: #imageLiteral(resourceName: "bubble-red"))
+    private func performRenderHack() {
+        self.gameArea.addSubview(self.renderingBugWorkaroundImage)
+        self.renderingBugWorkaroundImage.alpha = 0.1
+        self.renderingBugWorkaroundImage.frame.size.height = self.gameArea.frame.size.height / 1000
+        self.renderingBugWorkaroundImage.frame.size.width = self.gameArea.frame.size.width / 1000
+        if self.renderingBugWorkaroundImage.image == #imageLiteral(resourceName: "bubble-red") {
+            self.renderingBugWorkaroundImage.image = #imageLiteral(resourceName: "bubble-blue")
+        } else {
+            self.renderingBugWorkaroundImage.image = #imageLiteral(resourceName: "bubble-red")
+        }
+        self.bubbleGridView.render()
     }
 
-    private func destroyPalette() {
-        markPaintableBubbles(with: nil)
-        paletteView.teardownPalette()
-        self._paletteView = nil
+    /***************************
+     ** Display Link Handlers **
+     ***************************/
+
+    private func takedownDisplayLink() {
+        self.displayLink?.remove(from: .current, forMode: .defaultRunLoopMode)
+        self.displayLink = nil
+    }
+
+    private func setupPaletteDisplayLink() {
+        self.displayLink = CADisplayLink(target: self, selector: #selector(refreshForPalette))
+        self.displayLink?.add(to: .current, forMode: .defaultRunLoopMode)
+    }
+
+    @objc private func refreshForPalette(displayLink: CADisplayLink) {
+        self.bubbleGridView.render()
+        self.performRenderHack()
+    }
+
+    private func setupGameDisplayLink() {
+        self.displayLink = CADisplayLink(target: self, selector: #selector(refreshForGame))
+        self.displayLink?.add(to: .current, forMode: .defaultRunLoopMode)
+    }
+
+    @objc private func refreshForGame(displayLink: CADisplayLink) {
+        self.bubbleGridModel.simulate(dt: displayLink.targetTimestamp - displayLink.timestamp)
+        self.bubbleGridModel.update()
+        self.bubbleGridView.render()
+        self.performRenderHack()
     }
 
     private func markPaintableBubbles(with color: UIColor?) {
@@ -120,80 +132,75 @@ class ViewController: UIViewController {
         }
     }
 
-    /*******************************
-     ** Input Handlers for Scenes **
-     *******************************/
+    /**************************************
+     ** Palette Creation and Destruction **
+     **************************************/
+
+    private func createPalette() {
+        self._paletteView = PaletteView(parentView: gameArea)
+        paletteView.setupPalette()
+        markPaintableBubbles(with: .gray)
+        setupPaletteDisplayLink()
+    }
+
+    private func destroyPalette() {
+        takedownDisplayLink()
+        markPaintableBubbles(with: nil)
+        paletteView.teardownPalette()
+        self._paletteView = nil
+    }
+
+    /*********************************
+     ** Palette Mode Input Handlers **
+     *********************************/
 
     private func paletteModeTapHandler(_ sender: UITapGestureRecognizer) {
         let coords = sender.location(in: gameArea)
 
-        if didTapOccurInPalette(at: coords) {
+        if didTapOccurInPaletteRegion(at: coords) {
             let paletteCoords = sender.location(in: paletteView.uiView)
-            handlePaletteTap(at: paletteCoords)
+            handleTapInPaletteRegion(at: paletteCoords)
         } else {
             let bubbleGridCoords = sender.location(in: bubbleGridView.uiView)
-            handleGridTap(at: bubbleGridCoords)
+            handleTapInGridRegion(at: bubbleGridCoords)
         }
     }
     private func paletteModePanHandler(_ sender: UIPanGestureRecognizer) {
         let bubbleGridCoords = sender.location(in: bubbleGridView.uiView)
-        handleGridPan(at: bubbleGridCoords)
+        handlePanInGridRegion(at: bubbleGridCoords)
     }
     private func paletteModeLongPressHandler(_ sender: UILongPressGestureRecognizer) {
         let bubbbleGridCoords = sender.location(in: bubbleGridView.uiView)
-        handleGridLongPress(at: bubbbleGridCoords)
+        handleLongPressInGridRegion(at: bubbbleGridCoords)
     }
 
-    private func gameModeTapHandler(_ sender: UITapGestureRecognizer) {
-        print("Tap @ \(sender.location(in: gameArea))")
-    }
-    private func gameModePanHandler(_ sender: UIPanGestureRecognizer) {
-        print("Pan @ \(sender.location(in: gameArea))")
-        let viewVelocity = sender.velocity(in: bubbleGridView.uiView)
-        guard viewVelocity.y < 0 && bubbleGridModel.projectile?.status == .ready else {
-            return
-        }
+    /* handle taps in the bottom part of the screen where the palette itself is located */
 
-        let speed = 0.5
-        let modelVelocity = bubbleGridView.translateFromViewCoordinates(viewVelocity)
-        let adjustedModelVelocity = speed * modelVelocity / modelVelocity.magnitude
-
-        bubbleGridModel.projectile?.status = .flying
-        bubbleGridModel.projectile?.velocity += adjustedModelVelocity
-    }
-    private func gameModeLongPressHandler(_ sender: UILongPressGestureRecognizer) {
-        print("Long Press @ \(sender.location(in: gameArea))")
-    }
-
-
-    /**********************************************
-     ** Code to handle user input in the palette **
-     **********************************************/
-
-    private func didTapOccurInPalette(at coords: CGPoint) -> Bool {
+    private func didTapOccurInPaletteRegion(at coords: CGPoint) -> Bool {
         return paletteView.uiView.frame.contains(coords)
     }
 
-    private func handlePaletteTap(at coords: CGPoint) {
+    private func handleTapInPaletteRegion(at coords: CGPoint) {
         if let selector = paletteView.getSelectorContaining(point: coords) {
-            handlePaletteSelectorTap(selector: selector)
+            handleTapOnPaletteSelector(selector: selector)
         } else if let button = paletteView.getButtonContaining(point: coords) {
-            handlePaletteButtonTap(button: button)
+            handleTapOnPaletteButton(button: button)
         }
     }
 
-    private func handlePaletteSelectorTap(selector: Selector) {
+    private func handleTapOnPaletteSelector(selector: Selector) {
         nextBubbleToDraw = paletteView.mapSelectorToModel(selector: selector)
         paletteView.highlightSelector(selector: selector)
     }
 
-    private func handlePaletteButtonTap(button: Button) {
+    private func handleTapOnPaletteButton(button: Button) {
         switch button {
         case paletteView.resetButton:
             bubbleGridModel.removeAllBubbles()
             bubbleGridView.render()
         case paletteView.startButton:
             destroyPalette()
+            setupGameDisplayLink()
             bubbleGridModel.loadProjectile()
             bubbleGridView.loadProjectileView()
         case paletteView.saveButton:
@@ -205,11 +212,9 @@ class ViewController: UIViewController {
         }
     }
 
-    /**************************************************
-     ** Code to handle user input in the bubble grid **
-     **************************************************/
+    /* handle gestures in the top part of the screen where the bubble grid for painting on is located */
 
-    private func handleGridTap(at coords: CGPoint) {
+    private func handleTapInGridRegion(at coords: CGPoint) {
         guard let (row, col) = bubbleGridView.getBubbleIndexAt(coords: coords) else {
             return
         }
@@ -232,7 +237,7 @@ class ViewController: UIViewController {
         bubbleGridModel.setBubbleAt(row: row, col: col, to: currentBubble.color.next())
     }
 
-    private func handleGridPan(at coords: CGPoint) {
+    private func handlePanInGridRegion(at coords: CGPoint) {
         guard let (row, col) =  bubbleGridView.getBubbleIndexAt(coords: coords) else {
             return
         }
@@ -249,7 +254,7 @@ class ViewController: UIViewController {
         bubbleGridModel.setBubbleAt(row: row, col: col, to: nextBubble)
     }
 
-    private func handleGridLongPress(at coords: CGPoint) {
+    private func handleLongPressInGridRegion(at coords: CGPoint) {
         guard let (row, col) =  bubbleGridView.getBubbleIndexAt(coords: coords) else {
             return
         }
@@ -261,9 +266,9 @@ class ViewController: UIViewController {
         bubbleGridModel.removeBubbleAt(row: row, col: col)
     }
 
-    /************************************************************************************
-     ** Code to handle saving and loading, including prompting the user for a filename **
-     ************************************************************************************/
+    /**************************************
+     ** Palette Mode File Saving/Loading **
+     **************************************/
 
     private func promptUserForSave() {
         self.promptUser(title: "Save Bubble Configuration", message: "Enter file to save to", action: { (alert) in
@@ -316,5 +321,31 @@ class ViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .`default`))
         self.present(alert, animated: true, completion: nil)
     }
+
+    /******************************
+     ** Game Mode Input Handlers **
+     ******************************/
+
+    private func gameModeTapHandler(_ sender: UITapGestureRecognizer) {
+        print("Tap @ \(sender.location(in: gameArea))")
+    }
+    private func gameModePanHandler(_ sender: UIPanGestureRecognizer) {
+        print("Pan @ \(sender.location(in: gameArea))")
+        let viewVelocity = sender.velocity(in: bubbleGridView.uiView)
+        guard viewVelocity.y < 0 && bubbleGridModel.projectile?.status == .ready else {
+            return
+        }
+
+        let speed = 0.5
+        let modelVelocity = bubbleGridView.translateFromViewCoordinates(viewVelocity)
+        let adjustedModelVelocity = speed * modelVelocity / modelVelocity.magnitude
+
+        bubbleGridModel.projectile?.status = .flying
+        bubbleGridModel.projectile?.velocity += adjustedModelVelocity
+    }
+    private func gameModeLongPressHandler(_ sender: UILongPressGestureRecognizer) {
+        print("Long Press @ \(sender.location(in: gameArea))")
+    }
+
 }
 
