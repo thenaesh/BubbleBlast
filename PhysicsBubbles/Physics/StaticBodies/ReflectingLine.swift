@@ -15,7 +15,7 @@ protocol ReflectingLine: StaticBody {
 extension ReflectingLine {
     func collide(with otherBody: inout DynamicBody) {
         let v = otherBody.velocity
-        let n = self.normal / self.normal.magnitude
+        let n = self.normal.normalized
         let dv = -2 * (v * n) * n
         otherBody.velocity += dv
     }
