@@ -39,8 +39,7 @@ Adding additional physics logic will require additional protocols in the physics
 
 ## Problem 2.1
 
-Your answer here
-
+The user inputs the angle for launching the bubble by swiping on the screen in the desired direction. This direction is determined by reading the `velocity` attribute of the corresponding `UIPanGestureRecognizer`, converting it to a vector in the model's coordinate space and normalising it.
 
 ## Problem 3: Testing
 
