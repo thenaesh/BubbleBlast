@@ -20,6 +20,10 @@ struct Vector2D: Codable {
     var magnitude: Double {
         return sqrt(x * x + y * y)
     }
+
+    var normalized: Vector2D {
+        return self / self.magnitude
+    }
 }
 
 extension Vector2D {

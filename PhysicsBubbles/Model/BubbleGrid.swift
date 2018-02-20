@@ -21,10 +21,6 @@ class BubbleGrid: Codable {
         }
     }
 
-    func update() {
-        trackProjectile()
-    }
-
     func getBubbleAt(row: Int, col: Int) -> Bubble? {
         guard isBubbleIndexAllowable(row: row, col: col) else {
             return nil
@@ -69,37 +65,17 @@ class BubbleGrid: Codable {
         }
     }
 
-    func loadProjectile() {
-        self.projectile = nil
+    func createProjectile() {
         let xCentre = maxX / 2 - 0.05
-        let yCentre = maxY - BubbleGrid.radius
+        let yCentre = maxY - Bubble.radius
         self.projectile = ProjectileBubble(x: xCentre, y: yCentre, color: BubbleColor.random())
     }
 
-    func trackProjectile() {
-        guard let projectile = self.projectile else  {
-            return
-        }
-        guard projectile.status == .stopped else {
-            return
-        }
-
-        let (row, col) = nearestUnoccupiedGridPoint(from: projectile.position)
-        setBubbleAt(row: row, col: col, to: projectile.color)
-
-        // remove bubble clusters of at size 3
-        let bubbleCluster = getBubbleClusterAt(row: row, col: col, of: projectile.color)
-        if bubbleCluster.count >= 3 {
-            bubbleCluster.forEach({ (r, c) in self.removeBubbleAt(row: r, col: c) })
-        }
-
-        // remove floating bubbles
-        getFloatingBubbles().forEach({ (r, c) in self.removeBubbleAt(row: r, col: c) })
-
-        loadProjectile()
+    func destroyProjectile() {
+        self.projectile = nil
     }
 
-    private func nearestUnoccupiedGridPoint(from position: Vector2D) -> (Int, Int) {
+    func nearestUnoccupiedGridPoint(from position: Vector2D) -> (Int, Int) {
         var (nearestRow, nearestCol) = (-1, -1)
         var smallestDistance = Double.infinity
 
@@ -204,20 +180,13 @@ class BubbleGrid: Codable {
     }
 
     static var aspectRatio: Double {
-        return (2 + Double(NUM_ROWS - 1) * sqrt(3)) * radius
+        return (2 + Double(NUM_ROWS - 1) * sqrt(3)) * Bubble.radius
     }
 
-    static var diameter: Double {
-        return 1 / Double(BUBBLES_PER_ROW)
-    }
-
-    static var radius: Double {
-        return diameter / 2
-    }
 
     static func getBubbleCentre(row: Int, col: Int) -> Vector2D {
-        let xCentre = (row % 2 == 0 ? 1 : 2) * radius + Double(col) * diameter
-        let yCentre = radius + Double(row) * sqrt(3) * radius
+        let xCentre = (row % 2 == 0 ? 1 : 2) * Bubble.radius + Double(col) * Bubble.diameter
+        let yCentre = Bubble.radius + Double(row) * sqrt(3) * Bubble.radius
         return Vector2D(xCentre, yCentre)
     }
 }

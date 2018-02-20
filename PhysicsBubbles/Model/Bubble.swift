@@ -28,6 +28,14 @@ class Bubble: Codable {
     convenience init (coords: Vector2D, color: BubbleColor) {
         self.init(x: coords.x, y: coords.y, color: color)
     }
+
+    static var diameter: Double {
+        return 1 / Double(BUBBLES_PER_ROW)
+    }
+
+    static var radius: Double {
+        return diameter / 2
+    }
 }
 
 extension BubbleColor {

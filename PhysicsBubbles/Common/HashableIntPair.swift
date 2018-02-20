@@ -8,6 +8,9 @@
 
 import Foundation
 
+/*
+ * For when we need a hashable (Int, Int).
+ */
 struct HashableIntPair: Hashable {
     var hashValue: Int {
         let fnvConstant = 16777619

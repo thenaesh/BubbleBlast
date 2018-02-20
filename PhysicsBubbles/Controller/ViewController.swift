@@ -90,7 +90,6 @@ class ViewController: UIViewController {
         } else {
             self.renderingBugWorkaroundImage.image = #imageLiteral(resourceName: "bubble-red")
         }
-        self.bubbleGridView.render()
     }
 
     /***************************
@@ -119,8 +118,7 @@ class ViewController: UIViewController {
 
     @objc private func refreshForGame(displayLink: CADisplayLink) {
         self.bubbleGridModel.simulate(dt: displayLink.targetTimestamp - displayLink.timestamp)
-        self.bubbleGridModel.update()
-        self.bubbleGridView.render()
+        self.handleLandingProjectile()
         self.performRenderHack()
     }
 
@@ -199,10 +197,7 @@ class ViewController: UIViewController {
             bubbleGridModel.removeAllBubbles()
             bubbleGridView.render()
         case paletteView.startButton:
-            destroyPalette()
-            setupGameDisplayLink()
-            bubbleGridModel.loadProjectile()
-            bubbleGridView.loadProjectileView()
+            switchToGameMode()
         case paletteView.saveButton:
             promptUserForSave()
         case paletteView.loadButton:
@@ -322,30 +317,88 @@ class ViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
+    /*********************
+     ** Game Mode Setup **
+     *********************/
+
+    func switchToGameMode() {
+        destroyPalette()
+        setupGameDisplayLink()
+        loadProjectile()
+        bubbleGridView.setupProjectileView()
+    }
+
     /******************************
      ** Game Mode Input Handlers **
      ******************************/
 
     private func gameModeTapHandler(_ sender: UITapGestureRecognizer) {
-        print("Tap @ \(sender.location(in: gameArea))")
     }
     private func gameModePanHandler(_ sender: UIPanGestureRecognizer) {
-        print("Pan @ \(sender.location(in: gameArea))")
         let viewVelocity = sender.velocity(in: bubbleGridView.uiView)
         guard viewVelocity.y < 0 && bubbleGridModel.projectile?.status == .ready else {
             return
         }
 
-        let speed = 0.5
-        let modelVelocity = bubbleGridView.translateFromViewCoordinates(viewVelocity)
-        let adjustedModelVelocity = speed * modelVelocity / modelVelocity.magnitude
-
-        bubbleGridModel.projectile?.status = .flying
-        bubbleGridModel.projectile?.velocity += adjustedModelVelocity
+        let direction = bubbleGridView.translateFromViewCoordinates(viewVelocity).normalized
+        launchProjectile(towards: direction)
     }
     private func gameModeLongPressHandler(_ sender: UILongPressGestureRecognizer) {
-        print("Long Press @ \(sender.location(in: gameArea))")
     }
 
+    /**********************************
+     ** Game Mode Shot Handling Code **
+     **********************************/
+
+    func loadProjectile() {
+        bubbleGridModel.destroyProjectile()
+        bubbleGridModel.createProjectile()
+    }
+
+    func launchProjectile(towards direction: Vector2D) {
+        let speed = 0.5
+        let modelVelocity = speed * direction
+
+        bubbleGridModel.projectile?.status = .flying
+        bubbleGridModel.projectile?.velocity += modelVelocity
+    }
+
+    func handleLandingProjectile() {
+        guard let projectile = bubbleGridModel.projectile else  {
+            return
+        }
+
+        bubbleGridView.renderProjectile()
+
+        guard projectile.status == .stopped else {
+            return
+        }
+
+        let (row, col) = bubbleGridModel.nearestUnoccupiedGridPoint(from: projectile.position)
+        bubbleGridModel.setBubbleAt(row: row, col: col, to: projectile.color)
+        bubbleGridView.renderBubbleAt(row: row, col: col)
+
+        destroyAdjoiningCluster(row: row, col: col, of: projectile.color)
+        destroyFloatingBubbles()
+
+        loadProjectile() // reload
+    }
+
+    func destroyAdjoiningCluster(row: Int, col: Int, of color: BubbleColor) {
+        let bubbleCluster = bubbleGridModel.getBubbleClusterAt(row: row, col: col, of: color)
+        if bubbleCluster.count >= 3 {
+            bubbleCluster.forEach({ (r, c) in
+                self.bubbleGridModel.removeBubbleAt(row: r, col: c)
+                self.bubbleGridView.renderBubbleWithAnimationAt(.fade, row: r, col: c)
+            })
+        }
+    }
+
+    func destroyFloatingBubbles() {
+        bubbleGridModel.getFloatingBubbles().forEach({ (r, c) in
+            self.bubbleGridModel.removeBubbleAt(row: r, col: c)
+            self.bubbleGridView.renderBubbleWithAnimationAt(.drop, row: r, col: c)
+        })
+    }
 }
 

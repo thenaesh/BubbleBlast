@@ -15,7 +15,7 @@ class ProjectileBubble: Bubble, DynamicBody {
         case stopped
     }
 
-    var boundingRadius = BubbleGrid.radius
+    var boundingRadius = Bubble.radius
     var velocity: Vector2D
     var acceleration: Vector2D
     var status = Status.ready

@@ -44,7 +44,7 @@ class BubbleGridView {
         }
     }
 
-    func loadProjectileView() {
+    func setupProjectileView() {
         guard let projectileModel = model.projectile else {
             return
         }
@@ -90,6 +90,10 @@ class BubbleGridView {
         return grid[row][col]
     }
 
+    private func addBubbleToGrid(_ bubbleView: BubbleView) {
+        uiView.addSubview(bubbleView.uiView)
+    }
+
     private func getBubbleFrame(row: Int, col: Int) -> CGRect {
         let xCentre = (row % 2 == 0 ? 1 : 2) * radius + Double(col) * diameter
         let yCentre = radius + Double(row) * sqrt(3) * radius
@@ -98,24 +102,12 @@ class BubbleGridView {
         return CGRect(x: xTopLeftCorner, y: yTopLeftCorner, width: diameter, height: diameter)
     }
 
-    private func addBubbleToGrid(_ bubbleView: BubbleView) {
-        uiView.addSubview(bubbleView.uiView)
-    }
-
     func getProjectileFrameFor(_ coords: Vector2D) -> CGRect {
         let (xCentre, yCentre) = translateToViewCoordinates(coords)
         return CGRect(x: xCentre - radius, y: yCentre - radius, width: diameter, height: diameter)
     }
 
-    private func updateBubbleViewAt(row: Int, col: Int, to color: BubbleColor?) {
-        guard isBubbleIndexAllowable(row: row, col: col) else {
-            return
-        }
-        let bubbleView = getBubbleViewAt(row: row, col: col)
-        bubbleView?.render(as: color)
-    }
-
-    func updateProjectileView() {
+    func renderProjectile() {
         guard let projectileModel = model.projectile else {
             projectileView?.render(as: nil)
             return
@@ -125,14 +117,33 @@ class BubbleGridView {
         projectileView?.render(as: model.projectile?.color)
     }
 
+    func renderBubbleAt(row: Int, col: Int) {
+        guard isBubbleIndexAllowable(row: row, col: col) else {
+            return
+        }
+
+        let bubble = model.getBubbleAt(row: row, col: col)
+        let bubbleView = getBubbleViewAt(row: row, col: col)
+        bubbleView?.render(as: bubble?.color)
+    }
+
+    func renderBubbleWithAnimationAt(_ type: BubbleView.AnimationType, row: Int, col: Int) {
+        guard isBubbleIndexAllowable(row: row, col: col) else {
+            return
+        }
+
+        let bubble = model.getBubbleAt(row: row, col: col)
+        let bubbleView = getBubbleViewAt(row: row, col: col)
+        bubbleView?.renderWithAnimation(type, as: bubble?.color)
+    }
+
     func render() {
         for row in 0..<NUM_ROWS {
             for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
-                let bubble = model.getBubbleAt(row: row, col: col)
-                updateBubbleViewAt(row: row, col: col, to: bubble?.color)
+                renderBubbleAt(row: row, col: col)
             }
         }
-        updateProjectileView()
+        renderProjectile()
     }
 
     func translateToViewCoordinates(_ coords: Vector2D) -> (Double, Double) {

@@ -9,6 +9,11 @@
 import UIKit
 
 class BubbleView {
+    enum AnimationType {
+        case fade
+        case drop
+    }
+
     let uiView = UIImageView()
 
     init(frame: CGRect) {
@@ -38,6 +43,27 @@ class BubbleView {
             setImage(to: #imageLiteral(resourceName: "bubble-orange"))
         default:
             setImage(to: nil)
+        }
+    }
+
+    func renderWithAnimation(_ type: AnimationType, as color: BubbleColor?) {
+        switch type {
+        case .fade:
+            UIView.animate(withDuration: 0.5, animations: {
+                self.uiView.alpha = 0
+            }, completion: { _ in
+                self.render(as: color)
+                self.uiView.alpha = 1
+            })
+        case .drop:
+            UIView.animate(withDuration: 1, delay: 0.25, animations: {
+                self.uiView.alpha = 0
+                self.uiView.frame.origin.y += 100
+            }, completion: { _ in
+                self.render(as: color)
+                self.uiView.frame.origin.y -= 100
+                self.uiView.alpha = 1
+            })
         }
     }
 }
