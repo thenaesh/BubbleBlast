@@ -53,32 +53,52 @@ Expectation 1: There should be a projectile bubble at the bottom centre of the s
 
 Action 2: Swipe the screen at a randomly chosen angle (not in a downward direction). Repeat for several arbitrarily chosen angles towards both the right and left of the screen.
 
-Expectation 2: The bubble should travel in the direction of the swipe at a constant velocity.
+Expectation 2: The projectile should travel in the direction of the swipe at a constant velocity.
 
 Action 3: Swipe the screen downwards at an arbitrary angle.
 
-Expectation 3: The bubble should not move and should remain available for firing. Confirm this by swiping upwards and ensuring that the bubble does indeed fire.
+Expectation 3: The projectile should not move and should remain available for firing. Confirm this by swiping upwards and ensuring that the projectile does indeed fire.
 
 Action 4: Fire off a projectile.
 
-Expectation 4: A new projectile should appear for firing as soon as the already-fired one stops moving and snaps to grid. Confirm this by swiping upwards and ensuring that the new bubble does fire.
+Expectation 4: A new projectile should appear for firing as soon as the already-fired one stops moving and snaps to grid. Confirm this by swiping upwards and ensuring that the new projectile does fire.
+
+Action 5: Repeat Action 4 several times and observe the colours of the new projectiles.
+
+Expectation 5: The sequence of colours should appear random (in the layman sense, not in any mathematically precise sense).
 
 ### Collisions with Walls and Ceiling
 
 **For this section, we start each test by starting a game with an empty grid.**
 
-Action 1: Swipe a bubble towards the ceiling in a manner such that its trajectory doesn't come into contact with any walls.
+Action 1: Swipe a projectile towards the ceiling in a manner such that its trajectory doesn't come into contact with any walls.
 
-Expectation 1: The bubble should stop moving as soon at its boundary touches the ceiling. The bubble should also snap to a nearest possible grid position.
+Expectation 1: The projectile should stop moving as soon at its boundary touches the ceiling. The projectile should also snap to a nearest possible grid position.
 
-Action 2: Swipe a bubble towards the right wall.
+Action 2: Swipe a projectile towards the right wall.
 
-Expectation 2: The bubble should reflect from the right wall the moment its boundary touches the wall. The reflection should be such that the horizontal component of the velocity is negated and the vertical component remains the same.
+Expectation 2: The projectile should reflect from the right wall the moment its boundary touches the wall. The reflection should be such that the horizontal component of the velocity is negated and the vertical component remains the same.
 
-Action 3: Swipe a bubble towards the left wall.
+Action 3: Swipe a projectile towards the left wall.
 
-Expectation 3: The bubble should reflect from the left wall the moment its boundary touches the wall. the reflection should be such that the horizontal component of the velocity is negated and the vertical component remains the same.
+Expectation 3: The projectile should reflect from the left wall the moment its boundary touches the wall. the reflection should be such that the horizontal component of the velocity is negated and the vertical component remains the same.
 
-Action 4: Swipe a bubble towards either wall in a manner such that the angle between the trajectory and the horizontal is small. Observe the bubble after (WLOG) it reflects off the left wall.
+Action 4: Swipe a projectile towards either wall in a manner such that the angle between the trajectory and the horizontal is small. Observe the projectile after (WLOG) it reflects off the left wall.
 
-Expectation 4: The bubble should travel to the right wall with the expected trajectory and reflect off the right wall in the expected manner. After a series of reflections, the bubble should collide with the ceiling and stop.
+Expectation 4: The projectile should travel to the right wall with the expected trajectory and reflect off the right wall in the expected manner. After a series of reflections, the projectile should collide with the ceiling and stop.
+
+### Interaction of Projectile with Bubbles
+
+**For this section, unless otherwise specified, the initial placement of bubbles on the grid is always connected to the ceiling.**
+
+Action 1: Start a new game with some bubbles, where no two adjacent bubbles have the same colour. Fire the projectile into a group of adjacent bubbles.
+
+Expectation 1: The projectile should stop when its boundary comes into contact with any bubble. The projectile should also snap to the nearest possible grid position.
+
+Action 2: Start a new game with a group of two adjacent bubbles of the same colour.
+
+Expectation 2: The projectile should stop when its boundary comes into contact with any bubble. The projectile should also snap to the nearest possible grid position. The cluster of (now) three bubbles should then fade away.
+
+Action 3: Start the game with an inverted T-shaped structure, where the neck dangling from the ceiling is of one colour and the base is of another colour. Make sure some ceiling is exposed to the line of fire. Discard projectiles (by firing onto the ceiling) until the (projectile) colour same as that of the neck of the inverted T is obtained. Fire the projectile onto the neck of the T (by reflecting off a wall if necessary).
+
+Expection 3: Upon contact of the projectile with the neck of the T, the neck including the projectile should fade away. The base of the T, left unconnected to the ceiling, then drops off and fades away.
