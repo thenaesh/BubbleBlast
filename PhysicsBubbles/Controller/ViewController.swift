@@ -122,14 +122,6 @@ class ViewController: UIViewController {
         self.performRenderHack()
     }
 
-    private func markPaintableBubbles(with color: UIColor?) {
-        for row in 0..<NUM_ROWS_FOR_PALETTE {
-            for col in 0..<BUBBLES_PER_ROW {
-                bubbleGridView.getBubbleViewAt(row: row, col: col)?.setBackground(to: color)
-            }
-        }
-    }
-
     /**************************************
      ** Palette Creation and Destruction **
      **************************************/
@@ -137,15 +129,24 @@ class ViewController: UIViewController {
     private func createPalette() {
         self._paletteView = PaletteView(parentView: gameArea)
         paletteView.setupPalette()
-        markPaintableBubbles(with: .gray)
+        markBubblesInPaletteGrid(with: .gray)
         setupPaletteDisplayLink()
     }
 
     private func destroyPalette() {
         takedownDisplayLink()
-        markPaintableBubbles(with: nil)
+        markBubblesInPaletteGrid(with: nil)
         paletteView.teardownPalette()
         self._paletteView = nil
+    }
+
+
+    private func markBubblesInPaletteGrid(with color: UIColor?) {
+        for row in 0..<NUM_ROWS_FOR_PALETTE {
+            for col in 0..<BUBBLES_PER_ROW {
+                bubbleGridView.getBubbleViewAt(row: row, col: col)?.setBackground(to: color)
+            }
+        }
     }
 
     /*********************************
