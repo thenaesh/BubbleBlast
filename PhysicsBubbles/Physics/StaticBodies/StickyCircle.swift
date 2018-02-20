@@ -17,6 +17,6 @@ extension StickyCircle {
     }
     
     func isColliding(with otherBody: DynamicBody) -> Bool {
-        return (self.position - otherBody.position).magnitude <= otherBody.boundingRadius
+        return (self.position - otherBody.position).magnitude <= otherBody.boundingRadius * 2
     }
 }

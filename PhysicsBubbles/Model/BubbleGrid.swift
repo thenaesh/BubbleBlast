@@ -86,10 +86,20 @@ class BubbleGrid: Codable {
 
         let (row, col) = nearestUnoccupiedGridPoint(from: projectile.position)
         setBubbleAt(row: row, col: col, to: projectile.color)
+
+        // remove bubble clusters of at size 3
+        let bubbleCluster = getBubbleClusterAt(row: row, col: col, of: projectile.color)
+        if bubbleCluster.count >= 3 {
+            bubbleCluster.forEach({ (r, c) in self.removeBubbleAt(row: r, col: c) })
+        }
+
+        // remove floating bubbles
+        getFloatingBubbles().forEach({ (r, c) in self.removeBubbleAt(row: r, col: c) })
+
         loadProjectile()
     }
 
-    func nearestUnoccupiedGridPoint(from position: Vector2D) -> (Int, Int) {
+    private func nearestUnoccupiedGridPoint(from position: Vector2D) -> (Int, Int) {
         var (nearestRow, nearestCol) = (-1, -1)
         var smallestDistance = Double.infinity
 
@@ -109,6 +119,75 @@ class BubbleGrid: Codable {
         }
 
         return (nearestRow, nearestCol)
+    }
+
+    private func getAdjacentTo(row: Int, col: Int, with color: BubbleColor? = nil) -> [(Int, Int)] {
+        var adj = [(row, col - 1), (row, col + 1), (row - 1, col), (row + 1, col)]
+
+        if row % 2 == 1 {
+            adj.append((row - 1, col + 1))
+            adj.append((row + 1, col + 1))
+        } else {
+            adj.append((row - 1, col - 1))
+            adj.append((row + 1, col - 1))
+        }
+
+        adj = adj.filter({ (r, c) in isBubbleIndexAllowable(row: r, col: c) && getBubbleAt(row: r, col: c) != nil })
+
+        guard let color = color else {
+            return adj
+        }
+        return adj.filter({ (r, c) in getBubbleAt(row: r, col: c)?.color == color })
+    }
+
+    func getBubbleClusterAt(row: Int, col: Int, of color: BubbleColor? = nil) -> [(Int, Int)] {
+        guard isBubbleIndexAllowable(row: row, col: col) else {
+            return []
+        }
+
+        // standard DFS algorithm to find connected component
+        var cluster = [(Int, Int)]()
+        var frontier = [(Int, Int)]()
+        var elemsInFrontier = Set<HashableIntPair>()
+
+        frontier.append((row, col))
+        elemsInFrontier.insert(HashableIntPair(row, col))
+
+        while let next = frontier.popLast() {
+            let (nextRow, nextCol) = next
+            cluster.append(next)
+
+            for (r, c) in getAdjacentTo(row: nextRow, col: nextCol, with: color) where !elemsInFrontier.contains(HashableIntPair(r, c)){
+                frontier.append((r, c))
+                elemsInFrontier.insert(HashableIntPair(r, c))
+            }
+        }
+
+        return cluster
+    }
+
+    func getFloatingBubbles() -> [(Int, Int)] {
+        var allBubbles = [(Int, Int)]()
+
+        // initially, all bubbles in the grid are under consideration
+        for row in 0..<NUM_ROWS {
+            for col in 0..<BUBBLES_PER_ROW where getBubbleAt(row: row, col: col) != nil {
+                allBubbles.append((row, col))
+            }
+        }
+
+        var nonFloatingBubbles = Set<HashableIntPair>()
+        let ceilingBubbles = (0..<BUBBLES_PER_ROW).map({ (c) in (0, c) })
+                                                  .filter({ (r,c) in self.getBubbleAt(row: r, col: c) != nil })
+
+        // if a bubble is attached to ceiling, DFS from there to find the connected component starting from the ceiling
+        for (ceilingRow, ceilingCol) in ceilingBubbles {
+            // add connected component to nonFloatingBubbles
+            getBubbleClusterAt(row: ceilingRow, col: ceilingCol).forEach({ (rowcol) in nonFloatingBubbles.insert(HashableIntPair(rowcol)) })
+        }
+
+        let floatingBubbles = allBubbles.filter({ (rowcol) in !nonFloatingBubbles.contains(HashableIntPair(rowcol)) })
+        return floatingBubbles
     }
 
     var minX: Double {

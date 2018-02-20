@@ -66,7 +66,6 @@ class ViewController: UIViewController {
     private func setupDisplayLink() {
         let displayLink = CADisplayLink(target: self, selector: #selector(refresh))
         displayLink.add(to: .current, forMode: .defaultRunLoopMode)
-        initRenderHack()
     }
 
     @objc private func refresh(displayLink: CADisplayLink) {
@@ -76,14 +75,11 @@ class ViewController: UIViewController {
         self.performRenderHack()
     }
 
-    private func initRenderHack() {
+    private func performRenderHack() {
         self.gameArea.addSubview(self.renderingBugWorkaroundImage)
         self.renderingBugWorkaroundImage.alpha = 0.1
         self.renderingBugWorkaroundImage.frame.size.height = self.gameArea.frame.size.height / 1000
         self.renderingBugWorkaroundImage.frame.size.width = self.gameArea.frame.size.width / 1000
-    }
-
-    private func performRenderHack() {
         if self.renderingBugWorkaroundImage.image == #imageLiteral(resourceName: "bubble-red") {
             self.renderingBugWorkaroundImage.image = #imageLiteral(resourceName: "bubble-blue")
         } else {
@@ -154,9 +150,16 @@ class ViewController: UIViewController {
     private func gameModePanHandler(_ sender: UIPanGestureRecognizer) {
         print("Pan @ \(sender.location(in: gameArea))")
         let viewVelocity = sender.velocity(in: bubbleGridView.uiView)
-        let dampingCoefficient = 0.1
-        let modelVelocity = bubbleGridView.translateFromViewCoordinates(viewVelocity) * dampingCoefficient
-        bubbleGridModel.projectile?.velocity += modelVelocity
+        guard viewVelocity.y < 0 && bubbleGridModel.projectile?.status == .ready else {
+            return
+        }
+
+        let speed = 0.5
+        let modelVelocity = bubbleGridView.translateFromViewCoordinates(viewVelocity)
+        let adjustedModelVelocity = speed * modelVelocity / modelVelocity.magnitude
+
+        bubbleGridModel.projectile?.status = .flying
+        bubbleGridModel.projectile?.velocity += adjustedModelVelocity
     }
     private func gameModeLongPressHandler(_ sender: UILongPressGestureRecognizer) {
         print("Long Press @ \(sender.location(in: gameArea))")

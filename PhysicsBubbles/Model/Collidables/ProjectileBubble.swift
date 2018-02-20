@@ -10,6 +10,7 @@ import Foundation
 
 class ProjectileBubble: Bubble, DynamicBody {
     enum Status {
+        case ready
         case flying
         case stopped
     }
@@ -17,7 +18,7 @@ class ProjectileBubble: Bubble, DynamicBody {
     var boundingRadius = BubbleGrid.radius
     var velocity: Vector2D
     var acceleration: Vector2D
-    var status = Status.flying
+    var status = Status.ready
 
     override init(x: Double, y: Double, color: BubbleColor) {
         self.velocity = Vector2D(0, 0)
