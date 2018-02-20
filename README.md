@@ -43,4 +43,42 @@ The user inputs the angle for launching the bubble by swiping on the screen in t
 
 ## Problem 3: Testing
 
-Your answer here
+### Projectile Properties and Movement
+
+**For this section, we start each test by starting a game with an empty grid.**
+
+Action 1: Do nothing.
+
+Expectation 1: There should be a projectile bubble at the bottom centre of the screen.
+
+Action 2: Swipe the screen at a randomly chosen angle (not in a downward direction). Repeat for several arbitrarily chosen angles towards both the right and left of the screen.
+
+Expectation 2: The bubble should travel in the direction of the swipe at a constant velocity.
+
+Action 3: Swipe the screen downwards at an arbitrary angle.
+
+Expectation 3: The bubble should not move and should remain available for firing. Confirm this by swiping upwards and ensuring that the bubble does indeed fire.
+
+Action 4: Fire off a projectile.
+
+Expectation 4: A new projectile should appear for firing as soon as the already-fired one stops moving and snaps to grid. Confirm this by swiping upwards and ensuring that the new bubble does fire.
+
+### Collisions with Walls and Ceiling
+
+**For this section, we start each test by starting a game with an empty grid.**
+
+Action 1: Swipe a bubble towards the ceiling in a manner such that its trajectory doesn't come into contact with any walls.
+
+Expectation 1: The bubble should stop moving as soon at its boundary touches the ceiling. The bubble should also snap to a nearest possible grid position.
+
+Action 2: Swipe a bubble towards the right wall.
+
+Expectation 2: The bubble should reflect from the right wall the moment its boundary touches the wall. The reflection should be such that the horizontal component of the velocity is negated and the vertical component remains the same.
+
+Action 3: Swipe a bubble towards the left wall.
+
+Expectation 3: The bubble should reflect from the left wall the moment its boundary touches the wall. the reflection should be such that the horizontal component of the velocity is negated and the vertical component remains the same.
+
+Action 4: Swipe a bubble towards either wall in a manner such that the angle between the trajectory and the horizontal is small. Observe the bubble after (WLOG) it reflects off the left wall.
+
+Expectation 4: The bubble should travel to the right wall with the expected trajectory and reflect off the right wall in the expected manner. After a series of reflections, the bubble should collide with the ceiling and stop.
