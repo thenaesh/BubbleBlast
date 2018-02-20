@@ -325,6 +325,7 @@ class ViewController: UIViewController {
     func switchToGameMode() {
         destroyPalette()
         setupGameDisplayLink()
+        destroyFloatingBubbles()
         loadProjectile()
         bubbleGridView.setupProjectileView()
     }
