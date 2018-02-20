@@ -1,11 +1,11 @@
 CS3217 Problem Set 4
 ==
 
-**Name:** Your name
+**Name:** Thenaesh Elango
 
-**Matric No:** Your matric no
+**Matric No:** A0124772E
 
-**Tutor:** Your tutor's name
+**Tutor:** Li Kai
 
 ## Tips
 
