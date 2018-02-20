@@ -26,8 +26,4 @@ class SideWall: ReflectingLine {
             self.normal = Vector2D(-1, 0)
         }
     }
-    
-    func doOnCollide(with otherBody: inout DynamicBody) {
-        // nothing to do
-    }
 }

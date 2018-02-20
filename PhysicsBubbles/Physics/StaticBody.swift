@@ -15,3 +15,9 @@ protocol StaticBody {
     func collide(with otherBody: inout DynamicBody)
     func doOnCollide(with otherBody: inout DynamicBody)
 }
+
+extension StaticBody {
+    func doOnCollide(with otherBody: inout DynamicBody) {
+        // do nothing as a default implementation
+    }
+}
