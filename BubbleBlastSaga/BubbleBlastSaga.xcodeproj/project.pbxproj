@@ -11,7 +11,7 @@
 		D1AC4EC92036E2D50056743F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1AC4EC72036E2D50056743F /* Main.storyboard */; };
 		D1AC4ECB2036E2D50056743F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1AC4ECA2036E2D50056743F /* Assets.xcassets */; };
 		D1AC4ECE2036E2D50056743F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1AC4ECC2036E2D50056743F /* LaunchScreen.storyboard */; };
-		D1AC4ED92036E2D50056743F /* PhysicsBubblesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4ED82036E2D50056743F /* PhysicsBubblesUITests.swift */; };
+		D1AC4ED92036E2D50056743F /* BubbleBlastSagaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4ED82036E2D50056743F /* BubbleBlastSagaUITests.swift */; };
 		D1AC4EE5203701930056743F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EE4203701930056743F /* ViewController.swift */; };
 		D1AC4EE9203701B10056743F /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EE7203701B10056743F /* Common.swift */; };
 		D1AC4EEA203701B10056743F /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EE8203701B10056743F /* Serializable.swift */; };
@@ -42,19 +42,19 @@
 			containerPortal = D1AC4EB82036E2D40056743F /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D1AC4EBF2036E2D40056743F;
-			remoteInfo = PhysicsBubbles;
+			remoteInfo = BubbleBlastSaga;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D1AC4EC02036E2D50056743F /* PhysicsBubbles.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhysicsBubbles.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1AC4EC02036E2D50056743F /* BubbleBlastSaga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BubbleBlastSaga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1AC4EC32036E2D50056743F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1AC4EC82036E2D50056743F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D1AC4ECA2036E2D50056743F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D1AC4ECD2036E2D50056743F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D1AC4ECF2036E2D50056743F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D1AC4ED42036E2D50056743F /* PhysicsBubblesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhysicsBubblesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D1AC4ED82036E2D50056743F /* PhysicsBubblesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsBubblesUITests.swift; sourceTree = "<group>"; };
+		D1AC4ED42036E2D50056743F /* BubbleBlastSagaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BubbleBlastSagaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1AC4ED82036E2D50056743F /* BubbleBlastSagaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleBlastSagaUITests.swift; sourceTree = "<group>"; };
 		D1AC4EDA2036E2D50056743F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D1AC4EE4203701930056743F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D1AC4EE7203701B10056743F /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
@@ -106,8 +106,8 @@
 				D1AC4EF2203701C00056743F /* Model */,
 				D1AC4EE6203701B10056743F /* Common */,
 				D1AC4EE3203701930056743F /* Controller */,
-				D1AC4EC22036E2D50056743F /* PhysicsBubbles */,
-				D1AC4ED72036E2D50056743F /* PhysicsBubblesUITests */,
+				D1AC4EC22036E2D50056743F /* BubbleBlastSaga */,
+				D1AC4ED72036E2D50056743F /* BubbleBlastSagaUITests */,
 				D1AC4EC12036E2D50056743F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -115,13 +115,13 @@
 		D1AC4EC12036E2D50056743F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D1AC4EC02036E2D50056743F /* PhysicsBubbles.app */,
-				D1AC4ED42036E2D50056743F /* PhysicsBubblesUITests.xctest */,
+				D1AC4EC02036E2D50056743F /* BubbleBlastSaga.app */,
+				D1AC4ED42036E2D50056743F /* BubbleBlastSagaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D1AC4EC22036E2D50056743F /* PhysicsBubbles */ = {
+		D1AC4EC22036E2D50056743F /* BubbleBlastSaga */ = {
 			isa = PBXGroup;
 			children = (
 				D1AC4EC32036E2D50056743F /* AppDelegate.swift */,
@@ -130,16 +130,16 @@
 				D1AC4ECC2036E2D50056743F /* LaunchScreen.storyboard */,
 				D1AC4ECF2036E2D50056743F /* Info.plist */,
 			);
-			path = PhysicsBubbles;
+			path = BubbleBlastSaga;
 			sourceTree = "<group>";
 		};
-		D1AC4ED72036E2D50056743F /* PhysicsBubblesUITests */ = {
+		D1AC4ED72036E2D50056743F /* BubbleBlastSagaUITests */ = {
 			isa = PBXGroup;
 			children = (
-				D1AC4ED82036E2D50056743F /* PhysicsBubblesUITests.swift */,
+				D1AC4ED82036E2D50056743F /* BubbleBlastSagaUITests.swift */,
 				D1AC4EDA2036E2D50056743F /* Info.plist */,
 			);
-			path = PhysicsBubblesUITests;
+			path = BubbleBlastSagaUITests;
 			sourceTree = "<group>";
 		};
 		D1AC4EE3203701930056743F /* Controller */ = {
@@ -218,9 +218,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D1AC4EBF2036E2D40056743F /* PhysicsBubbles */ = {
+		D1AC4EBF2036E2D40056743F /* BubbleBlastSaga */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D1AC4EDD2036E2D50056743F /* Build configuration list for PBXNativeTarget "PhysicsBubbles" */;
+			buildConfigurationList = D1AC4EDD2036E2D50056743F /* Build configuration list for PBXNativeTarget "BubbleBlastSaga" */;
 			buildPhases = (
 				D1AC4EBC2036E2D40056743F /* Sources */,
 				D1AC4EBD2036E2D40056743F /* Frameworks */,
@@ -230,14 +230,14 @@
 			);
 			dependencies = (
 			);
-			name = PhysicsBubbles;
-			productName = PhysicsBubbles;
-			productReference = D1AC4EC02036E2D50056743F /* PhysicsBubbles.app */;
+			name = BubbleBlastSaga;
+			productName = BubbleBlastSaga;
+			productReference = D1AC4EC02036E2D50056743F /* BubbleBlastSaga.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D1AC4ED32036E2D50056743F /* PhysicsBubblesUITests */ = {
+		D1AC4ED32036E2D50056743F /* BubbleBlastSagaUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D1AC4EE02036E2D50056743F /* Build configuration list for PBXNativeTarget "PhysicsBubblesUITests" */;
+			buildConfigurationList = D1AC4EE02036E2D50056743F /* Build configuration list for PBXNativeTarget "BubbleBlastSagaUITests" */;
 			buildPhases = (
 				D1AC4ED02036E2D50056743F /* Sources */,
 				D1AC4ED12036E2D50056743F /* Frameworks */,
@@ -248,9 +248,9 @@
 			dependencies = (
 				D1AC4ED62036E2D50056743F /* PBXTargetDependency */,
 			);
-			name = PhysicsBubblesUITests;
-			productName = PhysicsBubblesUITests;
-			productReference = D1AC4ED42036E2D50056743F /* PhysicsBubblesUITests.xctest */;
+			name = BubbleBlastSagaUITests;
+			productName = BubbleBlastSagaUITests;
+			productReference = D1AC4ED42036E2D50056743F /* BubbleBlastSagaUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -274,7 +274,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D1AC4EBB2036E2D40056743F /* Build configuration list for PBXProject "PhysicsBubbles" */;
+			buildConfigurationList = D1AC4EBB2036E2D40056743F /* Build configuration list for PBXProject "BubbleBlastSaga" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -287,8 +287,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D1AC4EBF2036E2D40056743F /* PhysicsBubbles */,
-				D1AC4ED32036E2D50056743F /* PhysicsBubblesUITests */,
+				D1AC4EBF2036E2D40056743F /* BubbleBlastSaga */,
+				D1AC4ED32036E2D50056743F /* BubbleBlastSagaUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -348,7 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1AC4ED92036E2D50056743F /* PhysicsBubblesUITests.swift in Sources */,
+				D1AC4ED92036E2D50056743F /* BubbleBlastSagaUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,7 +357,7 @@
 /* Begin PBXTargetDependency section */
 		D1AC4ED62036E2D50056743F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D1AC4EBF2036E2D40056743F /* PhysicsBubbles */;
+			target = D1AC4EBF2036E2D40056743F /* BubbleBlastSaga */;
 			targetProxy = D1AC4ED52036E2D50056743F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -495,9 +495,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B945CLMX3Y;
-				INFOPLIST_FILE = PhysicsBubbles/Info.plist;
+				INFOPLIST_FILE = BubbleBlastSaga/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0124772.PhysicsBubbles;
+				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0124772.BubbleBlastSaga;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -510,9 +510,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B945CLMX3Y;
-				INFOPLIST_FILE = PhysicsBubbles/Info.plist;
+				INFOPLIST_FILE = BubbleBlastSaga/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0124772.PhysicsBubbles;
+				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0124772.BubbleBlastSaga;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -525,13 +525,13 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B945CLMX3Y;
-				INFOPLIST_FILE = PhysicsBubblesUITests/Info.plist;
+				INFOPLIST_FILE = BubbleBlastSagaUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0124772.PhysicsBubblesUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0124772.BubbleBlastSagaUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PhysicsBubbles;
+				TEST_TARGET_NAME = BubbleBlastSaga;
 			};
 			name = Debug;
 		};
@@ -541,20 +541,20 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B945CLMX3Y;
-				INFOPLIST_FILE = PhysicsBubblesUITests/Info.plist;
+				INFOPLIST_FILE = BubbleBlastSagaUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0124772.PhysicsBubblesUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = nus.cs3217.a0124772.BubbleBlastSagaUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PhysicsBubbles;
+				TEST_TARGET_NAME = BubbleBlastSaga;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D1AC4EBB2036E2D40056743F /* Build configuration list for PBXProject "PhysicsBubbles" */ = {
+		D1AC4EBB2036E2D40056743F /* Build configuration list for PBXProject "BubbleBlastSaga" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D1AC4EDB2036E2D50056743F /* Debug */,
@@ -563,7 +563,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D1AC4EDD2036E2D50056743F /* Build configuration list for PBXNativeTarget "PhysicsBubbles" */ = {
+		D1AC4EDD2036E2D50056743F /* Build configuration list for PBXNativeTarget "BubbleBlastSaga" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D1AC4EDE2036E2D50056743F /* Debug */,
@@ -572,7 +572,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D1AC4EE02036E2D50056743F /* Build configuration list for PBXNativeTarget "PhysicsBubblesUITests" */ = {
+		D1AC4EE02036E2D50056743F /* Build configuration list for PBXNativeTarget "BubbleBlastSagaUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D1AC4EE12036E2D50056743F /* Debug */,
