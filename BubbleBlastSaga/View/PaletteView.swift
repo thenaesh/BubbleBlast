@@ -11,8 +11,7 @@ import UIKit
 typealias Selector = UIImageView
 typealias Button = UILabel
 
-class PaletteView {
-    let uiView = UIView()
+class PaletteView: UIView {
     private let parentView: UIView
 
     let redSelector, greenSelector, blueSelector, orangeSelector: Selector
@@ -36,6 +35,11 @@ class PaletteView {
         startButton.text = "START"
         saveButton.text = "SAVE"
         loadButton.text = "LOAD"
+        super.init(frame: parentView.frame)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func setupPalette() {
@@ -47,22 +51,22 @@ class PaletteView {
     }
 
     func teardownPalette() {
-        uiView.removeFromSuperview()
+        self.removeFromSuperview()
     }
 
     private func loadPaletteBox() {
         let paletteHeight = parentView.frame.size.height / 5
         let paletteWidth = parentView.frame.size.width
 
-        uiView.frame = CGRect(x: 0, y: paletteHeight * 4, width: paletteWidth, height: paletteHeight)
-        uiView.backgroundColor = .lightGray
-        parentView.addSubview(uiView)
+        self.frame = CGRect(x: 0, y: paletteHeight * 4, width: paletteWidth, height: paletteHeight)
+        self.backgroundColor = .lightGray
+        parentView.addSubview(self)
     }
 
     private func addAllSelectorsToPaletteView() {
         for selector in [redSelector, greenSelector, blueSelector, orangeSelector, eraseSelector] {
             selector.translatesAutoresizingMaskIntoConstraints = false
-            uiView.addSubview(selector)
+            self.addSubview(selector)
         }
         grayOutAllSelectors()
     }
@@ -70,7 +74,7 @@ class PaletteView {
     private func addAllButtonsToPaletteView() {
         for button in [resetButton, startButton, saveButton, loadButton] {
             button.translatesAutoresizingMaskIntoConstraints = false
-            uiView.addSubview(button)
+            self.addSubview(button)
         }
     }
 
@@ -84,23 +88,23 @@ class PaletteView {
             selector.widthAnchor.constraint(equalTo: eraseSelector.widthAnchor).isActive = true
         }
 
-        let height = uiView.frame.size.height
-        let width = uiView.frame.size.width
+        let height = self.frame.size.height
+        let width = self.frame.size.width
 
         // ensure the selectors are circles
         eraseSelector.heightAnchor.constraint(equalTo: eraseSelector.widthAnchor).isActive = true
         // fix height of selectors
         eraseSelector.heightAnchor.constraint(equalToConstant: height / 3).isActive = true
         // prevent selectors from exceeding bounds of the palette
-        eraseSelector.topAnchor.constraint(equalTo: uiView.topAnchor, constant: height / 10).isActive = true
-        eraseSelector.bottomAnchor.constraint(lessThanOrEqualTo: uiView.bottomAnchor).isActive = true
+        eraseSelector.topAnchor.constraint(equalTo: self.topAnchor, constant: height / 10).isActive = true
+        eraseSelector.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor).isActive = true
 
         // set selectors' distance apart
-        uiView.leadingAnchor.constraint(equalTo: redSelector.leadingAnchor, constant: -width / 20).isActive = true
+        self.leadingAnchor.constraint(equalTo: redSelector.leadingAnchor, constant: -width / 20).isActive = true
         redSelector.trailingAnchor.constraint(equalTo: greenSelector.leadingAnchor, constant: -width / 20).isActive = true
         greenSelector.trailingAnchor.constraint(equalTo: blueSelector.leadingAnchor, constant: -width / 20).isActive = true
         blueSelector.trailingAnchor.constraint(lessThanOrEqualTo: orangeSelector.leadingAnchor, constant: -width / 20).isActive = true
-        eraseSelector.trailingAnchor.constraint(equalTo: uiView.trailingAnchor, constant: -width / 20).isActive = true
+        eraseSelector.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -width / 20).isActive = true
     }
 
     private func constrainButtons() {
@@ -113,7 +117,7 @@ class PaletteView {
             button.widthAnchor.constraint(equalTo: startButton.widthAnchor).isActive = true
         }
 
-        let height = uiView.frame.size.height
+        let height = self.frame.size.height
 
         // ensure the buttons are rectangles with 4:1 aspect ratio
         startButton.widthAnchor.constraint(equalTo: startButton.heightAnchor, multiplier: 4).isActive = true
@@ -121,14 +125,14 @@ class PaletteView {
         startButton.heightAnchor.constraint(equalToConstant: height / 5).isActive = true
         // prevent buttons frome exceeding bounds of the palette or appearing above the selectors
         startButton.topAnchor.constraint(greaterThanOrEqualTo: eraseSelector.bottomAnchor)
-        startButton.bottomAnchor.constraint(equalTo: uiView.bottomAnchor).isActive = true
+        startButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
         // set buttons' distance apart
-        uiView.leadingAnchor.constraint(equalTo: resetButton.leadingAnchor).isActive = true
+        self.leadingAnchor.constraint(equalTo: resetButton.leadingAnchor).isActive = true
         resetButton.trailingAnchor.constraint(lessThanOrEqualTo: startButton.leadingAnchor).isActive = true
         startButton.trailingAnchor.constraint(lessThanOrEqualTo: saveButton.leadingAnchor).isActive = true
         saveButton.trailingAnchor.constraint(equalTo: loadButton.leadingAnchor).isActive = true
-        loadButton.trailingAnchor.constraint(equalTo: uiView.trailingAnchor).isActive = true
+        loadButton.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
     }
 
     func getSelectorContaining(point: CGPoint) -> Selector? {

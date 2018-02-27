@@ -8,27 +8,30 @@
 
 import UIKit
 
-class BubbleView {
+class BubbleView: UIImageView {
     enum AnimationType {
         case fade
         case drop
     }
 
-    let uiView = UIImageView()
+    override init(frame: CGRect) {
+        super.init(image: nil)
+        self.frame = frame
+        self.layer.cornerRadius = frame.size.width / 2
+        self.isUserInteractionEnabled = true;
+    }
 
-    init(frame: CGRect) {
-        self.uiView.frame = frame
-        self.uiView.layer.cornerRadius = frame.size.width / 2
-        self.uiView.isUserInteractionEnabled = true;
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     func setImage(to img: UIImage?) {
-        uiView.image = img
-        uiView.setNeedsDisplay()
+        self.image = img
+        self.setNeedsDisplay()
     }
 
     func setBackground(to color: UIColor?) {
-        uiView.backgroundColor = color
+        self.backgroundColor = color
     }
 
     func render(as color: BubbleColor?) {
@@ -50,19 +53,19 @@ class BubbleView {
         switch type {
         case .fade:
             UIView.animate(withDuration: 0.5, animations: {
-                self.uiView.alpha = 0
+                self.alpha = 0
             }, completion: { _ in
                 self.render(as: color)
-                self.uiView.alpha = 1
+                self.alpha = 1
             })
         case .drop:
             UIView.animate(withDuration: 1, delay: 0.25, animations: {
-                self.uiView.alpha = 0
-                self.uiView.frame.origin.y += 100
+                self.alpha = 0
+                self.frame.origin.y += 100
             }, completion: { _ in
                 self.render(as: color)
-                self.uiView.frame.origin.y -= 100
-                self.uiView.alpha = 1
+                self.frame.origin.y -= 100
+                self.alpha = 1
             })
         }
     }

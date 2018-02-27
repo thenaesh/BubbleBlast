@@ -8,8 +8,7 @@
 
 import UIKit
 
-class BubbleGridView {
-    let uiView = UIView()
+class BubbleGridView: UIView {
     private let parentView: UIView
     private let model: BubbleGrid
     private var grid: [[BubbleView]] = []
@@ -18,19 +17,24 @@ class BubbleGridView {
     init(parentView: UIView, model: BubbleGrid) {
         self.parentView = parentView
         self.model = model
+        super.init(frame: parentView.frame)
         attachGridViewToParent()
         fixAspectRatio()
         createBubbleGrid()
     }
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private func attachGridViewToParent() {
-        uiView.frame.size = parentView.frame.size
-        parentView.addSubview(uiView)
+        self.frame.size = parentView.frame.size
+        parentView.addSubview(self)
     }
 
     private func fixAspectRatio() {
         let newHeight = (2 + Double(NUM_ROWS - 1) * sqrt(3)) * radius
-        uiView.frame.size.height = CGFloat(newHeight)
+        self.frame.size.height = CGFloat(newHeight)
     }
 
     private func createBubbleGrid() {
@@ -50,7 +54,12 @@ class BubbleGridView {
         }
 
         projectileView = BubbleView(frame: getProjectileFrameFor(projectileModel.position))
-        uiView.addSubview(projectileView!.uiView)
+
+        guard let projectileView = projectileView else {
+            fatalError("Projectile view failed to initialize!")
+        }
+
+        self.addSubview(projectileView)
     }
 
     func getBubbleIndexAt(coords: CGPoint) -> (Int, Int)? {
@@ -62,7 +71,7 @@ class BubbleGridView {
         var col: Int = invalidIndex
 
         for r in 0..<NUM_ROWS {
-            for c in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: r, col: c) && grid[r][c].uiView.frame.contains(coords) {
+            for c in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: r, col: c) && grid[r][c].frame.contains(coords) {
                 row = r
                 col = c
             }
@@ -91,7 +100,7 @@ class BubbleGridView {
     }
 
     private func addBubbleToGrid(_ bubbleView: BubbleView) {
-        uiView.addSubview(bubbleView.uiView)
+        self.addSubview(bubbleView)
     }
 
     private func getBubbleFrame(row: Int, col: Int) -> CGRect {
@@ -113,7 +122,7 @@ class BubbleGridView {
             return
         }
 
-        projectileView?.uiView.frame = getProjectileFrameFor(projectileModel.position)
+        projectileView?.frame = getProjectileFrameFor(projectileModel.position)
         projectileView?.render(as: model.projectile?.color)
     }
 
@@ -157,7 +166,7 @@ class BubbleGridView {
     }
 
     private var viewCoordinateScaleFactor: Double {
-        return Double(uiView.frame.size.width)
+        return Double(self.frame.size.width)
     }
 
     private var diameter: Double {

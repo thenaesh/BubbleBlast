@@ -157,26 +157,26 @@ class ViewController: UIViewController {
         let coords = sender.location(in: gameArea)
 
         if didTapOccurInPaletteRegion(at: coords) {
-            let paletteCoords = sender.location(in: paletteView.uiView)
+            let paletteCoords = sender.location(in: paletteView)
             handleTapInPaletteRegion(at: paletteCoords)
         } else {
-            let bubbleGridCoords = sender.location(in: bubbleGridView.uiView)
+            let bubbleGridCoords = sender.location(in: bubbleGridView)
             handleTapInGridRegion(at: bubbleGridCoords)
         }
     }
     private func paletteModePanHandler(_ sender: UIPanGestureRecognizer) {
-        let bubbleGridCoords = sender.location(in: bubbleGridView.uiView)
+        let bubbleGridCoords = sender.location(in: bubbleGridView)
         handlePanInGridRegion(at: bubbleGridCoords)
     }
     private func paletteModeLongPressHandler(_ sender: UILongPressGestureRecognizer) {
-        let bubbbleGridCoords = sender.location(in: bubbleGridView.uiView)
+        let bubbbleGridCoords = sender.location(in: bubbleGridView)
         handleLongPressInGridRegion(at: bubbbleGridCoords)
     }
 
     /* handle taps in the bottom part of the screen where the palette itself is located */
 
     private func didTapOccurInPaletteRegion(at coords: CGPoint) -> Bool {
-        return paletteView.uiView.frame.contains(coords)
+        return paletteView.frame.contains(coords)
     }
 
     private func handleTapInPaletteRegion(at coords: CGPoint) {
@@ -337,7 +337,7 @@ class ViewController: UIViewController {
     private func gameModeTapHandler(_ sender: UITapGestureRecognizer) {
     }
     private func gameModePanHandler(_ sender: UIPanGestureRecognizer) {
-        let viewVelocity = sender.velocity(in: bubbleGridView.uiView)
+        let viewVelocity = sender.velocity(in: bubbleGridView)
         guard viewVelocity.y < 0 && bubbleGridModel.projectile?.status == .ready else {
             return
         }
