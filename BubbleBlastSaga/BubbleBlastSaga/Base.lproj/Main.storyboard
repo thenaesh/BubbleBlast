@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Palette View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PhysicsBubbles" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="PaletteViewController" customModule="BubbleBlastSaga" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -40,26 +40,66 @@
                     </view>
                     <connections>
                         <outlet property="gameArea" destination="qEN-Ze-pWA" id="cf9-Uo-G8U"/>
+                        <segue destination="ijo-lo-tmD" kind="presentation" identifier="switchToGameMode" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="gQG-Sj-uZb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="vcW-yq-K1b">
                     <connections>
-                        <action selector="handleGesture:" destination="BYZ-38-t0r" id="xxH-5G-2M4"/>
+                        <action selector="handleTap:" destination="BYZ-38-t0r" id="0Ap-H1-aEe"/>
                     </connections>
                 </tapGestureRecognizer>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="bNr-gI-Z0E">
                     <connections>
-                        <action selector="handleGesture:" destination="BYZ-38-t0r" id="v6I-9Q-RJo"/>
+                        <action selector="handlePan:" destination="BYZ-38-t0r" id="vxH-Tj-4fB"/>
                     </connections>
                 </panGestureRecognizer>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="1y3-pW-bb9">
                     <connections>
-                        <action selector="handleGesture:" destination="BYZ-38-t0r" id="3E1-BP-q2x"/>
+                        <action selector="handleLongPress:" destination="BYZ-38-t0r" id="aDf-b3-Gni"/>
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="25.78125" y="37.5"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="ogn-VN-J3n">
+            <objects>
+                <viewController id="ijo-lo-tmD" customClass="GameViewController" customModule="BubbleBlastSaga" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ele-JY-9TQ">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8M4-ul-r19">
+                                <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="pTm-ur-1eh" appends="YES" id="WK5-ml-b8j"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="35Y-Kr-uql" firstAttribute="trailing" secondItem="8M4-ul-r19" secondAttribute="trailing" id="05T-A2-8L2"/>
+                            <constraint firstItem="8M4-ul-r19" firstAttribute="top" secondItem="35Y-Kr-uql" secondAttribute="top" id="0o1-ij-0hS"/>
+                            <constraint firstItem="35Y-Kr-uql" firstAttribute="bottom" secondItem="8M4-ul-r19" secondAttribute="bottom" id="3bq-f3-Pr7"/>
+                            <constraint firstItem="8M4-ul-r19" firstAttribute="leading" secondItem="35Y-Kr-uql" secondAttribute="leading" id="ckR-CS-zk8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="35Y-Kr-uql"/>
+                    </view>
+                    <connections>
+                        <outlet property="gameArea" destination="8M4-ul-r19" id="zGV-kp-4PU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dij-UR-MsI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="pTm-ur-1eh">
+                    <connections>
+                        <action selector="handlePan:" destination="ijo-lo-tmD" id="doG-km-FBS"/>
+                    </connections>
+                </panGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="663" y="38"/>
         </scene>
     </scenes>
 </document>
