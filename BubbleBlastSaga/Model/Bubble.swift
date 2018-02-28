@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PhysicsEngine
 
 
 enum BubbleColor: String, Codable {

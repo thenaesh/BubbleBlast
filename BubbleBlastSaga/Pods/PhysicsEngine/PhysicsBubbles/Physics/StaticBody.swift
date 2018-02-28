@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol StaticBody {
+public protocol StaticBody {
     var position: Vector2D { get }
 
     func isColliding(with otherBody: DynamicBody) -> Bool
@@ -16,7 +16,7 @@ protocol StaticBody {
     func doOnCollide(with otherBody: inout DynamicBody)
 }
 
-extension StaticBody {
+public extension StaticBody {
     func doOnCollide(with otherBody: inout DynamicBody) {
         // do nothing as a default implementation
     }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PhysicsEngine
 
 class ProjectileBubble: Bubble, DynamicBody {
     enum Status {

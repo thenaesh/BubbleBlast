@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PhysicsEngine
 
 class BubbleGridView: UIView {
     private let parentView: UIView

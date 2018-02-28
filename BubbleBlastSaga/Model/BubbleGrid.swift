@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PhysicsEngine
 
 class BubbleGrid: Codable {
     var grid: [[FixedBubble?]]

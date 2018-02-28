@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PhysicsEngine
 
 class Ceiling: StickyLine {
     var normal = Vector2D(0, 1)

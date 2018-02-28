@@ -8,25 +8,25 @@
 
 import Foundation
 
-struct Vector2D: Codable {
-    var x: Double
-    var y: Double
+public struct Vector2D: Codable {
+    public var x: Double
+    public var y: Double
 
-    init(_ x: Double = 0, _ y: Double = 0) {
+    public init(_ x: Double = 0, _ y: Double = 0) {
         self.x = x
         self.y = y
     }
 
-    var magnitude: Double {
+    public var magnitude: Double {
         return sqrt(x * x + y * y)
     }
 
-    var normalized: Vector2D {
+    public var normalized: Vector2D {
         return self / self.magnitude
     }
 }
 
-extension Vector2D {
+public extension Vector2D {
     static func + (_ lhs: Vector2D, _ rhs: Vector2D) -> Vector2D {
         return Vector2D(lhs.x + rhs.x, lhs.y + rhs.y)
     }

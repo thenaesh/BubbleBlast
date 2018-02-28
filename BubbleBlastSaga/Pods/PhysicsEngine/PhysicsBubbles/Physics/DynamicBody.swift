@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol DynamicBody {
+public protocol DynamicBody {
     var boundingRadius: Double { get }
 
     var position: Vector2D { get set }
@@ -18,7 +18,7 @@ protocol DynamicBody {
     mutating func integrate(dt: Double)
 }
 
-extension DynamicBody {
+public extension DynamicBody {
     mutating func integrate(dt: Double) {
         velocity += acceleration * dt
         position += velocity * dt

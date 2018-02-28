@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PhysicsEngine
 
 extension BubbleGrid: PhysicsEnvironment {
 

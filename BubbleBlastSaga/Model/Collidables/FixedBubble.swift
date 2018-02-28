@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PhysicsEngine
 
 class FixedBubble: Bubble, StickyCircle {
     override init(x: Double, y: Double, color: BubbleColor) {

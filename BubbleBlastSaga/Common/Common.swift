@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PhysicsEngine
 
 let BUBBLES_PER_ROW = 12
 let NUM_ROWS = 18

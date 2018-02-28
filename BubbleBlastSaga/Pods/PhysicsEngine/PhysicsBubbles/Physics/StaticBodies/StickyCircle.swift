@@ -8,10 +8,10 @@
 
 import Foundation
 
-protocol StickyCircle: StaticBody {
+public protocol StickyCircle: StaticBody {
 }
 
-extension StickyCircle {
+public extension StickyCircle {
     func collide(with otherBody: inout DynamicBody) {
         otherBody.velocity *= 0
     }

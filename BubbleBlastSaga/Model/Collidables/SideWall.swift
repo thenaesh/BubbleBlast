@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PhysicsEngine
 
 class SideWall: ReflectingLine {
     enum Side {

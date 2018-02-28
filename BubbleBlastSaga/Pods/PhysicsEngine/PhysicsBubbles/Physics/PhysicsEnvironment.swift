@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol PhysicsEnvironment: AnyObject {
+public protocol PhysicsEnvironment: AnyObject {
     var staticBodies: [StaticBody] { get }
     var dynamicBody: DynamicBody? { get set }
 }
 
-extension PhysicsEnvironment {
+public extension PhysicsEnvironment {
     func simulate(dt: Double) {
         guard var dynamicBody = dynamicBody else {
             return
