@@ -15,6 +15,10 @@ enum BubbleColor: String, Codable {
     case greenBubble
     case blueBubble
     case orangeBubble
+    case indestructibleBubble
+    case lightningBubble
+    case bombBubble
+    case starBubble
 }
 
 class Bubble: Codable {
@@ -49,6 +53,14 @@ extension BubbleColor {
         case .blueBubble:
             return .orangeBubble
         case .orangeBubble:
+            return .indestructibleBubble
+        case .indestructibleBubble:
+            return .lightningBubble
+        case .lightningBubble:
+            return .bombBubble
+        case .bombBubble:
+            return .starBubble
+        case .starBubble:
             return .redBubble
         }
     }

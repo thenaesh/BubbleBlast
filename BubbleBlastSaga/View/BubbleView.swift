@@ -44,6 +44,14 @@ class BubbleView: UIImageView {
             setImage(to: #imageLiteral(resourceName: "bubble-blue"))
         case .orangeBubble?:
             setImage(to: #imageLiteral(resourceName: "bubble-orange"))
+        case .indestructibleBubble?:
+            setImage(to: #imageLiteral(resourceName: "bubble-indestructible"))
+        case .lightningBubble?:
+            setImage(to: #imageLiteral(resourceName: "bubble-lightning"))
+        case .bombBubble?:
+            setImage(to: #imageLiteral(resourceName: "bubble-bomb"))
+        case .starBubble?:
+            setImage(to: #imageLiteral(resourceName: "bubble-star"))
         default:
             setImage(to: nil)
         }

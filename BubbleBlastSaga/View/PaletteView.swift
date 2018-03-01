@@ -15,6 +15,7 @@ class PaletteView: UIView {
     private let parentView: UIView
 
     let redSelector, greenSelector, blueSelector, orangeSelector: Selector
+    let indestructibleSelector, lightningSelector, bombSelector, starSelector: Selector
     let eraseSelector: Selector
 
     let resetButton = Button()
@@ -30,6 +31,10 @@ class PaletteView: UIView {
         self.blueSelector = UIImageView(image: #imageLiteral(resourceName: "bubble-blue"))
         self.orangeSelector = UIImageView(image: #imageLiteral(resourceName: "bubble-orange"))
         self.eraseSelector = UIImageView(image: #imageLiteral(resourceName: "erase"))
+        self.indestructibleSelector = UIImageView(image: #imageLiteral(resourceName: "bubble-indestructible"))
+        self.lightningSelector = UIImageView(image: #imageLiteral(resourceName: "bubble-lightning"))
+        self.bombSelector = UIImageView(image: #imageLiteral(resourceName: "bubble-bomb"))
+        self.starSelector = UIImageView(image: #imageLiteral(resourceName: "bubble-star"))
 
         resetButton.text = "RESET"
         startButton.text = "START"
@@ -64,7 +69,7 @@ class PaletteView: UIView {
     }
 
     private func addAllSelectorsToPaletteView() {
-        for selector in [redSelector, greenSelector, blueSelector, orangeSelector, eraseSelector] {
+        for selector in selectors {
             selector.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(selector)
         }
@@ -72,7 +77,7 @@ class PaletteView: UIView {
     }
 
     private func addAllButtonsToPaletteView() {
-        for button in [resetButton, startButton, saveButton, loadButton] {
+        for button in buttons {
             button.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview(button)
         }
@@ -80,7 +85,7 @@ class PaletteView: UIView {
 
     private func constrainSelectors() {
         // all selectors' positions/dimensions defined relative to eraseSelector
-        for selector in [redSelector, greenSelector, blueSelector, orangeSelector] {
+        for selector in selectors where selector != eraseSelector {
             // ensure all selectors are in the same horizontal line
             selector.centerYAnchor.constraint(equalTo: eraseSelector.centerYAnchor).isActive = true
             // ensure all selectors are the same size
@@ -100,16 +105,20 @@ class PaletteView: UIView {
         eraseSelector.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor).isActive = true
 
         // set selectors' distance apart
-        self.leadingAnchor.constraint(equalTo: redSelector.leadingAnchor, constant: -width / 20).isActive = true
-        redSelector.trailingAnchor.constraint(equalTo: greenSelector.leadingAnchor, constant: -width / 20).isActive = true
-        greenSelector.trailingAnchor.constraint(equalTo: blueSelector.leadingAnchor, constant: -width / 20).isActive = true
-        blueSelector.trailingAnchor.constraint(lessThanOrEqualTo: orangeSelector.leadingAnchor, constant: -width / 20).isActive = true
-        eraseSelector.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -width / 20).isActive = true
+        self.leadingAnchor.constraint(equalTo: redSelector.leadingAnchor, constant: -width / 50).isActive = true
+        redSelector.trailingAnchor.constraint(equalTo: greenSelector.leadingAnchor).isActive = true
+        greenSelector.trailingAnchor.constraint(equalTo: blueSelector.leadingAnchor).isActive = true
+        blueSelector.trailingAnchor.constraint(lessThanOrEqualTo: orangeSelector.leadingAnchor).isActive = true
+        orangeSelector.trailingAnchor.constraint(lessThanOrEqualTo: indestructibleSelector.leadingAnchor, constant: -width / 20).isActive = true
+        indestructibleSelector.trailingAnchor.constraint(lessThanOrEqualTo: lightningSelector.leadingAnchor).isActive = true
+        lightningSelector.trailingAnchor.constraint(lessThanOrEqualTo: bombSelector.leadingAnchor).isActive = true
+        bombSelector.trailingAnchor.constraint(lessThanOrEqualTo: starSelector.leadingAnchor).isActive = true
+        eraseSelector.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -width / 50).isActive = true
     }
 
     private func constrainButtons() {
         // all buttons' positions/dimentions defined relative to startButton
-        for button in [resetButton, saveButton, loadButton] {
+        for button in buttons where button != startButton {
             // ensure all buttons are in the same horizontal line
             button.centerYAnchor.constraint(equalTo: startButton.centerYAnchor).isActive = true
             // ensure all selectors are the same size
@@ -136,21 +145,21 @@ class PaletteView: UIView {
     }
 
     func getSelectorContaining(point: CGPoint) -> Selector? {
-        for selector in [redSelector, greenSelector, blueSelector, orangeSelector, eraseSelector] where selector.frame.contains(point) {
+        for selector in selectors where selector.frame.contains(point) {
             return selector
         }
         return nil
     }
 
     func getButtonContaining(point: CGPoint) -> Button? {
-        for button in [resetButton, startButton, saveButton, loadButton] where button.frame.contains(point) {
+        for button in buttons where button.frame.contains(point) {
             return button
         }
         return nil
     }
 
     func highlightSelector(selector: Selector) {
-        guard [redSelector, greenSelector, blueSelector, orangeSelector, eraseSelector].contains(selector) else {
+        guard selectors.contains(selector) else {
             fatalError("There are selector types that don't match any known Bubble model!")
         }
 
@@ -160,7 +169,7 @@ class PaletteView: UIView {
     }
 
     func grayOutAllSelectors() {
-        for selector in [redSelector, greenSelector, blueSelector, orangeSelector, eraseSelector] {
+        for selector in selectors {
             let mostlyTransparentAlphaLevel = CGFloat(0.25)
             selector.alpha = mostlyTransparentAlphaLevel
         }
@@ -176,10 +185,34 @@ class PaletteView: UIView {
             return .blueBubble
         case orangeSelector:
             return .orangeBubble
+        case indestructibleSelector:
+            return .indestructibleBubble
+        case lightningSelector:
+            return .lightningBubble
+        case bombSelector:
+            return .bombBubble
+        case starSelector:
+            return .starBubble
         case eraseSelector:
             return nil
         default:
             fatalError("There are selector types that don't match any known Bubble model!")
         }
+    }
+
+    var selectors: [Selector] {
+        return [redSelector,
+                greenSelector,
+                blueSelector,
+                orangeSelector,
+                indestructibleSelector,
+                lightningSelector,
+                bombSelector,
+                starSelector,
+                eraseSelector]
+    }
+
+    var buttons: [Button] {
+        return [resetButton, startButton, saveButton, loadButton]
     }
 }
