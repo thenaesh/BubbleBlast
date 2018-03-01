@@ -41,6 +41,11 @@ class Bubble: Codable {
     static var radius: Double {
         return diameter / 2
     }
+
+    func isSpecial() -> Bool {
+        let specialBubbles: [BubbleColor] = [.indestructibleBubble, .lightningBubble, .bombBubble, .starBubble]
+        return specialBubbles.contains(self.color)
+    }
 }
 
 extension BubbleColor {

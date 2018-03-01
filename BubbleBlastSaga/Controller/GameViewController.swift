@@ -99,6 +99,7 @@ class GameViewController: BaseViewController {
         bubbleGridModel.setBubbleAt(row: row, col: col, to: projectile.color)
         bubbleGridView.renderBubbleAt(row: row, col: col)
 
+        performSpecialEffectsOnAdjacent(row: row, col: col)
         destroyAdjoiningCluster(row: row, col: col, of: projectile.color)
         destroyFloatingBubbles()
 
@@ -120,6 +121,114 @@ class GameViewController: BaseViewController {
             self.bubbleGridModel.removeBubbleAt(row: r, col: c)
             self.bubbleGridView.renderBubbleWithAnimationAt(.drop, row: r, col: c)
         })
+    }
+
+    /*********************
+     ** Special Bubbles **
+     *********************/
+
+    private func performSpecialEffectsOnAdjacent(row: Int, col: Int) {
+        guard let triggeringBubble = bubbleGridModel.getBubbleAt(row: row, col: col) else {
+            return
+        }
+
+        let adjSpecialBubbles = bubbleGridModel.getAdjacentTo(row: row, col: col).filter({ (r, c) in
+            guard let bubble = self.bubbleGridModel.getBubbleAt(row: r, col: c) else {
+                return false
+            }
+            return bubble.isSpecial()
+        })
+
+        for (r, c) in adjSpecialBubbles {
+            performSpecialEffectsOnSelf(row: r, col: c, triggeringBubble: triggeringBubble)
+        }
+    }
+
+    private func performSpecialEffectsOnSelf(row: Int, col: Int, triggeringBubble: Bubble?) {
+        guard let bubble = bubbleGridModel.getBubbleAt(row: row, col: col) else {
+            return
+        }
+
+        var bubblesToCascadeOn = [(Int, Int)]()
+
+        switch bubble.color {
+        case .lightningBubble:
+            performLightningEffect(cascadeOn: &bubblesToCascadeOn, row: row)
+        case .bombBubble:
+            performBombEffect(cascadeOn: &bubblesToCascadeOn, row: row, col: col)
+        case .starBubble:
+            performStarEffect(color: triggeringBubble?.color)
+        default:
+            return
+        }
+
+        // destroy the special bubble itself
+        bubbleGridModel.removeBubbleAt(row: row, col: col)
+        self.bubbleGridView.renderBubbleWithAnimationAt(.fade, row: row, col: col)
+
+        // cascade
+        for (r, c) in bubblesToCascadeOn {
+            performSpecialEffectsOnSelf(row: r, col: c, triggeringBubble: nil)
+        }
+    }
+
+    private func performLightningEffect(cascadeOn: inout [(Int, Int)], row: Int) {
+        let colsWithSpecialBubbles = (0..<BUBBLES_PER_ROW).filter({ (c) in
+            guard let bubble = self.bubbleGridModel.getBubbleAt(row: row, col: c) else {
+                return false
+            }
+            return bubble.isSpecial()
+        })
+
+        let colsWithStrikableBubbles = (0..<BUBBLES_PER_ROW).filter({ (c) in
+            guard let bubble = self.bubbleGridModel.getBubbleAt(row: row, col: c) else {
+                return false
+            }
+            return !(bubble.isSpecial() || bubble.color == .indestructibleBubble)
+        })
+
+        for c in colsWithStrikableBubbles {
+            bubbleGridModel.removeBubbleAt(row: row, col: c)
+            bubbleGridView.renderBubbleWithAnimationAt(.lightning, row: row, col: c)
+        }
+
+        cascadeOn = colsWithSpecialBubbles.map({ (c) in (row, c) })
+    }
+
+    private func performBombEffect(cascadeOn: inout [(Int, Int)], row: Int, col: Int) {
+        let adjSpecialBubbles = bubbleGridModel.getAdjacentTo(row: row, col: col).filter({ (r, c) in
+            guard let bubble = self.bubbleGridModel.getBubbleAt(row: r, col: c) else {
+                return false
+            }
+            return bubble.isSpecial()
+        })
+
+        let adjBombableBubbles = bubbleGridModel.getAdjacentTo(row: row, col: col).filter({ (r, c) in
+            guard let bubble = self.bubbleGridModel.getBubbleAt(row: r, col: c) else {
+                return false
+            }
+            return !(bubble.isSpecial() || bubble.color == .indestructibleBubble)
+        })
+
+        for (r, c) in adjBombableBubbles {
+            bubbleGridModel.removeBubbleAt(row: r, col: c)
+            bubbleGridView.renderBubbleWithAnimationAt(.bomb, row: r, col: c)
+        }
+
+        cascadeOn = adjSpecialBubbles
+    }
+
+    private func performStarEffect(color: BubbleColor?) {
+        guard let color = color else {
+            return
+        }
+
+        let bubblesToRemove = bubbleGridModel.getAllBubblesSatisfying(condition: { (bubble) in bubble.color == color })
+
+        for (r, c) in bubblesToRemove {
+            bubbleGridModel.removeBubbleAt(row: r, col: c)
+            bubbleGridView.renderBubbleWithAnimationAt(.star, row: r, col: c)
+        }
     }
 }
 

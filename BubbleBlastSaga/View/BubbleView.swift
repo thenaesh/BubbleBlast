@@ -12,6 +12,9 @@ class BubbleView: UIImageView {
     enum AnimationType {
         case fade
         case drop
+        case lightning
+        case bomb
+        case star
     }
 
     override init(frame: CGRect) {
@@ -74,6 +77,39 @@ class BubbleView: UIImageView {
                 self.render(as: color)
                 self.frame.origin.y -= 100
                 self.alpha = 1
+            })
+        case .lightning:
+            UIView.animate(withDuration: 0.1, animations: {
+                self.render(as: .lightningBubble)
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.1, delay: 0.1, animations: {
+                    self.alpha = 0
+                }, completion: { _ in
+                    self.render(as: color)
+                    self.alpha = 1
+                })
+            })
+        case .bomb:
+            UIView.animate(withDuration: 0.1, animations: {
+                self.render(as: .bombBubble)
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.1, delay: 0.1, animations: {
+                    self.alpha = 0
+                }, completion: { _ in
+                    self.render(as: color)
+                    self.alpha = 1
+                })
+            })
+        case .star:
+            UIView.animate(withDuration: 0.1, animations: {
+                self.render(as: .starBubble)
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.1, delay: 0.1, animations: {
+                    self.alpha = 0
+                }, completion: { _ in
+                    self.render(as: color)
+                    self.alpha = 1
+                })
             })
         }
     }

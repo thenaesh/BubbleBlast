@@ -98,7 +98,24 @@ class BubbleGrid: Codable {
         return (nearestRow, nearestCol)
     }
 
-    private func getAdjacentTo(row: Int, col: Int, with color: BubbleColor? = nil) -> [(Int, Int)] {
+    func getAllBubblesSatisfying(condition: (Bubble) -> Bool) -> [(Int, Int)] {
+        var satisfyingBubbles = [(Int, Int)]()
+
+        for row in 0..<NUM_ROWS {
+            for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
+                satisfyingBubbles.append((row, col))
+            }
+        }
+
+        return satisfyingBubbles.filter({ (r, c) in
+            guard let bubble = self.getBubbleAt(row: r, col: c) else {
+                return false
+            }
+            return condition(bubble)
+        })
+    }
+
+    func getAdjacentTo(row: Int, col: Int, with color: BubbleColor? = nil) -> [(Int, Int)] {
         var adj = [(row, col - 1), (row, col + 1), (row - 1, col), (row + 1, col)]
 
         if row % 2 == 1 {
