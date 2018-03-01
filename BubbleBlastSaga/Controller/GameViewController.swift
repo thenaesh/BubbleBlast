@@ -48,13 +48,22 @@ class GameViewController: BaseViewController {
      ** Game Mode Input Handlers **
      ******************************/
 
-    @IBAction private func handlePan(_ sender: UIPanGestureRecognizer) {
-        let viewVelocity = sender.velocity(in: bubbleGridView)
-        guard viewVelocity.y < 0 && bubbleGridModel.projectile?.status == .ready else {
+    @IBAction private func handleLongPress(_ sender: UILongPressGestureRecognizer) {
+        guard let projectile = bubbleGridModel.projectile else {
+            fatalError("Projectile missing!")
+        }
+        guard sender.state == .began else {
             return
         }
 
-        let direction = bubbleGridView.translateFromViewCoordinates(viewVelocity).normalized
+        let pressPosition = bubbleGridView.translateFromViewCoordinates(sender.location(in: bubbleGridView))
+        let projectilePosition = projectile.position
+
+        let direction = (pressPosition - projectilePosition).normalized
+        guard direction.y < 0 && projectile.status == .ready else {
+            return
+        }
+
         launchProjectile(towards: direction)
     }
 

@@ -75,7 +75,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="pTm-ur-1eh" appends="YES" id="WK5-ml-b8j"/>
+                                    <outletCollection property="gestureRecognizers" destination="vtK-87-wOC" appends="YES" id="3s1-AU-aFJ"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -93,11 +93,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dij-UR-MsI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="pTm-ur-1eh">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="vtK-87-wOC">
                     <connections>
-                        <action selector="handlePan:" destination="ijo-lo-tmD" id="doG-km-FBS"/>
+                        <action selector="handleLongPress:" destination="ijo-lo-tmD" id="ceQ-9H-JFv"/>
                     </connections>
-                </panGestureRecognizer>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="663" y="38"/>
         </scene>

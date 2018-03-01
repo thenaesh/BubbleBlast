@@ -14,6 +14,7 @@ class BubbleGridView: UIView {
     private let model: BubbleGrid
     private var grid: [[BubbleView]] = []
     private var projectileView: BubbleView? = nil
+    private var cannonView: CannonView? = nil
 
     init(parentView: UIView, model: BubbleGrid) {
         self.parentView = parentView
@@ -55,12 +56,15 @@ class BubbleGridView: UIView {
         }
 
         projectileView = BubbleView(frame: getProjectileFrameFor(projectileModel.position))
+        cannonView = CannonView(parentFrame: self.frame, projectileFrame: getProjectileFrameFor(projectileModel.position))
 
-        guard let projectileView = projectileView else {
-            fatalError("Projectile view failed to initialize!")
+        guard let projectileView = projectileView,
+              let cannonView = cannonView else {
+            fatalError("Projectile or cannon view failed to initialize!")
         }
 
         self.addSubview(projectileView)
+        self.addSubview(cannonView)
     }
 
     func getBubbleIndexAt(coords: CGPoint) -> (Int, Int)? {

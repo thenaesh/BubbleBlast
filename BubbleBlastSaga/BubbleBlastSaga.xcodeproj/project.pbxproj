@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D10D9BCB2047E15E0010A3D3 /* CannonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D9BCA2047E15E0010A3D3 /* CannonView.swift */; };
 		D1AC4EC42036E2D50056743F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1AC4EC32036E2D50056743F /* AppDelegate.swift */; };
 		D1AC4EC92036E2D50056743F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1AC4EC72036E2D50056743F /* Main.storyboard */; };
 		D1AC4ECB2036E2D50056743F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1AC4ECA2036E2D50056743F /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 		33DFA387B28E1BB5EE86AC94 /* Pods-BubbleBlastSaga.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BubbleBlastSaga.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BubbleBlastSaga/Pods-BubbleBlastSaga.debug.xcconfig"; sourceTree = "<group>"; };
 		9FB4E4DAA638336793133E34 /* Pods_BubbleBlastSaga.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BubbleBlastSaga.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB6DD4455416FDD79F219FC9 /* Pods-BubbleBlastSaga.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BubbleBlastSaga.release.xcconfig"; path = "Pods/Target Support Files/Pods-BubbleBlastSaga/Pods-BubbleBlastSaga.release.xcconfig"; sourceTree = "<group>"; };
+		D10D9BCA2047E15E0010A3D3 /* CannonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannonView.swift; sourceTree = "<group>"; };
 		D1AC4EC02036E2D50056743F /* BubbleBlastSaga.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BubbleBlastSaga.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1AC4EC32036E2D50056743F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D1AC4EC82036E2D50056743F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				D1AC4EEC203701B80056743F /* BubbleGridView.swift */,
 				D1AC4EED203701B80056743F /* BubbleView.swift */,
 				D1AC4EEE203701B80056743F /* PaletteView.swift */,
+				D10D9BCA2047E15E0010A3D3 /* CannonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D10D9BCB2047E15E0010A3D3 /* CannonView.swift in Sources */,
 				D1AC4EE9203701B10056743F /* Common.swift in Sources */,
 				D1CC38AB20469E41001AA757 /* GameViewController.swift in Sources */,
 				D1AC4EF6203701C10056743F /* Bubble.swift in Sources */,

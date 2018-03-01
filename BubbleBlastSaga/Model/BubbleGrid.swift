@@ -68,7 +68,7 @@ class BubbleGrid: Codable {
 
     func createProjectile() {
         let xCentre = maxX / 2 - 0.05
-        let yCentre = maxY - Bubble.radius
+        let yCentre = maxY - 2 * Bubble.radius
         self.projectile = ProjectileBubble(x: xCentre, y: yCentre, color: BubbleColor.random())
     }
 
