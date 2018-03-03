@@ -15,6 +15,8 @@ public protocol DynamicBody {
     var velocity: Vector2D { get set }
     var acceleration: Vector2D { get set }
 
+    var isAnchored: Bool { get set }
+
     mutating func integrate(dt: Double)
 }
 
@@ -22,5 +24,6 @@ public extension DynamicBody {
     mutating func integrate(dt: Double) {
         velocity += acceleration * dt
         position += velocity * dt
+        acceleration = Vector2D.zero
     }
 }

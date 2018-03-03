@@ -19,6 +19,7 @@ enum BubbleColor: String, Codable {
     case lightningBubble
     case bombBubble
     case starBubble
+    case magneticBubble
 }
 
 class Bubble: Codable {
@@ -66,6 +67,8 @@ extension BubbleColor {
         case .bombBubble:
             return .starBubble
         case .starBubble:
+            return .magneticBubble
+        case .magneticBubble:
             return .redBubble
         }
     }

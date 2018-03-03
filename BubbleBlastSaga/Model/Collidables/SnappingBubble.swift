@@ -10,6 +10,11 @@ import Foundation
 import PhysicsEngine
 
 class SnappingBubble: Bubble, StickyCircle {
+    // only magnetic bubbles have mass, so they can attract other bubbles
+    var mass: Double? {
+        return self.color == .magneticBubble ? 1 : nil
+    }
+
     override init(x: Double, y: Double, color: BubbleColor) {
         super.init(x: x, y: y, color: color)
     }

@@ -12,6 +12,7 @@ import PhysicsEngine
 class Ceiling: StickyLine {
     var normal = Vector2D(0, 1)
     var position = Vector2D(0, 0)
+    var mass: Double? = nil
 
     func doOnCollide(with otherBody: inout DynamicBody) {
         guard let otherBody = otherBody as? ProjectileBubble else {

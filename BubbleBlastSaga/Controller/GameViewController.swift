@@ -8,12 +8,14 @@
 
 import UIKit
 import PhysicsEngine
+import AVFoundation
 
 class GameViewController: BaseViewController {
     
     @IBOutlet var gameArea: UIView!
 
     var gridFile: String? = nil
+    var player: AVAudioPlayer? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +26,35 @@ class GameViewController: BaseViewController {
         destroyFloatingBubbles()
         loadProjectile()
         bubbleGridView.setupProjectileView()
+
+        func playSound(_ name: String) {
+            guard let sound = NSDataAsset(name: name) else {
+                print("url missing")
+                return
+            }
+
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setActive(true)
+
+
+
+                /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
+                player = try AVAudioPlayer(data: sound.data, fileTypeHint: AVFileType.mp3.rawValue)
+
+                guard let player = player else {
+                    print("player failed to initialise")
+                    return
+                }
+
+                player.numberOfLoops = -1
+                player.play()
+
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+        playSound("background_theme_ddlc")
     }
 
     override func refresh(displayLink: CADisplayLink) {
@@ -80,6 +111,7 @@ class GameViewController: BaseViewController {
         let speed = 1.0
         let modelVelocity = speed * direction
 
+        bubbleGridModel.projectile?.isAnchored = false
         bubbleGridModel.projectile?.status = .flying
         bubbleGridModel.projectile?.velocity += modelVelocity
     }

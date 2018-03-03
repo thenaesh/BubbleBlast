@@ -20,6 +20,7 @@ class ProjectileBubble: Bubble, DynamicBody {
     var boundingRadius = Bubble.radius
     var velocity: Vector2D
     var acceleration: Vector2D
+    var isAnchored: Bool = true
     var status = Status.ready
     let isNonSnapping: Bool
 

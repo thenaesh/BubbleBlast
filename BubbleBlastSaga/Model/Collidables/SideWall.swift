@@ -17,6 +17,7 @@ class SideWall: ReflectingLine {
 
     var normal: Vector2D
     var position: Vector2D
+    var mass: Double? = nil
 
     init(xPos: Double, side: Side) {
         self.position = Vector2D(xPos, 0)

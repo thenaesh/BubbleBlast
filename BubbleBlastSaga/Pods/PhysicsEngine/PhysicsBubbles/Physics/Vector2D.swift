@@ -24,6 +24,8 @@ public struct Vector2D: Codable {
     public var normalized: Vector2D {
         return self / self.magnitude
     }
+
+    public static let zero = Vector2D(0, 0)
 }
 
 public extension Vector2D {

@@ -15,7 +15,7 @@ class PaletteView: UIView {
     private let parentView: UIView
 
     let redSelector, greenSelector, blueSelector, orangeSelector: Selector
-    let indestructibleSelector, lightningSelector, bombSelector, starSelector: Selector
+    let indestructibleSelector, lightningSelector, bombSelector, starSelector, magneticSelector: Selector
     let eraseSelector: Selector
 
     let resetButton = Button()
@@ -35,6 +35,7 @@ class PaletteView: UIView {
         self.lightningSelector = UIImageView(image: #imageLiteral(resourceName: "bubble-lightning"))
         self.bombSelector = UIImageView(image: #imageLiteral(resourceName: "bubble-bomb"))
         self.starSelector = UIImageView(image: #imageLiteral(resourceName: "bubble-star"))
+        self.magneticSelector = UIImageView(image: #imageLiteral(resourceName: "bubble-magnetic"))
 
         resetButton.text = "RESET"
         startButton.text = "START"
@@ -113,6 +114,7 @@ class PaletteView: UIView {
         indestructibleSelector.trailingAnchor.constraint(lessThanOrEqualTo: lightningSelector.leadingAnchor).isActive = true
         lightningSelector.trailingAnchor.constraint(lessThanOrEqualTo: bombSelector.leadingAnchor).isActive = true
         bombSelector.trailingAnchor.constraint(lessThanOrEqualTo: starSelector.leadingAnchor).isActive = true
+        starSelector.trailingAnchor.constraint(lessThanOrEqualTo: magneticSelector.leadingAnchor).isActive = true
         eraseSelector.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -width / 50).isActive = true
     }
 
@@ -193,6 +195,8 @@ class PaletteView: UIView {
             return .bombBubble
         case starSelector:
             return .starBubble
+        case magneticSelector:
+            return .magneticBubble
         case eraseSelector:
             return nil
         default:
@@ -209,6 +213,7 @@ class PaletteView: UIView {
                 lightningSelector,
                 bombSelector,
                 starSelector,
+                magneticSelector,
                 eraseSelector]
     }
 

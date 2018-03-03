@@ -1,5 +1,5 @@
 PODS:
-  - PhysicsEngine (0.1)
+  - PhysicsEngine (0.2)
 
 DEPENDENCIES:
   - PhysicsEngine (from `https://github.com/cs3217/2018-ps4-thenaesh`, branch `cocoapod`)
@@ -11,11 +11,11 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   PhysicsEngine:
-    :commit: 9c2e51196201bbe5ffed5ea5dd0e5e6790001f36
+    :commit: ee8010f3d26fd597e8d13245baedc389dcca0710
     :git: https://github.com/cs3217/2018-ps4-thenaesh
 
 SPEC CHECKSUMS:
-  PhysicsEngine: 3607ada7e7ee18b4ccdedf9b35c80f965c59cc2c
+  PhysicsEngine: 6b9b63d7ed081c46310ab8bddc609a154368594d
 
 PODFILE CHECKSUM: 19c0967a98327048645b11f0c2384d8ba8f2e932
 

@@ -15,11 +15,16 @@ public protocol PhysicsEnvironment: AnyObject {
 
 public extension PhysicsEnvironment {
     func simulate(dt: Double) {
-        guard var dynamicBody = dynamicBody else {
+        guard var dynamicBody = dynamicBody, !dynamicBody.isAnchored else {
             return
         }
 
         dynamicBody.integrate(dt: dt)
+
+        for staticBody in staticBodies {
+            staticBody.attract(&dynamicBody)
+        }
+        
         for staticBody in staticBodies where staticBody.isColliding(with: dynamicBody) {
             staticBody.collide(with: &dynamicBody)
             staticBody.doOnCollide(with: &dynamicBody)

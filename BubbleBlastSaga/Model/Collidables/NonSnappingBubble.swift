@@ -10,6 +10,11 @@ import Foundation
 import PhysicsEngine
 
 class NonSnappingBubble: Bubble, StickyCircle {
+    // only magnetic bubbles have mass, so they can attract other bubbles
+    var mass: Double? {
+        return color == .magneticBubble ? 1 : nil
+    }
+    
     static var idCounter: Int64 = 0;
     static func getNewId() -> Int64 {
         idCounter += 1
