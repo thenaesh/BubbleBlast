@@ -13,25 +13,26 @@ protocol Serializable {
     func load(from file: String) -> Bool
 }
 
-extension Serializable {
 
-    func saveData(_ data: Data, to file: String) {
-        try? data.write(to: getFileURL(file))
-    }
+/********************
+ ** Helper Methods **
+ ********************/
 
-    func loadData(from file: String) -> Data? {
-        return try? Data(contentsOf: getFileURL(file))
-    }
+func saveData(_ data: Data, to file: String) {
+    try? data.write(to: getFileURL(file))
+}
 
-    private func getFileURL(_ file: String) -> URL {
-        // Get the URL of the Documents Directory
-        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+func loadData(from file: String) -> Data? {
+    return try? Data(contentsOf: getFileURL(file))
+}
 
-        // Get the URL for a file in the Documents Directory
-        let documentDirectory = urls[0]
-        let fileURL = documentDirectory.appendingPathComponent(file)
+func getFileURL(_ file: String) -> URL {
+    // Get the URL of the Documents Directory
+    let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
 
-        return fileURL
-    }
+    // Get the URL for a file in the Documents Directory
+    let documentDirectory = urls[0]
+    let fileURL = documentDirectory.appendingPathComponent(file)
 
+    return fileURL
 }

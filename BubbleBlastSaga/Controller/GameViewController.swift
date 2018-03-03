@@ -21,7 +21,7 @@ class GameViewController: BaseViewController {
         super.viewDidLoad()
         self.initWithParentView(self.gameArea)
         // Do any additional setup after loading the view, typically from a nib.
-        loadGridFromFileIfPossible()
+        loadGridFromFile()
         bubbleGridView.render()
         destroyFloatingBubbles()
         loadProjectile()
@@ -37,9 +37,6 @@ class GameViewController: BaseViewController {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
                 try AVAudioSession.sharedInstance().setActive(true)
 
-
-
-                /* The following line is required for the player to work on iOS 11. Change the file type accordingly*/
                 player = try AVAudioPlayer(data: sound.data, fileTypeHint: AVFileType.mp3.rawValue)
 
                 guard let player = player else {
@@ -54,7 +51,7 @@ class GameViewController: BaseViewController {
                 print(error.localizedDescription)
             }
         }
-        playSound("background_theme_ddlc")
+        playSound("background_theme_mario")
     }
 
     override func refresh(displayLink: CADisplayLink) {
@@ -63,9 +60,10 @@ class GameViewController: BaseViewController {
         self.performRenderHack(on: self.gameArea)
     }
 
-    func loadGridFromFileIfPossible() {
+    func loadGridFromFile() {
+        // if no file is specified, it's a problem with our code
         guard let gridFile = self.gridFile else {
-            return
+            fatalError("No load string specified!")
         }
 
         // if a file is specified, it should not be erroneous, otherwise it's a problem with our code
@@ -166,12 +164,16 @@ class GameViewController: BaseViewController {
         */
 
         let (row, col) = bubbleGridModel.nearestUnoccupiedGridPoint(from: projectile.position)
+
         bubbleGridModel.setBubbleAt(row: row, col: col, to: projectile.color)
         bubbleGridView.renderBubbleAt(row: row, col: col)
 
         performSpecialEffectsOnAdjacent(row: row, col: col)
         destroyAdjoiningCluster(row: row, col: col, of: projectile.color)
         destroyFloatingBubbles()
+
+        winIfConditionSatisfied()
+        loseIfConditionSatisfied()
 
         loadProjectile() // reload
     }
@@ -191,6 +193,52 @@ class GameViewController: BaseViewController {
             self.bubbleGridModel.removeBubbleAt(row: r, col: c)
             self.bubbleGridView.renderBubbleWithAnimationAt(.drop, row: r, col: c)
         })
+    }
+
+    /***********************
+     ** Win/Loss Handling **
+     ***********************/
+
+    func isGameWon() -> Bool {
+        // we only need to check that the first row is empty
+        // that means there is no bubble connected to the ceiling, so every bubble would have dropped off
+        // this implies that the entire grid is empty, which is our win condition
+        let firstRow = 0
+
+        for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: firstRow, col: col) {
+            guard bubbleGridModel.getBubbleAt(row: firstRow, col: col) == nil else {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    func isGameLost() -> Bool {
+        // if any bubbles are placed on this row, the game is lost
+        // the rows below it are also automatically forbidden, since by ceiling connection requirement
+        // if there is a bubble in any row below then there neccesarily is a bubble in this row as well
+        let losingRow = NUM_ROWS - 2
+
+        for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: losingRow, col: col) {
+            if bubbleGridModel.getBubbleAt(row: losingRow, col: col) != nil {
+                return true
+            }
+        }
+
+        return false
+    }
+
+    func winIfConditionSatisfied() {
+        if isGameWon() {
+            performSegue(withIdentifier: "winGame", sender: nil)
+        }
+    }
+
+    func loseIfConditionSatisfied() {
+        if isGameLost() {
+            performSegue(withIdentifier: "loseGame", sender: nil)
+        }
     }
 
     /*********************

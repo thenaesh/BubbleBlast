@@ -80,6 +80,7 @@ class PaletteView: UIView {
     private func addAllButtonsToPaletteView() {
         for button in buttons {
             button.translatesAutoresizingMaskIntoConstraints = false
+            button.font = UIFont.systemFont(ofSize: 24.0)
             self.addSubview(button)
         }
     }
