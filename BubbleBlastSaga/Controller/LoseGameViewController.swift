@@ -10,6 +10,11 @@ import UIKit
 
 class LoseGameViewController: UIViewController {
     override func viewDidLoad() {
+        super.viewDidLoad()
+
+        audio.stopAll()
+        audio.play(.Lose)
+        
         print("GAME OVER :(")
     }
 }

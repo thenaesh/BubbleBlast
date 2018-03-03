@@ -14,7 +14,7 @@
         <!--Menu View Controller-->
         <scene sceneID="2AO-tf-4ct">
             <objects>
-                <viewController id="xoF-1M-Tyk" userLabel="Menu View Controller" sceneMemberID="viewController">
+                <viewController id="xoF-1M-Tyk" userLabel="Menu View Controller" customClass="MenuViewController" customModule="BubbleBlastSaga" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1YF-OL-7vc">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

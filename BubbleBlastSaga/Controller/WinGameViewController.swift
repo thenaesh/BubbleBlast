@@ -10,6 +10,11 @@ import UIKit
 
 class WinGameViewController: UIViewController {
     override func viewDidLoad() {
+        super.viewDidLoad()
+
+        audio.stopAll()
+        audio.play(.Win)
+        
         print("WIN LIAO LOR! :)")
     }
 }

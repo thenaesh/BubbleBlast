@@ -12,7 +12,7 @@ class SaveGameCollectionCell: UICollectionViewCell {
     @IBOutlet weak var saveGameLabel: UILabel!
 }
 
-class LevelSelectionViewController: UIViewController{
+class LevelSelectionViewController: UIViewController {
 
     @IBOutlet weak var savedGrids: UICollectionView!
     let reuseIdentifier = "cell"
@@ -35,7 +35,7 @@ class LevelSelectionViewController: UIViewController{
     }
 
     func writeBundledLevelsToSaveDirectory() {
-        let bundledLevelNames = ["cables", "magnets", "stripes"]
+        let bundledLevelNames = ["Cables", "Magnets", "Stripes"]
 
         for bundledLevelName in bundledLevelNames {
             guard let levelData = NSDataAsset(name: bundledLevelName) else {

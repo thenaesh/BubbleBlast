@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaletteViewController: BaseViewController {
+class PaletteViewController: GridViewController {
     
     @IBOutlet var gameArea: UIView!
 
@@ -226,7 +226,7 @@ class PaletteViewController: BaseViewController {
      ** Game Mode Segue **
      *********************/
 
-    private let defaultGridFile = "default.json"
+    private let defaultGridFile = "PreviousLevel"
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)

@@ -10,7 +10,7 @@ import UIKit
 import PhysicsEngine
 import AVFoundation
 
-class GameViewController: BaseViewController {
+class GameViewController: GridViewController {
     
     @IBOutlet var gameArea: UIView!
 
@@ -27,31 +27,8 @@ class GameViewController: BaseViewController {
         loadProjectile()
         bubbleGridView.setupProjectileView()
 
-        func playSound(_ name: String) {
-            guard let sound = NSDataAsset(name: name) else {
-                print("url missing")
-                return
-            }
-
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                try AVAudioSession.sharedInstance().setActive(true)
-
-                player = try AVAudioPlayer(data: sound.data, fileTypeHint: AVFileType.mp3.rawValue)
-
-                guard let player = player else {
-                    print("player failed to initialise")
-                    return
-                }
-
-                player.numberOfLoops = -1
-                player.play()
-
-            } catch let error {
-                print(error.localizedDescription)
-            }
-        }
-        playSound("background_theme_mario")
+        audio.stopAll()
+        audio.playForever(.SAFMarch)
     }
 
     override func refresh(displayLink: CADisplayLink) {
@@ -112,6 +89,8 @@ class GameViewController: BaseViewController {
         bubbleGridModel.projectile?.isAnchored = false
         bubbleGridModel.projectile?.status = .flying
         bubbleGridModel.projectile?.velocity += modelVelocity
+
+        audio.play(.Shoot)
     }
 
     func handleLandingProjectile() {
@@ -147,6 +126,7 @@ class GameViewController: BaseViewController {
                 self.bubbleGridModel.removeBubbleAt(row: r, col: c)
                 self.bubbleGridView.renderBubbleWithAnimationAt(.fade, row: r, col: c)
             })
+            audio.play(.Coin)
         }
     }
 
@@ -270,6 +250,7 @@ class GameViewController: BaseViewController {
         for c in colsWithStrikableBubbles {
             bubbleGridModel.removeBubbleAt(row: row, col: c)
             bubbleGridView.renderBubbleWithAnimationAt(.lightning, row: row, col: c)
+            audio.play(.Zap)
         }
 
         cascadeOn = colsWithSpecialBubbles.map({ (c) in (row, c) })
@@ -293,6 +274,7 @@ class GameViewController: BaseViewController {
         for (r, c) in adjBombableBubbles {
             bubbleGridModel.removeBubbleAt(row: r, col: c)
             bubbleGridView.renderBubbleWithAnimationAt(.bomb, row: r, col: c)
+            audio.play(.Explosion)
         }
 
         cascadeOn = adjSpecialBubbles
@@ -308,6 +290,7 @@ class GameViewController: BaseViewController {
         for (r, c) in bubblesToRemove {
             bubbleGridModel.removeBubbleAt(row: r, col: c)
             bubbleGridView.renderBubbleWithAnimationAt(.star, row: r, col: c)
+            audio.play(.Powerup)
         }
     }
 }
