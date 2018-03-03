@@ -10,7 +10,8 @@ import Foundation
 import PhysicsEngine
 
 class BubbleGrid: Codable {
-    var grid: [[FixedBubble?]]
+    var grid: [[SnappingBubble?]]
+    //var danglingBubbles = Set<NonSnappingBubble>()
     var projectile: ProjectileBubble? = nil
 
     init() {
@@ -36,7 +37,7 @@ class BubbleGrid: Codable {
         }
 
         if grid[row][col] == nil {
-            grid[row][col] = FixedBubble(coords: BubbleGrid.getBubbleCentre(row: row, col: col), color: color)
+            grid[row][col] = SnappingBubble(coords: BubbleGrid.getBubbleCentre(row: row, col: col), color: color)
         } else {
             grid[row][col]?.color = color
         }
@@ -132,6 +133,22 @@ class BubbleGrid: Codable {
             return adj
         }
         return adj.filter({ (r, c) in getBubbleAt(row: r, col: c)?.color == color })
+    }
+
+    func getAdjacentTo(position: Vector2D, with color: BubbleColor? = nil) -> [(Int, Int)] {
+        var adj = [(Int, Int)]()
+
+        for row in 0..<NUM_ROWS {
+            for col in 0..<BUBBLES_PER_ROW where isBubbleIndexAllowable(row: row, col: col) {
+                guard let bubble = getBubbleAt(row: row, col: col),
+                          (bubble.position - position).magnitude <= Bubble.diameter else {
+                    continue
+                }
+                adj.append((row, col))
+            }
+        }
+
+        return adj
     }
 
     func getBubbleClusterAt(row: Int, col: Int, of color: BubbleColor? = nil) -> [(Int, Int)] {

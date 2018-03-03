@@ -9,7 +9,7 @@
 import Foundation
 import PhysicsEngine
 
-class FixedBubble: Bubble, StickyCircle {
+class SnappingBubble: Bubble, StickyCircle {
     override init(x: Double, y: Double, color: BubbleColor) {
         super.init(x: x, y: y, color: color)
     }

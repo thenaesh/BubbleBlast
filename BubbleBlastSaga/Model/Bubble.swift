@@ -71,8 +71,6 @@ extension BubbleColor {
     }
 
     static func random() -> BubbleColor {
-        let choices: [BubbleColor] = [.redBubble, .greenBubble, .blueBubble, .orangeBubble]
-        let randomIndex = Int(arc4random_uniform(UInt32(choices.count)))
-        return choices[randomIndex]
+        return randomChoiceFrom([.redBubble, .greenBubble, .blueBubble, .orangeBubble])
     }
 }

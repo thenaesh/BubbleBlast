@@ -77,7 +77,7 @@ class GameViewController: BaseViewController {
     }
 
     func launchProjectile(towards direction: Vector2D) {
-        let speed = 0.5
+        let speed = 1.0
         let modelVelocity = speed * direction
 
         bubbleGridModel.projectile?.status = .flying
@@ -91,9 +91,47 @@ class GameViewController: BaseViewController {
 
         bubbleGridView.renderProjectile()
 
-        guard projectile.status == .stopped else {
+        guard projectile.status == .stopped || projectile.status == .stoppedWithoutSnapping else {
             return
         }
+
+        /*
+        if projectile.status == .stoppedWithoutSnapping || projectile.isNonSnapping {
+
+            let adjGridBubbles = bubbleGridModel.getAdjacentTo(position: projectile.position)
+            let adjDanglingBubbles = bubbleGridModel.danglingBubbles.filter({ (danglingBubble) in
+                return (danglingBubble.position - projectile.position).magnitude <= Bubble.diameter
+            })
+
+            let newDanglingBubble = NonSnappingBubble(x: projectile.position.x,
+                                                      y: projectile.position.y,
+                                                      color: projectile.color,
+                                                      adjacentGridBubbles: adjGridBubbles,
+                                                      adjacentDanglingBubbles: adjDanglingBubbles)
+
+            bubbleGridModel.danglingBubbles.insert(newDanglingBubble)
+
+            // TODO: refactor this mess, this belongs in the view
+            let viewCoords = bubbleGridView.translateToViewCoordinates(newDanglingBubble.position)
+            bubbleGridView.danglingBubbleViews[newDanglingBubble.id] = BubbleView(frame: CGRect(x: viewCoords.0 - bubbleGridView.radius,
+                                                                                                y: viewCoords.1 - bubbleGridView.radius,
+                                                                                                width: bubbleGridView.diameter,
+                                                                                                height: bubbleGridView.diameter))
+            bubbleGridView.addSubview(bubbleGridView.danglingBubbleViews[newDanglingBubble.id]!)
+            bubbleGridView.danglingBubbleViews[newDanglingBubble.id]?.render(as: newDanglingBubble.color)
+
+        } else {
+
+            let (row, col) = bubbleGridModel.nearestUnoccupiedGridPoint(from: projectile.position)
+            bubbleGridModel.setBubbleAt(row: row, col: col, to: projectile.color)
+            bubbleGridView.renderBubbleAt(row: row, col: col)
+
+            performSpecialEffectsOnAdjacent(row: row, col: col)
+            destroyAdjoiningCluster(row: row, col: col, of: projectile.color)
+            destroyFloatingBubbles()
+
+        }
+        */
 
         let (row, col) = bubbleGridModel.nearestUnoccupiedGridPoint(from: projectile.position)
         bubbleGridModel.setBubbleAt(row: row, col: col, to: projectile.color)

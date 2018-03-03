@@ -14,20 +14,25 @@ class ProjectileBubble: Bubble, DynamicBody {
         case ready
         case flying
         case stopped
+        case stoppedWithoutSnapping
     }
 
     var boundingRadius = Bubble.radius
     var velocity: Vector2D
     var acceleration: Vector2D
     var status = Status.ready
+    let isNonSnapping: Bool
 
     override init(x: Double, y: Double, color: BubbleColor) {
+        //self.isNonSnapping = randomChoiceFrom([true, false])
+        self.isNonSnapping = false
         self.velocity = Vector2D(0, 0)
         self.acceleration = Vector2D(0, 0)
         super.init(x: x, y: y, color: color)
     }
 
     required init(from decoder: Decoder) throws {
+        self.isNonSnapping = randomChoiceFrom([true, false])
         self.velocity = Vector2D(0, 0)
         self.acceleration = Vector2D(0, 0)
         try super.init(from: decoder)

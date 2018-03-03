@@ -22,6 +22,12 @@ extension BubbleGrid: PhysicsEnvironment {
             }
         }
 
+        /*
+        for nonSnappingBubble in self.danglingBubbles {
+            staticBodyArray.append(nonSnappingBubble)
+        }
+         */
+
         let stickyCeiling = Ceiling()
         staticBodyArray.append(stickyCeiling)
 

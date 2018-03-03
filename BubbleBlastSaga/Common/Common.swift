@@ -31,3 +31,8 @@ func isBubbleIndexInPalette(row: Int, col: Int) -> Bool {
 
     return row < NUM_ROWS_FOR_PALETTE
 }
+
+func randomChoiceFrom<T>(_ choices: [T]) -> T {
+    let randomIndex = Int(arc4random_uniform(UInt32(choices.count)))
+    return choices[randomIndex]
+}

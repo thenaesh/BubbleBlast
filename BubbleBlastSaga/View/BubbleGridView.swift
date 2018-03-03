@@ -13,6 +13,7 @@ class BubbleGridView: UIView {
     private let parentView: UIView
     private let model: BubbleGrid
     private var grid: [[BubbleView]] = []
+    var danglingBubbleViews = [Int64: BubbleView]()
     private var projectileView: BubbleView? = nil
     private var cannonView: CannonView? = nil
 
@@ -129,6 +130,12 @@ class BubbleGridView: UIView {
 
         projectileView?.frame = getProjectileFrameFor(projectileModel.position)
         projectileView?.render(as: model.projectile?.color)
+        projectileView?.layer.borderColor = UIColor.purple.cgColor
+        if projectileModel.isNonSnapping {
+            projectileView?.layer.borderWidth = 5
+        } else {
+            projectileView?.layer.borderWidth = 0
+        }
     }
 
     func renderBubbleAt(row: Int, col: Int) {
@@ -174,10 +181,10 @@ class BubbleGridView: UIView {
         return Double(self.frame.size.width)
     }
 
-    private var diameter: Double {
+    var diameter: Double {
         return viewCoordinateScaleFactor / Double(BUBBLES_PER_ROW)
     }
-    private var radius: Double {
+    var radius: Double {
         return diameter / 2
     }
 }
