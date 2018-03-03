@@ -11,7 +11,6 @@ import PhysicsEngine
 
 class BubbleGrid: Codable {
     var grid: [[SnappingBubble?]]
-    //var danglingBubbles = Set<NonSnappingBubble>()
     var projectile: ProjectileBubble? = nil
 
     init() {

@@ -13,7 +13,6 @@ class BubbleGridView: UIView {
     private let parentView: UIView
     private let model: BubbleGrid
     private var grid: [[BubbleView]] = []
-    var danglingBubbleViews = [Int64: BubbleView]()
     private var projectileView: BubbleView? = nil
     private var cannonView: CannonView? = nil
 
