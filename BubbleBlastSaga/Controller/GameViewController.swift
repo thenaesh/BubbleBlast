@@ -127,6 +127,7 @@ class GameViewController: GridViewController {
                 self.bubbleGridView.renderBubbleWithAnimationAt(.fade, row: r, col: c)
             })
             audio.play(.Coin)
+            updateScore(for: color)
         }
     }
 
@@ -135,6 +136,31 @@ class GameViewController: GridViewController {
             self.bubbleGridModel.removeBubbleAt(row: r, col: c)
             self.bubbleGridView.renderBubbleWithAnimationAt(.drop, row: r, col: c)
         })
+    }
+
+    /********************
+     ** Score Handling **
+     ********************/
+
+    var score: [BubbleColor: Int] = [
+        .redBubble: 0,
+        .greenBubble: 0,
+        .blueBubble: 0,
+        .orangeBubble: 0
+    ]
+
+    var specialScore = 0
+
+    func updateScore(for color: BubbleColor) {
+        guard let currentScore = score[color] else {
+            fatalError("Attempt to get score for unscored bubble!")
+        }
+
+        score[color] = currentScore + 1
+    }
+
+    func updateSpecialScore() {
+        specialScore += 1
     }
 
     /***********************
@@ -173,13 +199,25 @@ class GameViewController: GridViewController {
 
     func winIfConditionSatisfied() {
         if isGameWon() {
-            performSegue(withIdentifier: "winGame", sender: nil)
+            performSegue(withIdentifier: "endGame", sender: EndGameState.Win)
         }
     }
 
     func loseIfConditionSatisfied() {
         if isGameLost() {
-            performSegue(withIdentifier: "loseGame", sender: nil)
+            performSegue(withIdentifier: "endGame", sender: EndGameState.Lose)
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let endState = sender as? EndGameState else {
+            fatalError("Segue to end game performed without giving win/loss information!")
+        }
+
+        if let endGameVC = segue.destination as? EndGameViewController {
+            endGameVC.endState = endState
+            endGameVC.score = score
+            endGameVC.specialScore = specialScore
         }
     }
 
@@ -225,6 +263,7 @@ class GameViewController: GridViewController {
         // destroy the special bubble itself
         bubbleGridModel.removeBubbleAt(row: row, col: col)
         self.bubbleGridView.renderBubbleWithAnimationAt(.fade, row: row, col: col)
+        updateSpecialScore()
 
         // cascade
         for (r, c) in bubblesToCascadeOn {

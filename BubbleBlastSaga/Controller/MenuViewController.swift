@@ -12,6 +12,7 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        audio.stopAll()
         audio.playForever(.DDLCTheme)
     }
 }

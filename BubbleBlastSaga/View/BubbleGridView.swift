@@ -15,6 +15,7 @@ class BubbleGridView: UIView {
     private var grid: [[BubbleView]] = []
     private var projectileView: BubbleView? = nil
     private var cannonView: CannonView? = nil
+    private var scoreView: UILabel? = nil
 
     init(parentView: UIView, model: BubbleGrid) {
         self.parentView = parentView
@@ -65,6 +66,9 @@ class BubbleGridView: UIView {
 
         self.addSubview(projectileView)
         self.addSubview(cannonView)
+    }
+
+    func setupScoreView() {
     }
 
     func getBubbleIndexAt(coords: CGPoint) -> (Int, Int)? {
@@ -135,6 +139,9 @@ class BubbleGridView: UIView {
         } else {
             projectileView?.layer.borderWidth = 0
         }
+    }
+
+    func renderScore() {
     }
 
     func renderBubbleAt(row: Int, col: Int) {

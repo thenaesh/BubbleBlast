@@ -110,8 +110,13 @@ class Audio {
     }
 
     func play(_ name: SoundNames, numLoops: Int = 0) {
-        players[name]?.numberOfLoops = numLoops
-        players[name]?.play()
+        guard let player = players[name] else {
+            return
+        }
+
+        player.numberOfLoops = numLoops
+        player.currentTime = 0
+        player.play()
     }
 
     func stop(_ name: SoundNames) {

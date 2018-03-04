@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D108C2B9204B2C94008A4D71 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D108C2B8204B2C94008A4D71 /* MenuViewController.swift */; };
+		D108C2BB204BBB6A008A4D71 /* EndGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D108C2BA204BBB6A008A4D71 /* EndGameViewController.swift */; };
 		D10D9BCB2047E15E0010A3D3 /* CannonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D9BCA2047E15E0010A3D3 /* CannonView.swift */; };
 		D10D9BCD20484A2B0010A3D3 /* NonSnappingBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10D9BCC20484A2B0010A3D3 /* NonSnappingBubble.swift */; };
 		D1214BC6204A5813001DB14B /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1214BC1204A5812001DB14B /* Graph.swift */; };
@@ -40,8 +41,6 @@
 		D1CC38AB20469E41001AA757 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC38AA20469E41001AA757 /* GameViewController.swift */; };
 		D1CC38AD2046A6DF001AA757 /* GridViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CC38AC2046A6DF001AA757 /* GridViewController.swift */; };
 		D1DD6943204AC15000FE412E /* LevelSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD6942204AC15000FE412E /* LevelSelectionViewController.swift */; };
-		D1DD6945204ACC9400FE412E /* LoseGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD6944204ACC9400FE412E /* LoseGameViewController.swift */; };
-		D1DD6947204B09E800FE412E /* WinGameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD6946204B09E800FE412E /* WinGameViewController.swift */; };
 		D1DD6949204B133300FE412E /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DD6948204B133300FE412E /* Audio.swift */; };
 		E0BDEF4E8134DF83B7BFCEC6 /* Pods_BubbleBlastSaga.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FB4E4DAA638336793133E34 /* Pods_BubbleBlastSaga.framework */; };
 /* End PBXBuildFile section */
@@ -61,6 +60,7 @@
 		9FB4E4DAA638336793133E34 /* Pods_BubbleBlastSaga.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BubbleBlastSaga.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB6DD4455416FDD79F219FC9 /* Pods-BubbleBlastSaga.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BubbleBlastSaga.release.xcconfig"; path = "Pods/Target Support Files/Pods-BubbleBlastSaga/Pods-BubbleBlastSaga.release.xcconfig"; sourceTree = "<group>"; };
 		D108C2B8204B2C94008A4D71 /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		D108C2BA204BBB6A008A4D71 /* EndGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndGameViewController.swift; sourceTree = "<group>"; };
 		D10D9BCA2047E15E0010A3D3 /* CannonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CannonView.swift; sourceTree = "<group>"; };
 		D10D9BCC20484A2B0010A3D3 /* NonSnappingBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonSnappingBubble.swift; sourceTree = "<group>"; };
 		D1214BC1204A5812001DB14B /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
@@ -97,8 +97,6 @@
 		D1CC38AA20469E41001AA757 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		D1CC38AC2046A6DF001AA757 /* GridViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridViewController.swift; sourceTree = "<group>"; };
 		D1DD6942204AC15000FE412E /* LevelSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectionViewController.swift; sourceTree = "<group>"; };
-		D1DD6944204ACC9400FE412E /* LoseGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoseGameViewController.swift; sourceTree = "<group>"; };
-		D1DD6946204B09E800FE412E /* WinGameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WinGameViewController.swift; sourceTree = "<group>"; };
 		D1DD6948204B133300FE412E /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -204,9 +202,8 @@
 				D1CC38AA20469E41001AA757 /* GameViewController.swift */,
 				D1CC38AC2046A6DF001AA757 /* GridViewController.swift */,
 				D1DD6942204AC15000FE412E /* LevelSelectionViewController.swift */,
-				D1DD6944204ACC9400FE412E /* LoseGameViewController.swift */,
-				D1DD6946204B09E800FE412E /* WinGameViewController.swift */,
 				D108C2B8204B2C94008A4D71 /* MenuViewController.swift */,
+				D108C2BA204BBB6A008A4D71 /* EndGameViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -420,7 +417,6 @@
 			files = (
 				D1214BC7204A5813001DB14B /* Edge.swift in Sources */,
 				D10D9BCB2047E15E0010A3D3 /* CannonView.swift in Sources */,
-				D1DD6945204ACC9400FE412E /* LoseGameViewController.swift in Sources */,
 				D1AC4EE9203701B10056743F /* Common.swift in Sources */,
 				D1214BC9204A5813001DB14B /* Node.swift in Sources */,
 				D1CC38AB20469E41001AA757 /* GameViewController.swift in Sources */,
@@ -430,11 +426,11 @@
 				D1AC4EEA203701B10056743F /* Serializable.swift in Sources */,
 				D1214BCE204A5943001DB14B /* PriorityValue.swift in Sources */,
 				D1AC4EF0203701B80056743F /* BubbleView.swift in Sources */,
-				D1DD6947204B09E800FE412E /* WinGameViewController.swift in Sources */,
 				D1AC4EEF203701B80056743F /* BubbleGridView.swift in Sources */,
 				D1AC4EE5203701930056743F /* PaletteViewController.swift in Sources */,
 				D1214BC6204A5813001DB14B /* Graph.swift in Sources */,
 				D1AC4EF8203701C10056743F /* BubbleGrid.swift in Sources */,
+				D108C2BB204BBB6A008A4D71 /* EndGameViewController.swift in Sources */,
 				D1C4296E203B4403006125CF /* SideWall.swift in Sources */,
 				D1AC4EF1203701B80056743F /* PaletteView.swift in Sources */,
 				D1AC4EF7203701C10056743F /* BubbleGrid+Serializable.swift in Sources */,
