@@ -104,6 +104,8 @@ The controllers comprise the view controllers, each of which represents both a s
 
 ####  Painting of bubbles
 
+This part is from PS3.
+
 * Tap handler behaviour (paints tapped bubble with selected colout, cycles through colours)
     * Select a non-erase bubble from palette and tap the grid at a few points. Only those few points should change to the chosen colour.
     * Select a non-erase bubble from palette and tap a filled point multiple times. The colours of that point should cycle (red -> green -> blue -> orange -> red).
@@ -119,6 +121,8 @@ The controllers comprise the view controllers, each of which represents both a s
     * Select a non-erase bubble and tap at random points both on and off the grid. Only the bubbles on the grid should get filled; the parts below the bubble grid should not get filled with bubbles. Repeat this with dragging rather than tapping. Same results should apply.
 
 #### Selection from palette
+
+This part is from PS3.
 
 The registering of a bubble selection in the palette is already thoroughly tested above, so we don't test it again.
 
@@ -247,11 +251,29 @@ Action 2: Go to the level selection screen and tap on a level.
 
 Expectation 2: A new game should start with that level.
 
+### Glass-Box Tests
+
+#### Game Files
+
+Action 1: Attempt to save or load a file with non-alphanumeric characters in the palette save/load prompts.
+
+Expectation 1: The guard clause checking for `isFileNameLegal` should be triggered and the message stating this should be presented as a dialog box.
+
+Action 2: Run the game in the emulator and go to the game save directory (can be found by printing `FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first`) in the terminal. Delete all files. Start the game and `ls` the directory. Go to the level load screen and `ls` the directory again.
+
+Expectation 2: On the first `ls`, the directory should still be empty. On the second `ls`, the files `Cables`, `Magnets` and `Stripes` should be found in the directory, having been created from the asset bundle during the loading of `LevelSelectionViewController`.
+
+#### Audio
+
+Action 1: Launch the game, let the starting music play for a while, then load a level from the level selection screen while the music is playing halfway. Complete the game and click "Play Again" on the endgame screen.
+
+Expectation 1: The music should change to a new tune when the level is loaded. Upon clicking "Play Again", the starting menu screen should be loaded and the starting music should play from the beginning again, not from where it left off.
+
 #### End Game States
 
 Action 1: Create a game (without special bubbles)  such that it is easy to clear the entire level (perhaps a single row of red bubbles, or a few large monochromatic clusters). Then fire enough projectiles until the level is cleared. Each time a cluster of bubbles is cleared, make a note of it and record the colour.
 
-Expectation 1: Once the last bubble has been eliminated from the grid, the game should segue to a screen declaring victory. The number of each type of cluster cleared is listed and should match the tally. The score for special bubble triggered (marked "special" at the bottom of the screen) should be 0.
+Expectation 1: Once the last bubble has been eliminated from the grid, the game should segue to a screen declaring victory. The number of each type of cluster cleared is listed and should match the tally, as the score for a given colour is incremented every time a cluster of that colour is cleared. The score for special bubble triggered (marked "special" at the bottom of the screen) should be 0, as no special bubbles were triggered.
 
 Action 2: Create a new level (without special bubbles) and play in the stupidest possible manner, such that the bubbles keep piling up towards the bottom of the screen with very few clusters being cleared. Note the clusters cleared, as in Action 1.
 
@@ -259,7 +281,11 @@ Expectation 2: When any bubble snaps into the row directly above the projectile 
 
 Action 3: Load the "Magnets" prepackaged level and hit the 4 side star bubbles in a manner such that the game is won (one colour of projectile to each).
 
-Expectation 3: The game should end and segue to the win screen, where the "special" score at the bottom is exactly 4.
+Expectation 3: The game should end and segue to the win screen, where the "special" score at the bottom is exactly 4. This is because the special score is incremented each time a special bubble is triggered.
+
+Action 4: Design a new level with 2 rows: top row with all red bubbles except 1 lightning bubble, next row with all indestructable bubbles except 1 bomb bubble placed touching the top row's lightning bubble and 1 lightning bubbles placed elsewhere in the row not touching any other special bubble. Play the level and hit the lower row's lightning bubble.
+
+Expectation 4: The game should end in a victory due to the special bubble cascade and the top row's lightning bubble destroying the entire top row. The special score should be 3, since the special score is incremented in each recursive call in `performSpecialEffectOnSelf`.
 
 ### Problem 9: The Bells & Whistles
 
