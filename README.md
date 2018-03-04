@@ -70,7 +70,33 @@ An alternative approach could be maintaining a stack of triggered special bubble
 
 ### Problem 7: Class Diagram
 
-Please save your diagram as `class-diagram.png` in the root directory of the repository.
+![Class Diagram](class-diagram.png)
+
+#### Model
+
+`BubbleGrid` is the main class for the model, storing the bubbles in the grid as well as the projectile as attributes. It provides useful methods to help the controller make decisions e.g. which grid point is nearest to the current coordinate point, which bubbles of the same colour are in the same connected component as some given bubble, etc. It contains a coordinate system (needed for physics calculations) that is different from the one in the view, and whose aspect ratio is defined directly by the number of rows vs the number of bubbles in each row. The view and model coordinate systems differ only by a scaling factor, so transformation is easy.
+
+`PhysicsEnvironment`, `StaticBody` and `DynamicBody` are protocols which make up the physics engine. An instance of `PhysicsEnvironment` may contain any number of static bodies (which are stationary and are there to be collided with by the dynamic body) and at most one (for now) dynamic body (which can move). When its `simulate` method is called with a time delta from the display link, it can then simulate the motion of the dynamic body in the environment, including collisions with the static bodies. `DynamicBody` is implemented by `ProjectileBubble` in the model, which `StaticBody` is derived into a few specific protocols (`StickyCircle`, `StickyLine`, `ReflectingLine`) that are then implemented by the models representing collidable entities (`FixedBubble`, `Ceiling`, `SideWall`). `PhysicsEnvironment` itself is implemented by `BubbleGrid` as that is the class that contains all the physics objects in the model. `StaticBody` optionally can have a mass which is used to determine gravitational acceleration (this is used to implement magnetic bubbles in the game).
+
+#### View
+
+`BubbleGridView` contains methods to render the bubble grid and the projectile (which in the view is simply a `BubbleView`), as well as to render with animation if needed. `BubbleGridView` also contains helper methods for translating to and from model and view coordinates. The animated rendering itself is done in the `BubbleView` class (which represents an individual bubble).
+
+`PaletteView` renders the palette and is used for the level designer stage. In particular, it is used in `PaletteViewController`.
+
+#### Controller
+
+The controllers comprise the view controllers, each of which represents both a single screen and a single phase of the game.
+
+`MenuViewController`: Handles the first segment of the game, where the user decides whether to design a level or launch an existing level. If the player chooses to launch an existing level, it segues to `LevelSelectionViewController`, otherwise it segues to `PaletteViewController`.
+
+`LevelSelectionViewController`: Presents the user all saved levels in an encapsulated `UICollectionView`. When the user taps on a level, it segues to `GameViewController` to play the selected level. In addition to the saved levels created by the user, there are 3 prepackaged saved levels ("Cables", "Magnets", "Stripes") which are loaded from the assets bundle and presented together with the other saved levels.
+
+`PaletteViewController`: Handles the level design phase of the game. After the level is designed and "START" is pressed, it segues to `GameViewController` to begin the actual game.
+
+`GameViewController`: Handles the game itself. It contains methods to fire a projectile, remove bubble clusters once hit, trigger special bubbles and keep track of score. It checks for endgame conditions (empty grid or filled past a certain row) and segues to `EndGameViewController`.
+
+`EndGameViewController`: Shows the player whether they won or lost, along with their score. Allows user to choose to play again, at which point it segues back to `MenuViewController`.
 
 ### Problem 8: Testing
 
