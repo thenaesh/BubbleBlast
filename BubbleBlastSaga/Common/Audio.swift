@@ -28,7 +28,6 @@ extension SoundTypes {
 
 enum SoundNames: String {
     case SAFMarch = "tentera-singapura"
-    case MarioTheme = "background_theme_mario"
     case DDLCTheme = "background_theme_ddlc"
     case Lose = "smb_mariodie"
     case Win = "smb_world_clear"
@@ -41,7 +40,6 @@ enum SoundNames: String {
     // for conveniently iterating across all sounds
     static let all: [SoundNames] = [
         .SAFMarch,
-        .MarioTheme,
         .DDLCTheme,
         .Lose,
         .Win,
@@ -57,8 +55,6 @@ extension SoundNames {
     var type: SoundTypes {
         switch self {
         case .SAFMarch:
-            return .MP3
-        case .MarioTheme:
             return .MP3
         case .DDLCTheme:
             return .MP3
