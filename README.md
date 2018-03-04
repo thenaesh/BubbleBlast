@@ -311,4 +311,10 @@ A full audio subsystem was implemented as a singleton to handle music at all par
 
 ## Problem 10: Final Reflection
 
-Your answer here
+The original idea of MVC as applied to this game was that models reflected the game state, views presented the model on the screen and controllers read input and updated the model. The model contained the bubble class, the bubble colour enum and the bubble grid class. There were views for the bubble grid, the palette and several subviews of the grid like the cannon and projectile. The game engine and level handling code was implemented in the view controllers.
+
+For the model, I initially started out with bubbles only having a grid position and only the view bubble having a coordinate. However I had to change this in order to introduce a physics engine in PS4, since physics required coordinates to operate. I did not use the view's coordinates, and instead introduced a separate coordinate system ([0, 1] * [0, aspectRatio]). The aspect ratio depended on the number of rows and columns allowed, and this was fixed as a constant in a global file.
+
+I initially did not know how to use segues properly and ended up with one massive view controller containing both palette-handling code and actual game code in PS4. This was two controllers combined into one: the game engine and the level designer. After figuring out how to use segues for PS5, I split each stage of the game up into its own view controller. The specific game mechanics was then contained in `GameViewController`.
+
+I decided not to have a separate GameEngine class since this game was not very abstractable, and contains just game mechanics and physics. A game engine is generally supposed to contain graphics systems (with rendering techniques), audio systems, physics systems, but these are not very applicable here (as compared to some 3D game). The one thing that was indeed abstractable was the physics engine, which I designed as a set of protocols to be concretely instantiated by the game classes.
