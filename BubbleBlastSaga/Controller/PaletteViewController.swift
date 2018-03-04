@@ -179,6 +179,11 @@ class PaletteViewController: GridViewController {
                     return
                 }
 
+                guard self.isFileNameLegal(filename) else {
+                    self.alertUser(title: "ERROR", message: "Invalid filename. Only alphanumerics are allowed.")
+                    return
+                }
+
                 let success = self.bubbleGridModel.save(to: filename)
 
                 if !success {
@@ -197,6 +202,11 @@ class PaletteViewController: GridViewController {
                     return
                 }
 
+                guard self.isFileNameLegal(filename) else {
+                    self.alertUser(title: "ERROR", message: "Invalid filename. Only alphanumerics are allowed.")
+                    return
+                }
+
                 let success = self.bubbleGridModel.load(from: filename)
 
                 if !success {
@@ -210,7 +220,7 @@ class PaletteViewController: GridViewController {
         // implementation obtained from https://medium.com/@chan.henryk/alert-controller-with-text-field-in-swift-3-bda7ac06026c
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addTextField { (textField) in
-            textField.placeholder = "<filename>.json"
+            textField.placeholder = "<filename>"
         }
         alert.addAction(action(alert))
         self.present(alert, animated:true, completion: nil)
@@ -220,6 +230,11 @@ class PaletteViewController: GridViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .`default`))
         self.present(alert, animated: true, completion: nil)
+    }
+
+    // only alphanumerics allowed in save file names
+    private func isFileNameLegal(_ filename: String) -> Bool {
+        return CharacterSet.alphanumerics.isSuperset(of: CharacterSet(charactersIn: filename))
     }
 
     /*********************
