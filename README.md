@@ -287,11 +287,28 @@ Action 4: Design a new level with 2 rows: top row with all red bubbles except 1 
 
 Expectation 4: The game should end in a victory due to the special bubble cascade and the top row's lightning bubble destroying the entire top row. The special score should be 3, since the special score is incremented in each recursive call in `performSpecialEffectOnSelf`.
 
-### Problem 9: The Bells & Whistles
+## Problem 9: The Bells & Whistles
 
-Your answer here
+### Bells
 
+* Music for game menu, level selection screen and level design screen (one of the soundtracks from Doki Doki Literature Club, a visual horror novel by Dan Salvato)
+* Music while playing game (which should sound familiar to every Singaporean male)
+* Sound effects when launching bubble, clearing a cluster and triggering special bubbles (some sound effects from Super Mario)
 
-### Problem 10: Final Reflection
+A full audio subsystem was implemented as a singleton to handle music at all parts of the game. It is located at `Audio.swift`.
+
+### Whistles
+
+* Level selector screen that allows not just convenient selecting of prepackaged levels but all saved levels from a scrolling menu
+    * Added by reading out the contents of the save directory and displaying it with a `UICollectionView`
+* Win/lose conditions and appropriate end game screens
+    * Win test: check if the top row is clear
+    * Lose test: check if the row just above the launcher has any bubbles
+* Score calculation and reporting on end game screens, split into each type of bubble cluster and special bubble triggers
+    * Counters added to `GameViewController` and incremented at appropriate locations in the cluster clearing code and special bubble triggering code
+* "Play Again" button on the end game screens to enable user to go back to the main menu
+    * Just a segue back to the menu screen
+
+## Problem 10: Final Reflection
 
 Your answer here
